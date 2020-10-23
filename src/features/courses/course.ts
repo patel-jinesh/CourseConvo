@@ -19,7 +19,7 @@ export interface Course {
  * Redux Section
  */
 export interface CoursesState {
-    courses: { [id: string]: Course },
+    [id: string]: Course
 }
 
 export enum CourseActions {
@@ -27,20 +27,18 @@ export enum CourseActions {
     EDIT = "EDIT"
 }
 
-const initialState: CoursesState = {
-    courses: {},
-};
+const initialState: CoursesState = {};
 
 const coursesRedux = createSlice({
     name: "COURSES",
     initialState,
     reducers: {
         add(state, action: PayloadAction<Course>) {
-            state.courses = { [action.payload.id]: action.payload, ...state.courses };
+            state = { [action.payload.id]: action.payload, ...state };
         },
 
         edit(state, action: PayloadAction<Course>) {
-            state.courses[action.payload.id] = action.payload;
+            state[action.payload.id] = action.payload;
         }
     }
 });

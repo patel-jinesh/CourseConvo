@@ -17,7 +17,7 @@ export interface Review {
  * Redux Section
  */
 export interface ReviewsState {
-    reviews: { [id: string]: Review },
+    [id: string]: Review
 }
 
 export enum ReviewActions {
@@ -26,22 +26,20 @@ export enum ReviewActions {
     DELETE = "DELETE"
 }
 
-const initialState: ReviewsState = {
-    reviews: {},
-};
+const initialState: ReviewsState = {};
 
 const reviewsRedux = createSlice({
     name: "REVIEWS",
     initialState,
     reducers: {
         add(state, action: PayloadAction<Review>) {
-            state.reviews = { [action.payload.id]: action.payload, ...state.reviews}
+            state = { [action.payload.id]: action.payload, ...state}
         },
         edit(state, action: PayloadAction<Review>) {
-            state.reviews[action.payload.id] = action.payload;
+            state[action.payload.id] = action.payload;
         },
         remove(state, action: PayloadAction<string>) {
-            delete state.reviews[action.payload];
+            delete state[action.payload];
         }
     }
 });

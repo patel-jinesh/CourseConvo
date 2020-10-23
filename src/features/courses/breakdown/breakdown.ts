@@ -20,7 +20,7 @@ export interface Breakdown {
  * Redux Section
  */
 export interface BreakdownsState {
-    reviews: { [id: string]: Breakdown },
+    [id: string]: Breakdown
 }
 
 export enum BreakdownActions {
@@ -29,22 +29,20 @@ export enum BreakdownActions {
     DELETE = "DELETE"
 }
 
-const initialState: BreakdownsState = {
-    reviews: {},
-};
+const initialState: BreakdownsState = {};
 
 const breakdownsRedux = createSlice({
     name: "REVIEWS",
     initialState,
     reducers: {
         add(state, action: PayloadAction<Breakdown>) {
-            state.reviews = { [action.payload.id]: action.payload, ...state.reviews }
+            state = { [action.payload.id]: action.payload, ...state }
         },
         edit(state, action: PayloadAction<Breakdown>) {
-            state.reviews[action.payload.id] = action.payload;
+            state[action.payload.id] = action.payload;
         },
         remove(state, action: PayloadAction<string>) {
-            delete state.reviews[action.payload];
+            delete state[action.payload];
         }
     }
 });
