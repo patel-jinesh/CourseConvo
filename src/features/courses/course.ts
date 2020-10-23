@@ -8,7 +8,7 @@ export enum Semester {
 };
 
 export interface Course {
-    id: number;
+    id: string;
     code: string;
     instructor: string;
     semester: Semester;
@@ -19,7 +19,7 @@ export interface Course {
  * Redux Section
  */
 export interface CoursesState {
-    courses: { [index: number]: Course },
+    courses: { [id: string]: Course },
 }
 
 export enum CourseActions {
@@ -28,7 +28,7 @@ export enum CourseActions {
 }
 
 const initialState: CoursesState = {
-    courses: [],
+    courses: {},
 };
 
 const coursesRedux = createSlice({
