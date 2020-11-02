@@ -10,8 +10,9 @@ import {
 import React from 'react';
 import { RootState } from '../app/store';
 import { ConnectedProps, connect } from 'react-redux';
-import { Record, Status, remove } from '../features/courses/record'
+import { remove } from '../features/courses/record'
 import Column from 'antd/lib/table/Column';
+import { Record } from '../data/types'
 
 const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
