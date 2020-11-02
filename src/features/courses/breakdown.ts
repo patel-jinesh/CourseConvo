@@ -1,5 +1,5 @@
-import { Course } from "../course";
-import { User } from "../../user/user"
+import { Course } from "./course";
+import { User } from "../user/user"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Mark {
@@ -9,8 +9,8 @@ export interface Mark {
 }
 
 export interface Breakdown {
-    id: string,
-    course: Course;
+    breakdownID: string,
+    course: string;
     user: User;
     marks: Mark[];
     isAnonymous: boolean;
@@ -20,7 +20,7 @@ export interface Breakdown {
  * Redux Section
  */
 export interface BreakdownsState {
-    [id: string]: Breakdown
+    [breakdownID: string]: Breakdown
 }
 
 export enum BreakdownActions {
@@ -32,14 +32,14 @@ export enum BreakdownActions {
 const initialState: BreakdownsState = {};
 
 const breakdownsRedux = createSlice({
-    name: "REVIEWS",
+    name: "BREAKDOWNS",
     initialState,
     reducers: {
         add(state, action: PayloadAction<Breakdown>) {
-            state = { [action.payload.id]: action.payload, ...state }
+            state = { [action.payload.breakdownID]: action.payload, ...state }
         },
         edit(state, action: PayloadAction<Breakdown>) {
-            state[action.payload.id] = action.payload;
+            state[action.payload.breakdownID] = action.payload;
         },
         remove(state, action: PayloadAction<string>) {
             delete state[action.payload];

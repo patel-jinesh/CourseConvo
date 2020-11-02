@@ -1,14 +1,14 @@
-import { Course } from "../course";
-import { User } from "../../user/user"
+import { Course, Term } from "./course";
+import { User } from "../user/user"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface Review {
-    id: string,
+    recordID: string,
     difficulty: number;
     enjoyability: number;
     workload: number;
     comment: string;
-    course: Course;
+    course: string;
     user: User;
     isAnonymous: boolean;
 };
@@ -17,7 +17,7 @@ export interface Review {
  * Redux Section
  */
 export interface ReviewsState {
-    [id: string]: Review
+    [recordID: string]: Review
 }
 
 export enum ReviewActions {
@@ -33,10 +33,10 @@ const reviewsRedux = createSlice({
     initialState,
     reducers: {
         add(state, action: PayloadAction<Review>) {
-            state = { [action.payload.id]: action.payload, ...state}
+            state = { [action.payload.recordID]: action.payload, ...state}
         },
         edit(state, action: PayloadAction<Review>) {
-            state[action.payload.id] = action.payload;
+            state[action.payload.recordID] = action.payload;
         },
         remove(state, action: PayloadAction<string>) {
             delete state[action.payload];

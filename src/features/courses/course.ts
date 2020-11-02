@@ -1,25 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export enum Semester {
-    FALL,
-    WINTER,
-    SPRING,
-    SUMMER
+export enum Term {
+    FALL = "Fall",
+    WINTER = "Winter",
+    SPRING = "Spring",
+    SUMMER = "Summer"
 };
 
 export interface Course {
-    id: string;
-    code: string;
+    courseID: string;
+    name: string;
+    identifier: {
+        code: string,
+        subject: string
+    };
     instructor: string;
-    semester: Semester;
-    year: number;
+    semester: {
+        term: Term,
+        year: number
+    };
 };
 
 /**
  * Redux Section
  */
 export interface CoursesState {
-    [id: string]: Course
+    [courseID: string]: Course
 }
 
 export enum CourseActions {
@@ -27,18 +33,45 @@ export enum CourseActions {
     EDIT = "EDIT"
 }
 
-const initialState: CoursesState = {};
+const initialState: CoursesState = {
+    "rando": {
+        courseID: "rando",
+        instructor: "Kevin Browne",
+        name: "HCI",
+        semester: {
+            term: Term.FALL,
+            year: 2020
+        },
+        identifier: {
+            code: "4HC3",
+            subject: "SFWRENG",
+        }
+    },
+    "rando1": {
+        courseID: "rando1",
+        instructor: "Kevin Browne",
+        name: "HCI",
+        semester: {
+            term: Term.FALL,
+            year: 2021
+        },
+        identifier: {
+            code: "4HC3",
+            subject: "SFWRENG",
+        }
+    }
+};
 
 const coursesRedux = createSlice({
     name: "COURSES",
     initialState,
     reducers: {
         add(state, action: PayloadAction<Course>) {
-            state = { [action.payload.id]: action.payload, ...state };
+            state = { [action.payload.courseID]: action.payload, ...state };
         },
 
         edit(state, action: PayloadAction<Course>) {
-            state[action.payload.id] = action.payload;
+            state[action.payload.courseID] = action.payload;
         }
     }
 });
