@@ -1,17 +1,5 @@
-import { Course, Term } from "./course";
-import { User } from "../user/user"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export interface Review {
-    recordID: string,
-    difficulty: number;
-    enjoyability: number;
-    workload: number;
-    comment: string;
-    course: string;
-    user: User;
-    isAnonymous: boolean;
-};
+import { Review } from "../../data/types";
 
 /**
  * Redux Section

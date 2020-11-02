@@ -1,19 +1,5 @@
-import { Course, Term } from "./course";
-import { User } from "../user/user"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export enum Status {
-    IN_PROGRESS = "In progress",
-    TAKEN = "Taken",
-    TRANSFERRED = "Transferred"
-}
-
-export interface Record {
-    recordID: string,
-    courseID: string;
-    status: Status;
-    grade?: number;
-}
+import { Status, Record } from "../../data/types";
 
 /**
  * Redux Section

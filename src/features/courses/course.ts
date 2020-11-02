@@ -1,25 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export enum Term {
-    FALL = "Fall",
-    WINTER = "Winter",
-    SPRING = "Spring",
-    SUMMER = "Summer"
-};
-
-export interface Course {
-    courseID: string;
-    name: string;
-    identifier: {
-        code: string,
-        subject: string
-    };
-    instructor: string;
-    semester: {
-        term: Term,
-        year: number
-    };
-};
+import { Course, Term } from "../../data/types";
 
 /**
  * Redux Section

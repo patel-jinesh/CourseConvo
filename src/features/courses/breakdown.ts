@@ -1,20 +1,5 @@
-import { Course } from "./course";
-import { User } from "../user/user"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export interface Mark {
-    type: string;
-    weight: number;
-    count: number;
-}
-
-export interface Breakdown {
-    breakdownID: string,
-    course: string;
-    user: User;
-    marks: Mark[];
-    isAnonymous: boolean;
-}
+import { Breakdown } from "../../data/types";
 
 /**
  * Redux Section
