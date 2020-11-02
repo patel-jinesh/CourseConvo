@@ -1,4 +1,4 @@
-import { Layout, Menu, PageHeader, Table, Drawer, Button, Dropdown, Checkbox, Space } from 'antd';
+import { Layout, Menu, PageHeader, Table, Drawer, Button, Space, Form, Input, Tooltip, Select, Col, Row, DatePicker, AutoComplete } from 'antd';
 import {
     DesktopOutlined,
     FileOutlined,
@@ -23,7 +23,7 @@ declare global {
     }
 }
 
-Array.prototype.unique = function () {
+Object(Array).prototype.unique = function () {
     return [...new Set(this)];
 };
 
@@ -131,7 +131,7 @@ class CourseHistory extends React.Component<Props, State> {
                             <Column title="Semester" render={this.renderSemester} {...this.filtering(this.extractSemester)} />
                             <Column title="Grade" render={this.renderGrade} {...this.filtering(this.extractGrade)} />
                             <Column title="Status" render={this.renderStatus} {...this.filtering(this.extractStatus)} />
-                            <Column align="right" render={(t, r : Record) => (
+                            <Column align="right" render={(t, r: Record) => (
                                 <Space>
                                     <Button type={"text"} shape={"circle"} icon={<EditOutlined />}></Button>
                                     <Button onClick={(e) => { this.props.remove(r.recordID); }} type={"text"} shape={"circle"} icon={<DeleteOutlined />}></Button>
@@ -143,14 +143,112 @@ class CourseHistory extends React.Component<Props, State> {
                     <Drawer
                         title="Basic Drawer"
                         placement="right"
+                        width={720}
                         visible={this.state.drawerOpen}
                         onClose={() => this.setState({ drawerOpen: false })}>
                         <Drawer
                             title="Basic Drawer"
                             placement="right"
-                            visible={this.state.drawerOpen}
                             onClose={() => this.setState({ drawerOpen: false })}>
                         </Drawer>
+                        <Form layout="vertical" hideRequiredMark>
+                            <Row gutter={16}>
+                                <Col span={12}>
+                                    <Form.Item
+                                        name="name"
+                                        label="Name"
+                                        rules={[{ required: true, message: 'Please enter user name' }]}
+                                    >
+                                        <AutoComplete
+                                            style={{ width: 200 }}
+                                            options={[]}
+                                            placeholder=""
+                                        />
+                                    </Form.Item>
+                                </Col>
+                                <Col span={12}>
+                                    <Form.Item
+                                        name="url"
+                                        label="Url"
+                                        rules={[{ required: true, message: 'Please enter url' }]}
+                                    >
+                                        <Input
+                                            style={{ width: '100%' }}
+                                            addonBefore="http://"
+                                            addonAfter=".com"
+                                            placeholder="Please enter url"
+                                        />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={16}>
+                                <Col span={12}>
+                                    <Form.Item
+                                        name="owner"
+                                        label="Owner"
+                                        rules={[{ required: true, message: 'Please select an owner' }]}
+                                    >
+                                        <Select placeholder="Please select an owner">
+                                            <Select.Option value="xiao">Xiaoxiao Fu</Select.Option>
+                                            <Select.Option value="mao">Maomao Zhou</Select.Option>
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col span={12}>
+                                    <Form.Item
+                                        name="type"
+                                        label="Type"
+                                        rules={[{ required: true, message: 'Please choose the type' }]}
+                                    >
+                                        <Select placeholder="Please choose the type">
+                                            <Select.Option value="private">Private</Select.Option>
+                                            <Select.Option value="public">Public</Select.Option>
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={16}>
+                                <Col span={12}>
+                                    <Form.Item
+                                        name="approver"
+                                        label="Approver"
+                                        rules={[{ required: true, message: 'Please choose the approver' }]}
+                                    >
+                                        <Select placeholder="Please choose the approver">
+                                            <Select.Option value="jack">Jack Ma</Select.Option>
+                                            <Select.Option value="tom">Tom Liu</Select.Option>
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col span={12}>
+                                    <Form.Item
+                                        name="dateTime"
+                                        label="DateTime"
+                                        rules={[{ required: true, message: 'Please choose the dateTime' }]}
+                                    >
+                                        <DatePicker.RangePicker
+                                            style={{ width: '100%' }}
+                                        />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row gutter={16}>
+                                <Col span={24}>
+                                    <Form.Item
+                                        name="description"
+                                        label="Description"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: 'please enter url description',
+                                            },
+                                        ]}
+                                    >
+                                        <Input.TextArea rows={4} placeholder="please enter url description" />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Form>
                     </Drawer>
                     <Button type="primary"
                         onClick={() => { this.setState({ drawerOpen: true }) }}

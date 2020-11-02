@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Status, Record } from "../../data/types";
+import { records } from "../../backend/database";
 
 /**
  * Redux Section
@@ -14,38 +15,10 @@ export enum RecordActions {
     DELETE = "DELETE"
 }
 
-const initialState: Records = {
-    "record": {
-        recordID: "record",
-        courseID: "rando",
-        status: Status.IN_PROGRESS
-    },
-    "record1": {
-        recordID: "record1",
-        courseID: "rando1",
-        status: Status.TAKEN
-    },
-    "record2": {
-        recordID: "record2",
-        courseID: "rando1",
-        status: Status.TAKEN
-    },
-    "record3": {
-        recordID: "record3",
-        courseID: "rando1",
-        status: Status.TAKEN
-    },
-    "record4": {
-        recordID: "record4",
-        courseID: "rando1",
-        status: Status.TAKEN
-    },
-    "record5": {
-        recordID: "record5",
-        courseID: "rando1",
-        status: Status.TAKEN
-    }
-};
+const initialState: Records = records.reduce((r, v) => ({
+    ...r,
+    [v.recordID]: v
+}), {})
 
 const recordsRedux = createSlice({
     name: "RECORDS",

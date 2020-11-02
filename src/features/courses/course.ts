@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Course, Term } from "../../data/types";
+import { courses } from "../../backend/database"
 
 /**
  * Redux Section
@@ -13,34 +14,11 @@ export enum CourseActions {
     EDIT = "EDIT"
 }
 
-const initialState: CoursesState = {
-    "rando": {
-        courseID: "rando",
-        instructor: "Kevin Browne",
-        name: "HCI",
-        semester: {
-            term: Term.FALL,
-            year: 2020
-        },
-        identifier: {
-            code: "4HC3",
-            subject: "SFWRENG",
-        }
-    },
-    "rando1": {
-        courseID: "rando1",
-        instructor: "Kevin Browne",
-        name: "HCI",
-        semester: {
-            term: Term.FALL,
-            year: 2021
-        },
-        identifier: {
-            code: "4HC3",
-            subject: "SFWRENG",
-        }
-    }
-};
+
+const initialState: CoursesState = courses.reduce((r, v) => ({
+    ...r,
+    [v.courseID]: v
+}), {})
 
 const coursesRedux = createSlice({
     name: "COURSES",
