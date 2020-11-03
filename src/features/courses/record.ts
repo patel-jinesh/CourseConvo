@@ -9,12 +9,6 @@ export interface Records {
     [recordID: string]: Record
 }
 
-export enum RecordActions {
-    ADD = "ADD",
-    EDIT = "EDIT",
-    DELETE = "DELETE"
-}
-
 const initialState: Records = records.reduce((r, v) => ({
     ...r,
     [v.recordID]: v
@@ -31,7 +25,6 @@ const recordsRedux = createSlice({
             state[action.payload.recordID] = action.payload;
         },
         remove(state, action: PayloadAction<string>) {
-            console.log("here");
             delete state[action.payload];
         }
     }

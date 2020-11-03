@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Breakdown } from "../../data/types";
+import { breakdowns } from "../../backend/database";
 
 /**
  * Redux Section
@@ -8,13 +9,10 @@ export interface BreakdownsState {
     [breakdownID: string]: Breakdown
 }
 
-export enum BreakdownActions {
-    ADD = "ADD",
-    EDIT = "EDIT",
-    DELETE = "DELETE"
-}
-
-const initialState: BreakdownsState = {};
+const initialState: BreakdownsState = breakdowns.reduce((r, v) => ({
+    ...r,
+    [v.breakdownID]: v
+}), {})
 
 const breakdownsRedux = createSlice({
     name: "BREAKDOWNS",

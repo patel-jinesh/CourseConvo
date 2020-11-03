@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Review } from "../../data/types";
+import { reviews } from "../../backend/database";
 
 /**
  * Redux Section
@@ -8,23 +9,20 @@ export interface ReviewsState {
     [recordID: string]: Review
 }
 
-export enum ReviewActions {
-    ADD = "ADD",
-    EDIT = "EDIT",
-    DELETE = "DELETE"
-}
-
-const initialState: ReviewsState = {};
+const initialState: ReviewsState = reviews.reduce((r, v) => ({
+    ...r,
+    [v.reviewID]: v
+}), {})
 
 const reviewsRedux = createSlice({
     name: "REVIEWS",
     initialState,
     reducers: {
         add(state, action: PayloadAction<Review>) {
-            state = { [action.payload.recordID]: action.payload, ...state}
+            state = { [action.payload.reviewID]: action.payload, ...state}
         },
         edit(state, action: PayloadAction<Review>) {
-            state[action.payload.recordID] = action.payload;
+            state[action.payload.reviewID] = action.payload;
         },
         remove(state, action: PayloadAction<string>) {
             delete state[action.payload];

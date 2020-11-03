@@ -9,12 +9,6 @@ export interface CoursesState {
     [courseID: string]: Course
 }
 
-export enum CourseActions {
-    ADD = "ADD",
-    EDIT = "EDIT"
-}
-
-
 const initialState: CoursesState = courses.reduce((r, v) => ({
     ...r,
     [v.courseID]: v

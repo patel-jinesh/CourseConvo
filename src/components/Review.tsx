@@ -5,11 +5,11 @@ import Avatar from 'antd/lib/avatar/avatar';
 import { Comment, Tooltip } from 'antd';
 
 type ComponentProps = {
-    id: string
+    reviewID: string
 }
 
-const mapState = (state: RootState, props : ComponentProps) => ({
-    review: state.reviews[props.id]
+const mapState = (state: RootState, props: ComponentProps) => ({
+    review: state.reviews[props.reviewID]
 });
 
 const connector = connect(mapState);
@@ -22,7 +22,7 @@ class Review extends React.Component<Props> {
     render() {
         return (
             <Comment
-                author={<a>{this.props.review.user.name}</a>}
+                author={<a>{this.props.review.userID}{}</a>}
                 avatar={
                     <Avatar
                         src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"

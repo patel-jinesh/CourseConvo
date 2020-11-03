@@ -1,6 +1,11 @@
+/**
+ * The types that our application will use.
+ */
+
 export interface User {
-    id: string
-    name: string
+    userID: string;
+    name: string;
+    avatar_url: string;
 }
 
 export interface Mark {
@@ -11,8 +16,8 @@ export interface Mark {
 
 export interface Breakdown {
     breakdownID: string,
-    course: string;
-    user: User;
+    courseID: string;
+    userID: string;
     marks: Mark[];
     isAnonymous: boolean;
 }
@@ -52,12 +57,12 @@ export interface Record {
 }
 
 export interface Review {
-    recordID: string,
+    reviewID: string,
     difficulty: number;
     enjoyability: number;
     workload: number;
     comment: string;
-    course: string;
-    user: User;
+    courseID: string;
+    userID: string;
     isAnonymous: boolean;
 };
