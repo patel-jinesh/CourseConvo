@@ -92,7 +92,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
             <PageHeader
                 style={{width: "100%"}}
                 backIcon={false}
-                title="Your Course History"
+                title="Your Academic Record"
             >
                 <Content style={{ padding: 24 }}>
                     <Table dataSource={this.props.data} pagination={false} rowKey="recordID">
