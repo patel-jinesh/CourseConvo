@@ -5,7 +5,8 @@ import {
     TeamOutlined,
     UserOutlined,
     EditOutlined,
-    DeleteOutlined
+    DeleteOutlined,
+    PlusOutlined
 } from '@ant-design/icons';
 import React from 'react';
 import { RootState } from '../app/store';
@@ -89,6 +90,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
     render() {
         return (
             <PageHeader
+                style={{width: "100%"}}
                 backIcon={false}
                 title="Your Course History"
             >
@@ -100,17 +102,17 @@ class AcademicRecordPage extends React.Component<Props, State> {
                         <Column title="Semester" render={this.renderSemester} {...this.filtering(this.extractSemester)} />
                         <Column title="Grade" render={this.renderGrade} {...this.filtering(this.extractGrade)} />
                         <Column title="Status" render={this.renderStatus} {...this.filtering(this.extractStatus)} />
-                        <Column align="right" render={(_, r: Record) => (
+                        <Column title={<Button type="primary" onClick={() => { this.setState({ drawerOpen: true }) }} icon={<PlusOutlined/>}>Add</Button>} align="right" render={(_, r: Record) => (
                             <Space>
                                 <Button type={"text"} shape={"circle"} icon={<EditOutlined />}></Button>
-                                <Button onClick={(e) => { this.props.remove(r.recordID); }} type={"text"} shape={"circle"} icon={<DeleteOutlined />}></Button>
+                                <Button danger onClick={(e) => { this.props.remove(r.recordID); }} type={"text"} shape={"circle"} icon={<DeleteOutlined />}></Button>
                             </Space>
                         )} />
                     </Table>
                 </Content>
                 <Footer style={{ textAlign: 'center' }}>CourseConvo ©2020 Created by JAMS</Footer>
                 <Drawer
-                    title="Basic Drawer"
+                    title="Add Academic Record"
                     placement="right"
                     width={467}
                     visible={this.state.drawerOpen}
@@ -122,11 +124,6 @@ class AcademicRecordPage extends React.Component<Props, State> {
                     </Drawer>
                     <AcademicRecordForm/>
                 </Drawer>
-                <Button type="primary"
-                    onClick={() => { this.setState({ drawerOpen: true }) }}
-                    style={{ transition: "0.3s cubic-bezier(0.7, 0.3, 0.1, 1)", position: "absolute", bottom: 10, right: !this.state.drawerOpen ? 10 : 265 }}>
-                    Open
-                    </Button>
             </PageHeader>
         );
     }
