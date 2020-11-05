@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Row, Col, AutoComplete, Input, Select, DatePicker, Form, Radio, InputNumber, Button } from "antd";
-import { courses } from "../../backend/database";
 import { Record, Status, Term } from "../../data/types";
 import { RootState } from "../../app/store";
 import { connect, ConnectedProps } from "react-redux";
@@ -10,11 +9,13 @@ import { format } from "path";
 
 const { Option } = AutoComplete;
 
-type ComponentProps = {}
+type ComponentProps = {
+    onFinish: (values: any) => void
+}
 type ComponentState = {}
 
 const mapState = (state: RootState) => ({
-    courses: state.courses,
+    courses: Object.values(state.courses),
 });
 
 const mapDispatch = {}
@@ -29,80 +30,57 @@ type State = ComponentState;
 class AcademicRecordForm extends React.Component<Props, State>{
     form = React.createRef<FormInstance>();
 
-    validateCourseCode = (value: any) => {
-        if (value?.subject === undefined || value?.code === undefined)
-            return false;
-        if (!/[A-Z]+/g.test(value.subject) || !/[0-9A-Z]{4}/g.test(value.code))
-            return false;
-
-        return true;
-    }
-
-    validateSemester = (fields: any) => {
-        if (fields?.semester?.term === undefined || fields?.semester?.year === undefined)
-            return false;
-
-        return true;
-    }
-
-    validateStatus = (fields: any) => {
-        if (fields?.status === undefined)
-            return false;
-
-        return true;
-    }
-
-    validateGrade = (fields: any) => {
-        if (fields?.status !== Status.TAKEN)
-            return true;
-
-        return fields.grade !== undefined;
-    }
-
-    onFinish = (values: any) => {
-
-    }
-
     render() {
         return (
-            <Form onFinish={this.onFinish} layout="horizontal" ref={this.form} labelCol={{ span: 8 }} labelAlign={"left"}>
+            <Form onFinish={this.props.onFinish} layout="horizontal" ref={this.form} labelCol={{ span: 8 }} labelAlign={"left"}>
                 <Form.Item
                     label="Course Code"
                     shouldUpdate={true}
                     required>
-                    {
-                        ({ getFieldValue }) => {
-                            return (
-                                <>
-                                    <Input.Group compact>
-                                        <Form.Item
-                                            name={['identifier', 'subject']}
-                                            rules={[{ required: true, message: 'Please input the subject!' }]}
-                                            noStyle>
-                                            <AutoComplete
-                                                style={{ width: '70%' }}
-                                                placeholder="Subject"
-                                                filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
-                                                options={courses.map(c => c.identifier.subject).unique().map(v => ({ value: v }))}
-                                            >
-                                            </AutoComplete>
-                                        </Form.Item>
-                                        <Form.Item
-                                            name={['identifier', 'code']}
-                                            dependencies={['identifier', 'subject']}
-                                            rules={[{ required: true, message: 'Please input the code!' }]}
-                                            noStyle>
-                                            <AutoComplete
-                                                style={{ width: '30%' }}
-                                                filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
-                                                options={courses.filter(c => c.identifier.subject === getFieldValue(['identifier', 'subject'])).map(c => c.identifier.code).unique().map(code => ({ value: code }))}
-                                                placeholder="Code"
-                                            />
-                                        </Form.Item>
-                                    </Input.Group>
-                                </>
-                            )
-                        }
+                    {({ getFieldValue }) =>
+                        <Input.Group compact>
+                            <Form.Item
+                                normalize={(v: string) => v.toUpperCase().replace(" ", "")}
+                                name={['identifier', 'subject']}
+                                rules={[
+                                    { required: true, message: 'Please input the subject!' },
+                                    { pattern: /^[A-Z]+$/g, message: 'Not a valid subject!' }]
+                                }
+                                noStyle>
+                                <AutoComplete
+                                    style={{ width: '70%' }}
+                                    placeholder="Subject"
+                                    filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
+                                    options={
+                                        this.props.courses
+                                            .map(c => c.identifier.subject)
+                                            .unique()
+                                            .map(v => ({ value: v }))
+                                    }>
+                                </AutoComplete>
+                            </Form.Item>
+                            <Form.Item
+                                normalize={(v: string) => v.toUpperCase().replace(" ", "").substr(0, 4)}
+                                name={['identifier', 'code']}
+                                rules={[
+                                    { required: true, message: 'Please input the code!' },
+                                    { pattern: /^[0-9][A-Z]([A-Z]|[0-9])[0-9]$/g, message: "Not a valid code!" }
+                                ]}
+                                noStyle>
+                                <AutoComplete
+                                    style={{ width: '30%' }}
+                                    filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
+                                    options={
+                                        this.props.courses
+                                            .filter(c => c.identifier.subject === getFieldValue(['identifier', 'subject']))
+                                            .map(c => c.identifier.code)
+                                            .unique()
+                                            .map(code => ({ value: code }))
+                                    }
+                                    placeholder="Code"
+                                />
+                            </Form.Item>
+                        </Input.Group>
                     }
                 </Form.Item>
                 <Form.Item name="semester" label="Semester" required>
@@ -128,19 +106,13 @@ class AcademicRecordForm extends React.Component<Props, State>{
                 </Form.Item>
                 <Form.Item
                     noStyle
-                    shouldUpdate={
-                        (p, c) =>
-                            p?.identifier?.code === c?.identifier?.code &&
-                            p?.identifier?.subject === c?.identifier?.subject &&
-                            p?.semester?.term === c?.semester?.term &&
-                            p?.semester?.year === c?.semester?.year?.year() !== undefined
-                    }>
+                    dependencies={[['identifier', 'subject'], ['identifier', 'code'], ['semester', 'term'], ['semester', 'year']]}>
                     {
                         ({ getFieldValue, setFieldsValue }) => {
                             let identifier = getFieldValue('identifier');
                             let semester = getFieldValue('semester');
 
-                            let course = courses.find(v =>
+                            let course = this.props.courses.find(v =>
                                 v.identifier.code === identifier?.code &&
                                 v.identifier.subject === identifier?.subject &&
                                 v.semester.term === semester?.term &&
@@ -154,14 +126,24 @@ class AcademicRecordForm extends React.Component<Props, State>{
                                     <Form.Item
                                         name="name"
                                         label="Course Name"
-                                        rules={[{ required: true }]}>
-                                        <Input defaultValue={course?.name} disabled={course !== undefined}></Input>
+                                        rules={[{ required: true, message: 'Please input the course name!' }]}
+                                        required>
+                                        <Input disabled={course !== undefined}></Input>
                                     </Form.Item>
                                     <Form.Item
                                         name="instructor"
                                         label="Instructor"
-                                        rules={[{ required: true }]}>
-                                        <Input disabled={course !== undefined}></Input>
+                                        required>
+                                        <AutoComplete
+                                            disabled={course !== undefined}
+                                            filterOption={(i, o) => o?.value.toUpperCase().indexOf(i.toUpperCase()) === 0}
+                                            options={
+                                                this.props.courses
+                                                    .map(course => course.instructor)
+                                                    .unique()
+                                                    .map(instructor => ({ value: instructor }))
+                                            }
+                                        />
                                     </Form.Item>
                                 </>
                             )
@@ -171,7 +153,7 @@ class AcademicRecordForm extends React.Component<Props, State>{
                 <Form.Item
                     name="status"
                     label="Status"
-                    rules={[{ required: true }]}>
+                    rules={[{ required: true, message: "Please select one of the options!" }]}>
                     <Radio.Group>
                         <Radio.Button value={Status.IN_PROGRESS}>{Status.IN_PROGRESS}</Radio.Button>
                         <Radio.Button value={Status.TRANSFERRED}>{Status.TRANSFERRED}</Radio.Button>
@@ -180,32 +162,41 @@ class AcademicRecordForm extends React.Component<Props, State>{
                 </Form.Item>
                 <Form.Item
                     noStyle
-                    shouldUpdate={(prev, curr) => prev.status !== curr.status}>
+                    dependencies={['status']}>
                     {({ getFieldValue }) => {
-                        return getFieldValue('status') === Status.TAKEN ? (
-                            <Form.Item
-                                name="grade"
-                                label="Grade"
-                                rules={[{ required: true }]}>
-                                <InputNumber
-                                    min={0}
-                                    max={12}
-                                />
-                            </Form.Item>
-                        ) : null;
+                        if (getFieldValue('status') === Status.TAKEN) {
+                            return (
+                                <Form.Item
+                                    name="grade"
+                                    label="Grade"
+                                    rules={[{ required: true, message: "Please enter your grade!" }]}>
+                                    <InputNumber
+                                        min={0}
+                                        max={12}
+                                    />
+                                </Form.Item>
+                            )
+                        }
                     }}
                 </Form.Item>
-                <Form.Item shouldUpdate={true}>
-                    {() => {
-                        return <Button
-                            type="primary"
-                            htmlType="submit"
-                            disabled={
-                                this.form.current?.getFieldsError().map(v => v.errors.length !== 0).reduce((r, c) => (r || c), false)
-                            }
-                        >
-                            Log in
-                        </Button>
+                <Form.Item shouldUpdate={true} label=" " colon={false}>
+                    {({ isFieldTouched, getFieldValue }) => {
+                        return (
+                            <Button
+                                type="primary"
+                                htmlType="submit"
+                                disabled={
+                                    !isFieldTouched(['identifier', 'subject']) ||
+                                    !isFieldTouched(['identifier', 'code']) ||
+                                    !isFieldTouched(['semester', 'term']) ||
+                                    !isFieldTouched(['semester', 'year']) ||
+                                    !isFieldTouched(['status']) ||
+                                    (getFieldValue(['status']) === Status.TAKEN && !isFieldTouched(['grade'])) ||
+                                    this.form.current?.getFieldsError().map(v => v.errors.length !== 0).reduce((r, c) => (r || c), false)
+                                }>
+                                Submit
+                            </Button>
+                        )
                     }}
                 </Form.Item>
             </Form>
