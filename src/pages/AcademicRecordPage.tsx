@@ -94,7 +94,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
                     type='text'
                     shape='circle'
                     icon={<EditOutlined />}
-                    onClick={_ => this.onEdit(record)}/>
+                    onClick={_ => this.onEdit(record)} />
             </Tooltip>
             <Tooltip title="Delete this record">
                 <Button
@@ -102,7 +102,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
                     type='text'
                     shape='circle'
                     icon={<DeleteOutlined />}
-                    onClick={_ => this.onDelete(record.recordID)}/>
+                    onClick={_ => this.onDelete(record.recordID)} />
             </Tooltip>
         </Space>
     );
@@ -145,7 +145,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
             v.identifier.subject === values?.identifier?.subject &&
             v.semester.term === values?.semester?.term &&
             v.semester.year === values?.semester?.year?.year());
-        
+
         let record = this.props.data.find(r => r.courseID === course?.courseID);
 
         let courseID = course?.courseID ?? uuidv4();
@@ -224,7 +224,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
 
     onAdd = () => {
         this.form.current?.resetFields();
-        this.setState({ visible: true }) 
+        this.setState({ visible: true })
     }
 
     onDelete = (recordID: string) => {
@@ -243,15 +243,17 @@ class AcademicRecordPage extends React.Component<Props, State> {
                             <Statistic
                                 title="GPA"
                                 value={
-                                    this.props.data
-                                        .filter(r => r.status === Status.TAKEN)
-                                        .map(r => Number(this.extractCode(r).match(/\d+$/g)![0]![0]) * r.grade!)
-                                        .reduce((p, c) => p + c)
-                                    /
-                                    this.props.data
-                                        .filter(r => r.status === Status.TAKEN)
-                                        .map(r => Number(this.extractCode(r).match(/\d+$/g)![0]![0]))
-                                        .reduce((p, c) => p + c) / 3
+                                    this.props.data.length > 0
+                                        ? (this.props.data
+                                            .filter(r => r.status === Status.TAKEN)
+                                            .map(r => Number(this.extractCode(r).match(/\d+$/g)![0]![0]) * r.grade!)
+                                            .reduce((p, c) => p + c)
+                                            /
+                                            this.props.data
+                                                .filter(r => r.status === Status.TAKEN)
+                                                .map(r => Number(this.extractCode(r).match(/\d+$/g)![0]![0]))
+                                                .reduce((p, c) => p + c) / 3)
+                                        : "N/A"
                                 }
                                 precision={2}
                                 suffix="/ 4"
@@ -273,14 +275,18 @@ class AcademicRecordPage extends React.Component<Props, State> {
                             <Statistic
                                 title="Average courses per semester"
                                 value={
-                                    Object.values(this.props.data
-                                        .reduce<{ [semester: string]: number }>(
-                                            (p, r) => {
-                                                let semester = this.extractSemester(r)
-                                                if (!(semester in p))
-                                                    return { ...p, [semester]: 1 }
-                                                return { ...p, [semester]: p[semester] + 1 }
-                                            }, {})).map((v, i, a) => v / a.length).reduce((p, c) => p + c)
+                                    this.props.data.length > 0
+                                        ? (Object.values(this.props.data
+                                            .reduce<{ [semester: string]: number }>(
+                                                (p, r) => {
+                                                    let semester = this.extractSemester(r)
+                                                    if (!(semester in p))
+                                                        return { ...p, [semester]: 1 }
+                                                    return { ...p, [semester]: p[semester] + 1 }
+                                                }, {}))
+                                            .map((v, i, a) => v / a.length)
+                                            .reduce((p, c) => p + c))
+                                        : 0
                                 }
                             />
                         </Card.Grid>
@@ -305,7 +311,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
                         <Card.Grid hoverable={false}>
                             <Statistic
                                 title="Highest grade"
-                                valueStyle={{color:"#0F0"}}
+                                valueStyle={{ color: "#0F0" }}
                                 value={
                                     this.props.data
                                         .map(r => r.grade)
@@ -325,31 +331,31 @@ class AcademicRecordPage extends React.Component<Props, State> {
                         <Column title="Code"
                             render={this.renderCode}
                             sorter={this.sortCourseCode}
-                            {...this.filtering(this.extractSubject)}/>
-                        <Column 
+                            {...this.filtering(this.extractSubject)} />
+                        <Column
                             title="Name"
                             ellipsis
                             render={this.renderName} />
-                        <Column 
+                        <Column
                             title="Instructor"
                             ellipsis
                             render={this.renderInstructor} />
-                        <Column 
+                        <Column
                             title="Semester"
                             render={this.renderSemester}
                             sorter={this.sortSemester}
                             {...this.filtering(this.extractSemester)} />
-                        <Column 
+                        <Column
                             title="Grade"
                             render={this.renderGrade}
                             sorter={this.sortGrade}
                             {...this.filtering(this.extractGrade)} />
-                        <Column 
+                        <Column
                             title="Status"
                             render={this.renderStatus}
                             sorter={this.sortStatus}
                             {...this.filtering(this.extractStatus)} />
-                        <Column 
+                        <Column
                             title={
                                 <Button
                                     type="primary"
@@ -364,9 +370,9 @@ class AcademicRecordPage extends React.Component<Props, State> {
                 </Content>
                 <Drawer
                     forceRender
+                    onClose={() => this.setState({ visible: false })}
                     title="Create a new account"
                     width={467}
-                    closable={false}
                     visible={this.state.visible}>
                     <AcademicRecordForm form={this.form} onFinish={this.onFinish} onCancel={() => this.setState({ recordID: undefined, editing: false, visible: false })} />
                 </Drawer>
