@@ -80,6 +80,11 @@ export const users: User[] = [
 ]
 
 /**
+ * The current logged in userID
+ */
+export const USERID = users[0].userID;
+
+/**
  * The courses in our fake database
  */
 export const courses: Course[] = coursesdb.map(([[term, year], [subject, code], instructor, name]) => {
@@ -105,13 +110,22 @@ export const records: Record[] = [
     {
         recordID: uuidv4(),
         status: Status.IN_PROGRESS,
-        courseID: courses[0].courseID
+        courseID: courses[0].courseID,
+        userID: users[0].userID
     },
     {
         recordID: uuidv4(),
         status: Status.TAKEN,
         courseID: courses[4].courseID,
+        userID: users[0].userID,
         grade: 12
+    },
+    {
+        recordID: uuidv4(),
+        status: Status.TAKEN,
+        courseID: courses[7].courseID,
+        userID: users[1].userID,
+        grade: 9
     }
 ]
 

@@ -50,6 +50,7 @@ export enum Status {
 }
 
 export interface Record {
+    userID: string;
     recordID: string,
     courseID: string;
     status: Status;

@@ -20,6 +20,7 @@ import AcademicRecordForm from '../components/forms/AcademicRecordForm';
 import { v4 as uuidv4 } from 'uuid'
 import { FormInstance } from 'antd/lib/form';
 import moment from 'moment';
+import { USERID } from '../backend/database';
 
 
 const { Content, Footer, Sider } = Layout;
@@ -45,7 +46,7 @@ type ComponentState = {
 
 const mapState = (state: RootState) => ({
     courses: state.courses,
-    data: Object.values(state.records)
+    records: Object.values(state.records).filter(record => record.userID === USERID)
 });
 
 const mapDispatch = {
@@ -127,7 +128,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
 
     filtering = (filter: (record: Record) => string) => {
         return {
-            filters: this.props.data.map(record =>
+            filters: this.props.records.map(record =>
                 filter(record),
             ).unique().map(value => ({
                 text: value,
@@ -146,7 +147,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
             v.semester.term === values?.semester?.term &&
             v.semester.year === values?.semester?.year?.year());
 
-        let record = this.props.data.find(r => r.courseID === course?.courseID);
+        let record = this.props.records.find(r => r.courseID === course?.courseID);
 
         let courseID = course?.courseID ?? uuidv4();
 
@@ -172,7 +173,8 @@ class AcademicRecordPage extends React.Component<Props, State> {
                             recordID: record!.recordID,
                             courseID: record!.courseID,
                             grade: values.grade,
-                            status: values.status
+                            status: values.status,
+                            userID: USERID
                         });
                         notification.close(key);
                     }
@@ -193,14 +195,16 @@ class AcademicRecordPage extends React.Component<Props, State> {
                 recordID: this.state.recordID,
                 courseID: courseID,
                 grade: values.grade,
-                status: values.status
+                status: values.status,
+                userID: USERID
             });
         } else {
             this.props.addRecord({
                 recordID: uuidv4(),
                 courseID: courseID,
                 grade: values.grade,
-                status: values.status
+                status: values.status,
+                userID: USERID
             });
         }
 
@@ -243,13 +247,13 @@ class AcademicRecordPage extends React.Component<Props, State> {
                             <Statistic
                                 title="GPA"
                                 value={
-                                    this.props.data.length > 0
-                                        ? (this.props.data
+                                    this.props.records.length > 0
+                                        ? (this.props.records
                                             .filter(r => r.status === Status.TAKEN)
                                             .map(r => Number(this.extractCode(r).match(/\d+$/g)![0]![0]) * r.grade!)
                                             .reduce((p, c) => p + c)
                                             /
-                                            this.props.data
+                                            this.props.records
                                                 .filter(r => r.status === Status.TAKEN)
                                                 .map(r => Number(this.extractCode(r).match(/\d+$/g)![0]![0]))
                                                 .reduce((p, c) => p + c) / 3)
@@ -262,21 +266,21 @@ class AcademicRecordPage extends React.Component<Props, State> {
                         <Card.Grid hoverable={false}>
                             <Statistic
                                 title="Courses In Progress"
-                                value={this.props.data.filter(r => r.status === Status.IN_PROGRESS).length}
+                                value={this.props.records.filter(r => r.status === Status.IN_PROGRESS).length}
                             />
                         </Card.Grid>
                         <Card.Grid hoverable={false}>
                             <Statistic
                                 title="Courses Completed"
-                                value={this.props.data.filter(r => r.status !== Status.IN_PROGRESS).length}
+                                value={this.props.records.filter(r => r.status !== Status.IN_PROGRESS).length}
                             />
                         </Card.Grid>
                         <Card.Grid hoverable={false}>
                             <Statistic
                                 title="Average courses per semester"
                                 value={
-                                    this.props.data.length > 0
-                                        ? (Object.values(this.props.data
+                                    this.props.records.length > 0
+                                        ? (Object.values(this.props.records
                                             .reduce<{ [semester: string]: number }>(
                                                 (p, r) => {
                                                     let semester = this.extractSemester(r)
@@ -295,7 +299,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
                                 title="Lowest grade"
                                 valueStyle={{ color: "#F00" }}
                                 value={
-                                    this.props.data
+                                    this.props.records
                                         .map(r => r.grade)
                                         .reduce(
                                             (p, c) => {
@@ -313,7 +317,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
                                 title="Highest grade"
                                 valueStyle={{ color: "#0F0" }}
                                 value={
-                                    this.props.data
+                                    this.props.records
                                         .map(r => r.grade)
                                         .reduce(
                                             (p, c) => {
@@ -327,7 +331,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
                             />
                         </Card.Grid>
                     </Card>
-                    <Table dataSource={this.props.data} pagination={false} rowKey="recordID">
+                    <Table dataSource={this.props.records} pagination={false} rowKey="recordID">
                         <Column title="Code"
                             render={this.renderCode}
                             sorter={this.sortCourseCode}
