@@ -19,7 +19,7 @@ const breakdownsRedux = createSlice({
     initialState,
     reducers: {
         add(state, action: PayloadAction<Breakdown>) {
-            state = { [action.payload.breakdownID]: action.payload, ...state }
+            state[action.payload.breakdownID] = action.payload;
         },
         edit(state, action: PayloadAction<Breakdown>) {
             state[action.payload.breakdownID] = action.payload;

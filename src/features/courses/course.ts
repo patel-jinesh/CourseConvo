@@ -19,7 +19,7 @@ const coursesRedux = createSlice({
     initialState,
     reducers: {
         add(state, action: PayloadAction<Course>) {
-            state = { [action.payload.courseID]: action.payload, ...state };
+            state[action.payload.courseID] = action.payload;
         },
 
         edit(state, action: PayloadAction<Course>) {

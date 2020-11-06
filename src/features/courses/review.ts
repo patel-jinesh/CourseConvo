@@ -19,7 +19,7 @@ const reviewsRedux = createSlice({
     initialState,
     reducers: {
         add(state, action: PayloadAction<Review>) {
-            state = { [action.payload.reviewID]: action.payload, ...state}
+            state[action.payload.reviewID] = action.payload;
         },
         edit(state, action: PayloadAction<Review>) {
             state[action.payload.reviewID] = action.payload;

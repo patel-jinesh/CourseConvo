@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Row, Col, AutoComplete, Input, Select, DatePicker, Form, Radio, InputNumber, Button } from "antd";
+import React, { useState, RefObject } from "react";
+import { Row, Col, AutoComplete, Input, Select, DatePicker, Form, Radio, InputNumber, Button, Space } from "antd";
 import { Record, Status, Term } from "../../data/types";
 import { RootState } from "../../app/store";
 import { connect, ConnectedProps } from "react-redux";
@@ -10,8 +10,11 @@ import { format } from "path";
 const { Option } = AutoComplete;
 
 type ComponentProps = {
-    onFinish: (values: any) => void
+    form: RefObject<FormInstance>;
+    onFinish: (values: any) => void,
+    onCancel: () => void,
 }
+
 type ComponentState = {}
 
 const mapState = (state: RootState) => ({
@@ -28,11 +31,23 @@ type Props = ReduxProps & ComponentProps;
 type State = ComponentState;
 
 class AcademicRecordForm extends React.Component<Props, State>{
-    form = React.createRef<FormInstance>();
+    onValuesChange = (_: any, values: any) => {
+        let identifier = values.identifier;
+        let semester = values.semester;
+
+        let course = this.props.courses.find(v =>
+            v.identifier.code === identifier?.code &&
+            v.identifier.subject === identifier?.subject &&
+            v.semester.term === semester?.term &&
+            v.semester.year === semester?.year?.year())
+
+        if (course !== undefined && (values.name !== course.name || values.instructor !== course.instructor))
+            this.props.form.current?.setFieldsValue({ name: course.name, instructor: course.instructor })
+    }
 
     render() {
         return (
-            <Form onFinish={this.props.onFinish} layout="horizontal" ref={this.form} labelCol={{ span: 8 }} labelAlign={"left"}>
+            <Form ref={this.props.form} onFinish={this.props.onFinish} layout="horizontal" labelCol={{ span: 8 }} labelAlign={"left"} onValuesChange={this.onValuesChange}>
                 <Form.Item
                     label="Course Code"
                     shouldUpdate={true}
@@ -108,7 +123,7 @@ class AcademicRecordForm extends React.Component<Props, State>{
                     noStyle
                     dependencies={[['identifier', 'subject'], ['identifier', 'code'], ['semester', 'term'], ['semester', 'year']]}>
                     {
-                        ({ getFieldValue, setFieldsValue }) => {
+                        ({ getFieldValue }) => {
                             let identifier = getFieldValue('identifier');
                             let semester = getFieldValue('semester');
 
@@ -117,9 +132,6 @@ class AcademicRecordForm extends React.Component<Props, State>{
                                 v.identifier.subject === identifier?.subject &&
                                 v.semester.term === semester?.term &&
                                 v.semester.year === semester?.year?.year())
-
-                            if (course !== undefined && (getFieldValue(['name']) !== course.name || getFieldValue(['instructor']) !== course.instructor))
-                                setFieldsValue({ name: course.name, instructor: course.instructor })
 
                             return (
                                 <>
@@ -133,6 +145,7 @@ class AcademicRecordForm extends React.Component<Props, State>{
                                     <Form.Item
                                         name="instructor"
                                         label="Instructor"
+                                        rules={[{ required: true, message: "Please input the instructor name!" }]}
                                         required>
                                         <AutoComplete
                                             disabled={course !== undefined}
@@ -180,22 +193,23 @@ class AcademicRecordForm extends React.Component<Props, State>{
                     }}
                 </Form.Item>
                 <Form.Item shouldUpdate={true} label=" " colon={false}>
-                    {({ isFieldTouched, getFieldValue }) => {
+                    {({ getFieldsError, resetFields }) => {
                         return (
-                            <Button
-                                type="primary"
-                                htmlType="submit"
-                                disabled={
-                                    !isFieldTouched(['identifier', 'subject']) ||
-                                    !isFieldTouched(['identifier', 'code']) ||
-                                    !isFieldTouched(['semester', 'term']) ||
-                                    !isFieldTouched(['semester', 'year']) ||
-                                    !isFieldTouched(['status']) ||
-                                    (getFieldValue(['status']) === Status.TAKEN && !isFieldTouched(['grade'])) ||
-                                    this.form.current?.getFieldsError().map(v => v.errors.length !== 0).reduce((r, c) => (r || c), false)
-                                }>
-                                Submit
-                            </Button>
+                            <Space>
+                                <Button
+                                    type="primary"
+                                    htmlType="submit"
+                                    disabled={
+                                        getFieldsError().map(v => v.errors.length !== 0).reduce((r, c) => (r || c), false)
+                                    }>
+                                    Submit
+                                </Button>
+                                <Button
+                                    htmlType="button"
+                                    onClick={() => { resetFields(); this.props.onCancel(); }}>
+                                    Cancel
+                                </Button>
+                            </Space>
                         )
                     }}
                 </Form.Item>

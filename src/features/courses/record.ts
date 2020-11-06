@@ -19,7 +19,7 @@ const recordsRedux = createSlice({
     initialState,
     reducers: {
         add(state, action: PayloadAction<Record>) {
-            state = { [action.payload.recordID]: action.payload, ...state }
+            state[action.payload.recordID] = action.payload
         },
         edit(state, action: PayloadAction<Record>) {
             state[action.payload.recordID] = action.payload;
