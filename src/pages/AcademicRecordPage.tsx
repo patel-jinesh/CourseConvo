@@ -1,4 +1,4 @@
-import { Layout, Menu, PageHeader, Table, Drawer, Button, Space, Form, Input, Tooltip, Select, Col, Row, DatePicker, AutoComplete, Radio, InputNumber, Modal } from 'antd';
+import { Layout, Menu, PageHeader, Table, Drawer, Button, Space, Form, Input, Tooltip, Select, Col, Row, DatePicker, AutoComplete, Radio, InputNumber, Modal, Statistic, Card, Switch, notification } from 'antd';
 import {
     DesktopOutlined,
     FileOutlined,
@@ -6,7 +6,8 @@ import {
     UserOutlined,
     EditOutlined,
     DeleteOutlined,
-    PlusOutlined
+    PlusOutlined,
+    ArrowUpOutlined
 } from '@ant-design/icons';
 import React from 'react';
 import { RootState } from '../app/store';
@@ -19,6 +20,7 @@ import AcademicRecordForm from '../components/forms/AcademicRecordForm';
 import { v4 as uuidv4 } from 'uuid'
 import { FormInstance } from 'antd/lib/form';
 import moment from 'moment';
+
 
 const { Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -66,6 +68,8 @@ class AcademicRecordPage extends React.Component<Props, State> {
         editing: true,
     }
 
+    form = React.createRef<FormInstance>();
+
     extractSubject = (record: Record) => this.props.courses[record.courseID].identifier.subject;
     extractCourseCode = (record: Record) => `${this.extractSubject(record)} ${this.extractCode(record)}`;
     extractCode = (record: Record) => this.props.courses[record.courseID].identifier.code;
@@ -83,6 +87,25 @@ class AcademicRecordPage extends React.Component<Props, State> {
     renderInstructor = (_: any, record: Record) => `${this.extractInstructor(record)}`;
     renderGrade = (_: any, record: Record) => `${this.extractGrade(record)}`;
     renderStatus = (_: any, record: Record) => `${this.extractStatus(record)}`;
+    renderActions = (_: any, record: Record) => (
+        <Space>
+            <Tooltip title="Edit this record">
+                <Button
+                    type='text'
+                    shape='circle'
+                    icon={<EditOutlined />}
+                    onClick={_ => this.onEdit(record)}/>
+            </Tooltip>
+            <Tooltip title="Delete this record">
+                <Button
+                    danger
+                    type='text'
+                    shape='circle'
+                    icon={<DeleteOutlined />}
+                    onClick={_ => this.onDelete(record.recordID)}/>
+            </Tooltip>
+        </Space>
+    );
 
     sortGrade = (a: Record, b: Record) => (a.grade ?? -1) - (b.grade ?? -1);
     sortStatus = (a: Record, b: Record) => a.status.localeCompare(b.status);
@@ -95,7 +118,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
                 [Term.SPRING]: 2,
                 [Term.SUMMER]: 3,
             }
-            
+
             return map[this.extractTerm(a)] - map[this.extractTerm(b)];
         }
 
@@ -115,15 +138,16 @@ class AcademicRecordPage extends React.Component<Props, State> {
         }
     }
 
-    form = React.createRef<FormInstance>();
 
     onFinish = (values: any) => {
         let course = Object.values(this.props.courses).find(v =>
             v.identifier.code === values?.identifier?.code &&
             v.identifier.subject === values?.identifier?.subject &&
             v.semester.term === values?.semester?.term &&
-            v.semester.year === values?.semester?.year?.year())
+            v.semester.year === values?.semester?.year?.year());
         
+        let record = this.props.data.find(r => r.courseID === course?.courseID);
+
         let courseID = course?.courseID ?? uuidv4();
 
         if (course === undefined) {
@@ -139,7 +163,32 @@ class AcademicRecordPage extends React.Component<Props, State> {
             });
         }
 
-        if (this.state.recordID !== undefined && this.state.editing) {
+        if (record !== undefined) {
+            const key = `open${Date.now()}`;
+            const btn = (
+                <Button danger type="text" size="small" onClick={
+                    () => {
+                        this.props.edit({
+                            recordID: record!.recordID,
+                            courseID: record!.courseID,
+                            grade: values.grade,
+                            status: values.status
+                        });
+                        notification.close(key);
+                    }
+                }>
+                    Overwrite
+                </Button>
+            );
+            notification.warn({
+                message: 'Course Record exists!',
+                description:
+                    `The academic record you just created for ${course?.identifier.subject} ${course?.identifier.code} ${course?.semester.term} ${course?.semester.year} exists. Would you like to overwrite the current record?`,
+                btn,
+                key,
+                placement: 'bottomLeft'
+            });
+        } else if (this.state.recordID !== undefined && this.state.editing) {
             this.props.edit({
                 recordID: this.state.recordID,
                 courseID: courseID,
@@ -155,7 +204,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
             });
         }
 
-        this.setState({visible: false, editing: false, recordID: undefined})
+        this.setState({ visible: false, editing: false, recordID: undefined })
     }
 
     onEdit = (record: Record) => {
@@ -173,26 +222,144 @@ class AcademicRecordPage extends React.Component<Props, State> {
         this.setState({ recordID: record.recordID, editing: true, visible: true });
     }
 
+    onAdd = () => {
+        this.form.current?.resetFields();
+        this.setState({ visible: true }) 
+    }
+
+    onDelete = (recordID: string) => {
+        this.props.remove(recordID);
+    }
+
     render() {
         return (
             <PageHeader
-                style={{ width: "100%" }}
+                style={{ minWidth: 896, width: "100%" }}
                 backIcon={false}
                 title="Your Academic Record">
                 <Content style={{ padding: 24 }}>
-                    <Table style={{minWidth: 896}} dataSource={this.props.data} pagination={false} rowKey="recordID">
-                        <Column title="Code" render={this.renderCode} {...this.filtering(this.extractSubject)} sorter={this.sortCourseCode}/>
-                        <Column title="Name" ellipsis render={this.renderName} />
-                        <Column title="Instructor" ellipsis render={this.renderInstructor} />
-                        <Column title="Semester" render={this.renderSemester} {...this.filtering(this.extractSemester)} sorter={this.sortSemester}/>
-                        <Column title="Grade" render={this.renderGrade} {...this.filtering(this.extractGrade)} sorter={this.sortGrade}/>
-                        <Column title="Status" render={this.renderStatus} {...this.filtering(this.extractStatus)} sorter={this.sortStatus}/>
-                        <Column title={<Button type="primary" onClick={() => { this.setState({ visible: true }) }} icon={<PlusOutlined />}>Add</Button>} align="right" render={(_, r: Record) => (
-                            <Space>
-                                <Button onClick={(e) => this.onEdit(r)} type={"text"} shape={"circle"} icon={<EditOutlined />}></Button>
-                                <Button danger onClick={(e) => { this.props.remove(r.recordID); }} type={"text"} shape={"circle"} icon={<DeleteOutlined />}></Button>
-                            </Space>
-                        )} />
+                    <Card style={{ marginBottom: 25 }} title={"Academic Report"}>
+                        <Card.Grid hoverable={false}>
+                            <Statistic
+                                title="GPA"
+                                value={
+                                    this.props.data
+                                        .filter(r => r.status === Status.TAKEN)
+                                        .map(r => Number(this.extractCode(r).match(/\d+$/g)![0]![0]) * r.grade!)
+                                        .reduce((p, c) => p + c)
+                                    /
+                                    this.props.data
+                                        .filter(r => r.status === Status.TAKEN)
+                                        .map(r => Number(this.extractCode(r).match(/\d+$/g)![0]![0]))
+                                        .reduce((p, c) => p + c) / 3
+                                }
+                                precision={2}
+                                suffix="/ 4"
+                            />
+                        </Card.Grid>
+                        <Card.Grid hoverable={false}>
+                            <Statistic
+                                title="Courses In Progress"
+                                value={this.props.data.filter(r => r.status === Status.IN_PROGRESS).length}
+                            />
+                        </Card.Grid>
+                        <Card.Grid hoverable={false}>
+                            <Statistic
+                                title="Courses Completed"
+                                value={this.props.data.filter(r => r.status !== Status.IN_PROGRESS).length}
+                            />
+                        </Card.Grid>
+                        <Card.Grid hoverable={false}>
+                            <Statistic
+                                title="Average courses per semester"
+                                value={
+                                    Object.values(this.props.data
+                                        .reduce<{ [semester: string]: number }>(
+                                            (p, r) => {
+                                                let semester = this.extractSemester(r)
+                                                if (!(semester in p))
+                                                    return { ...p, [semester]: 1 }
+                                                return { ...p, [semester]: p[semester] + 1 }
+                                            }, {})).map((v, i, a) => v / a.length).reduce((p, c) => p + c)
+                                }
+                            />
+                        </Card.Grid>
+                        <Card.Grid hoverable={false}>
+                            <Statistic
+                                title="Lowest grade"
+                                valueStyle={{ color: "#F00" }}
+                                value={
+                                    this.props.data
+                                        .map(r => r.grade)
+                                        .reduce(
+                                            (p, c) => {
+                                                if (p === undefined)
+                                                    return c;
+                                                if (c === undefined)
+                                                    return p;
+                                                return p < c ? p : c;
+                                            }, undefined)
+                                }
+                            />
+                        </Card.Grid>
+                        <Card.Grid hoverable={false}>
+                            <Statistic
+                                title="Highest grade"
+                                valueStyle={{color:"#0F0"}}
+                                value={
+                                    this.props.data
+                                        .map(r => r.grade)
+                                        .reduce(
+                                            (p, c) => {
+                                                if (p === undefined)
+                                                    return c;
+                                                if (c === undefined)
+                                                    return p;
+                                                return p > c ? p : c;
+                                            }, undefined)
+                                }
+                            />
+                        </Card.Grid>
+                    </Card>
+                    <Table dataSource={this.props.data} pagination={false} rowKey="recordID">
+                        <Column title="Code"
+                            render={this.renderCode}
+                            sorter={this.sortCourseCode}
+                            {...this.filtering(this.extractSubject)}/>
+                        <Column 
+                            title="Name"
+                            ellipsis
+                            render={this.renderName} />
+                        <Column 
+                            title="Instructor"
+                            ellipsis
+                            render={this.renderInstructor} />
+                        <Column 
+                            title="Semester"
+                            render={this.renderSemester}
+                            sorter={this.sortSemester}
+                            {...this.filtering(this.extractSemester)} />
+                        <Column 
+                            title="Grade"
+                            render={this.renderGrade}
+                            sorter={this.sortGrade}
+                            {...this.filtering(this.extractGrade)} />
+                        <Column 
+                            title="Status"
+                            render={this.renderStatus}
+                            sorter={this.sortStatus}
+                            {...this.filtering(this.extractStatus)} />
+                        <Column 
+                            title={
+                                <Button
+                                    type="primary"
+                                    onClick={this.onAdd}
+                                    icon={<PlusOutlined />}>
+                                    Add
+                                </Button>
+                            }
+                            align="right"
+                            render={this.renderActions} />
                     </Table>
                 </Content>
                 <Drawer
@@ -201,7 +368,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
                     width={467}
                     closable={false}
                     visible={this.state.visible}>
-                    <AcademicRecordForm form={this.form} onFinish={this.onFinish} onCancel={() => this.setState({ recordID: undefined, editing: false, visible: false })}/>
+                    <AcademicRecordForm form={this.form} onFinish={this.onFinish} onCancel={() => this.setState({ recordID: undefined, editing: false, visible: false })} />
                 </Drawer>
             </PageHeader>
         );
