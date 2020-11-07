@@ -9,11 +9,12 @@ import { format } from "path";
 import { add } from '../../features/courses/course';
 import { courses } from "../../backend/database";
 import { NamePath } from "antd/lib/form/interface";
+
 import {
     SearchOutlined,
 } from '@ant-design/icons';
-const { Option } = AutoComplete;
 
+const { Option } = AutoComplete;
 
 interface FieldData {
     name: NamePath;
@@ -35,9 +36,7 @@ const mapState = (state: RootState) => ({
     courses: Object.values(state.courses),
 });
 
-const mapDispatch = {
-    add: add
-}
+const mapDispatch = {}
 
 const connector = connect(mapState, mapDispatch);
 
@@ -47,10 +46,6 @@ type Props = ReduxProps & ComponentProps;
 type State = ComponentState;
 
 class CreateCourseForm extends React.Component<Props, State>{
-    onFinish = (values: any) => {
-
-    }
-
     render() {
         return (
             <Form ref={this.props.form} fields={this.props.fields} onFieldsChange={this.props.onFieldsChange} layout='horizontal'>

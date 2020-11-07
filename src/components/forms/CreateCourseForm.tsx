@@ -9,6 +9,7 @@ import { format } from "path";
 import { add } from '../../features/courses/course';
 import { courses } from "../../backend/database";
 import { NamePath } from "antd/lib/form/interface";
+import { v4 as uuidv4 } from 'uuid';
 
 const { Option } = AutoComplete;
 
@@ -45,12 +46,26 @@ type State = ComponentState;
 
 class CreateCourseForm extends React.Component<Props, State>{
     onFinish = (values: any) => {
-
+        console.log("here");
+        this.props.add({
+            courseID: uuidv4(),
+            name: values.name,
+            instructor: values.instructor,
+            identifier: {
+                code: values.identifier.code,
+                subject: values.identifier.subject
+            },
+            semester: {
+                term: values.semester.term,
+                year: values.semester.year.year()
+            }
+        });
     }
+
 
     render() {
         return (
-            <Form ref={this.props.form} fields={this.props.fields} onFieldsChange={this.props.onFieldsChange} onFinish={this.onFinish} layout="horizontal" labelCol={{ span: 8 }} labelAlign={"left"}>
+            <Form onFinishFailed={(e) => { console.log(e) }} ref={this.props.form} fields={this.props.fields} onFieldsChange={this.props.onFieldsChange} onFinish={this.onFinish} layout="horizontal" labelCol={{ span: 8 }} labelAlign={"left"}>
                 <Form.Item
                     label="Course Code"
                     shouldUpdate={true}
@@ -177,6 +192,7 @@ class CreateCourseForm extends React.Component<Props, State>{
 
                         let button = (
                             <Button
+                                onClick={() => this.props.form.current?.submit()}
                                 type="primary"
                                 htmlType="submit"
                                 disabled={
