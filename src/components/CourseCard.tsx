@@ -1,15 +1,11 @@
-import { connect, ConnectedProps } from 'react-redux'
-import { RootState } from '../app/store'
-import React from 'react'
-import { Tooltip, Card, Space, Button } from 'antd';
-import { Location, History } from "history";
-
-import {
-    InfoCircleOutlined,
-    PieChartOutlined,
-    CommentOutlined
-} from '@ant-design/icons';
+import { CommentOutlined, InfoCircleOutlined, PieChartOutlined } from '@ant-design/icons';
+import { Button, Card, Space, Tooltip } from 'antd';
+import { History, Location } from "history";
+import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import { match, withRouter } from 'react-router-dom';
+import { RootState } from '../app/store';
+
 
 type ComponentProps = {
     courseID: string,

@@ -1,15 +1,13 @@
-import React, { useState, RefObject } from "react";
-import { Row, Col, AutoComplete, Input, Select, DatePicker, Form, Radio, InputNumber, Button, Space, Tooltip } from "antd";
-import { Record, Status, Term } from "../../data/types";
-import { RootState } from "../../app/store";
-import { connect, ConnectedProps } from "react-redux";
+import { AutoComplete, Button, DatePicker, Form, Input, Select, Tooltip } from "antd";
 import { FormInstance } from "antd/lib/form/hooks/useForm";
-import { RadioChangeEvent } from "antd/lib/radio";
-import { format } from "path";
-import { add } from '../../features/courses/course';
-import { courses } from "../../backend/database";
 import { NamePath } from "antd/lib/form/interface";
+import React, { RefObject } from "react";
+import { connect, ConnectedProps } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
+import { RootState } from "../../app/store";
+import { courses } from "../../backend/database";
+import { Term } from "../../data/types";
+import { add } from '../../features/courses/course';
 
 const { Option } = AutoComplete;
 

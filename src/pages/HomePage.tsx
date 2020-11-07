@@ -1,21 +1,7 @@
-import { Layout, Menu, PageHeader, Table, Drawer, Button, Space, Form, Input, Tooltip, Select, Col, Row, DatePicker, AutoComplete } from 'antd';
-import {
-    DesktopOutlined,
-    FileOutlined,
-    TeamOutlined,
-    UserOutlined,
-    EditOutlined,
-    DeleteOutlined
-} from '@ant-design/icons';
+import { PageHeader } from 'antd';
 import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
-import { ConnectedProps, connect } from 'react-redux';
-import { remove, add, edit } from '../features/courses/record'
-import Column from 'antd/lib/table/Column';
-import { Record } from '../data/types'
-
-const { Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
 
 type ComponentProps = {}
 type ComponentState = {}

@@ -1,18 +1,11 @@
-import React, { useState, RefObject } from "react";
-import { Row, Col, AutoComplete, Input, Select, DatePicker, Form, Radio, InputNumber, Button, Space, Tooltip } from "antd";
-import { Record, Status, Term, Course } from "../../data/types";
-import { RootState } from "../../app/store";
-import { connect, ConnectedProps } from "react-redux";
+import { SearchOutlined } from '@ant-design/icons';
+import { AutoComplete, Button, DatePicker, Form, Input, Select } from "antd";
 import { FormInstance } from "antd/lib/form/hooks/useForm";
-import { RadioChangeEvent } from "antd/lib/radio";
-import { format } from "path";
-import { add } from '../../features/courses/course';
-import { courses } from "../../backend/database";
 import { NamePath } from "antd/lib/form/interface";
-
-import {
-    SearchOutlined,
-} from '@ant-design/icons';
+import React, { RefObject } from "react";
+import { connect, ConnectedProps } from "react-redux";
+import { RootState } from "../../app/store";
+import { Term } from "../../data/types";
 
 const { Option } = AutoComplete;
 

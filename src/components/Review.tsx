@@ -1,8 +1,8 @@
-import { connect, ConnectedProps } from 'react-redux'
-import { RootState } from '../app/store'
-import React from 'react'
+import { Comment } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
-import { Comment, Tooltip } from 'antd';
+import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { RootState } from '../app/store';
 
 type ComponentProps = {
     reviewID: string

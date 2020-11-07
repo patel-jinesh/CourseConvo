@@ -1,24 +1,16 @@
-import React from 'react';
-import './App.css';
-import AcademicRecordPage from './pages/AcademicRecordPage';
+import { AuditOutlined, CommentOutlined, HomeOutlined, InfoCircleOutlined, PieChartOutlined, SearchOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
-import {
-  AuditOutlined,
-  HomeOutlined,
-  PieChartOutlined,
-  CommentOutlined,
-  SearchOutlined,
-  InfoCircleOutlined
-} from '@ant-design/icons';
-import { Link, Route, Switch, BrowserRouter as Router, useLocation, useHistory, Redirect } from 'react-router-dom';
+import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { BrowserRouter as Router, Link, Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import './App.css';
+import { RootState } from './app/store';
+import AcademicRecordPage from './pages/AcademicRecordPage';
+import CourseInformationPage from './pages/CourseInformationPage';
 import HomePage from './pages/HomePage';
 import SearchCoursePage from './pages/SearchCoursePage';
-import CourseInformationPage from './pages/CourseInformationPage';
-import { RootState } from './app/store';
-import { connect, ConnectedProps } from 'react-redux';
 
 const { Sider } = Layout;
-const { SubMenu } = Menu;
 
 type ComponentProps = {}
 type ComponentState = {}

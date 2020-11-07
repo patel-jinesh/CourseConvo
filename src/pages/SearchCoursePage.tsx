@@ -1,28 +1,18 @@
-import { RootState } from "../app/store";
-import { connect, ConnectedProps } from "react-redux";
-import React from "react";
-import { PageHeader, Layout, AutoComplete, Input, Card, Button, Tooltip, Space, Form, Select, DatePicker, Typography, Result } from "antd";
-import Meta from "antd/lib/card/Meta";
-import {
-    PieChartOutlined,
-    CommentOutlined,
-    InfoCircleOutlined,
-    FrownOutlined
-} from '@ant-design/icons';
-import { Term, Course } from "../data/types";
-import { withRouter, match } from "react-router-dom";
-import { Location, History } from "history";
-import CreateCourseForm from "../components/forms/CreateCourseForm";
-import moment from "moment";
+import { FrownOutlined } from '@ant-design/icons';
+import { Form, Layout, PageHeader, Result, Space } from "antd";
 import { FormInstance } from "antd/lib/form";
 import { NamePath } from "antd/lib/form/interface";
-import SearchCourseForm from "../components/forms/SearchCourseForm";
+import { History, Location } from "history";
+import React from "react";
+import { connect, ConnectedProps } from "react-redux";
+import { match, withRouter } from "react-router-dom";
+import { RootState } from "../app/store";
 import CourseCard from "../components/CourseCard";
-
-const { Title } = Typography;
+import CreateCourseForm from "../components/forms/CreateCourseForm";
+import SearchCourseForm from "../components/forms/SearchCourseForm";
+import { Term } from "../data/types";
 
 const { Content } = Layout;
-const { Option } = Select;
 
 interface FieldData {
     name: NamePath;
@@ -82,7 +72,7 @@ class SearchCoursePage extends React.Component<Props, State> {
         let term = this.state.semester?.term;
         let year = this.state.semester?.year;
 
-        let allDefined = subject !== undefined && code !== undefined && term !== undefined && year !== undefined;
+        // let allDefined = subject !== undefined && code !== undefined && term !== undefined && year !== undefined;
         let noneDefined = subject === undefined && code === undefined && term === undefined && year === undefined;
 
         let results = this.props.courses

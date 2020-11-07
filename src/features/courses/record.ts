@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Status, Record } from "../../data/types";
 import { records } from "../../backend/database";
+import { Record } from "../../data/types";
 
 /**
  * Redux Section

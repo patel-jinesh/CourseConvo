@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { User } from "../../data/types";
+import { createSlice } from "@reduxjs/toolkit";
 import { users } from "../../backend/database";
+import { User } from "../../data/types";
 
 /**
  * Redux Section
@@ -20,6 +20,6 @@ const usersRedux = createSlice({
     reducers: {}
 });
 
-export const {} = usersRedux.actions;
+// export const {} = usersRedux.actions;
 
 export default usersRedux.reducer;

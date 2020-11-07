@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Course, Term } from "../../data/types";
-import { courses } from "../../backend/database"
+import { courses } from "../../backend/database";
+import { Course } from "../../data/types";
 
 /**
  * Redux Section

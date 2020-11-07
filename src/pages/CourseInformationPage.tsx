@@ -1,29 +1,12 @@
-import { RootState } from "../app/store";
-import { connect, ConnectedProps } from "react-redux";
+import { Layout, PageHeader, Select, Tabs } from "antd";
+import { History, Location } from "history";
 import React from "react";
-import { PageHeader, Layout, AutoComplete, Input, Card, Button, Tooltip, Space, Form, Select, DatePicker, Typography, Result, Tabs } from "antd";
-import Meta from "antd/lib/card/Meta";
-import {
-    PieChartOutlined,
-    CommentOutlined,
-    InfoCircleOutlined,
-    FrownOutlined
-} from '@ant-design/icons';
-import { Term, Course } from "../data/types";
-import { withRouter, match } from "react-router-dom";
-import { Location, History } from "history";
-import CreateCourseForm from "../components/forms/CreateCourseForm";
-import moment from "moment";
-import { FormInstance } from "antd/lib/form";
-import { NamePath } from "antd/lib/form/interface";
-import SearchCourseForm from "../components/forms/SearchCourseForm";
-import CourseCard from "../components/CourseCard";
-
-const { Title } = Typography;
+import { connect, ConnectedProps } from "react-redux";
+import { match, withRouter } from "react-router-dom";
+import { RootState } from "../app/store";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
-const { Option } = Select;
 
 type ComponentProps = {
     match: match,

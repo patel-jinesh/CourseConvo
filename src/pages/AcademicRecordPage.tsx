@@ -1,31 +1,19 @@
-import { Layout, Menu, PageHeader, Table, Drawer, Button, Space, Form, Input, Tooltip, Select, Col, Row, DatePicker, AutoComplete, Radio, InputNumber, Modal, Statistic, Card, Switch, notification } from 'antd';
-import {
-    DesktopOutlined,
-    FileOutlined,
-    TeamOutlined,
-    UserOutlined,
-    EditOutlined,
-    DeleteOutlined,
-    PlusOutlined,
-    ArrowUpOutlined
-} from '@ant-design/icons';
-import React from 'react';
-import { RootState } from '../app/store';
-import { ConnectedProps, connect } from 'react-redux';
-import { remove, add as addRecord, edit } from '../features/courses/record'
-import { add as addCourse } from '../features/courses/course'
-import Column from 'antd/lib/table/Column';
-import { Record, Course, Term, Status } from '../data/types'
-import AcademicRecordForm from '../components/forms/AcademicRecordForm';
-import { v4 as uuidv4 } from 'uuid'
+import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Card, Drawer, Layout, notification, PageHeader, Space, Statistic, Table, Tooltip } from 'antd';
 import { FormInstance } from 'antd/lib/form';
+import Column from 'antd/lib/table/Column';
 import moment from 'moment';
+import React from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+import { RootState } from '../app/store';
 import { USERID } from '../backend/database';
+import AcademicRecordForm from '../components/forms/AcademicRecordForm';
+import { Record, Status, Term } from '../data/types';
+import { add as addCourse } from '../features/courses/course';
+import { add as addRecord, edit, remove } from '../features/courses/record';
 
-
-const { Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
-const { Option } = Select;
+const { Content } = Layout;
 
 declare global {
     interface Array<T> {
