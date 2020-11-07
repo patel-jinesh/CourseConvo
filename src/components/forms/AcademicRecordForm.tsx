@@ -314,11 +314,8 @@ class AcademicRecordForm extends React.Component<Props, State>{
                         }
                     }}
                 </Form.Item>
-                <Form.Item shouldUpdate={true} label=" " colon={false}
-                    rules={[
-                        
-                ]}>
-                    {({ getFieldsError, resetFields }) => {
+                <Form.Item shouldUpdate={true} label=" " colon={false}>
+                    {({ getFieldsError }) => {
                         return (
                             <Space>
                                 <Button
