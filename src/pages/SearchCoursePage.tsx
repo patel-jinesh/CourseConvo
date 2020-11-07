@@ -72,9 +72,6 @@ type State = ComponentState
 class SearchCoursePage extends React.Component<Props, State> {
     state: State = {}
 
-    createCourseForm = React.createRef<FormInstance>();
-    searchCourseForm = React.createRef<FormInstance>();
-
     onSearch = (values: any) => {
         this.setState({ ...values });
     }
