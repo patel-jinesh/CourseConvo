@@ -90,8 +90,8 @@ class SearchCoursePage extends React.Component<Props, State> {
 
         let results = this.props.courses
             .filter(course => {
-                let matchSubject = subject === undefined || course.identifier.subject.includes(subject);
-                let matchCode = code === undefined || course.identifier.code.includes(code);
+                let matchSubject = subject === undefined || course.identifier.subject.indexOf(subject) === 0;
+                let matchCode = code === undefined || course.identifier.code.indexOf(code) === 0;
                 let matchTerm = term === undefined || course.semester.term === term;
                 let matchYear = year === undefined || course.semester.year === year;
                 return matchSubject && matchCode && matchTerm && matchYear;
@@ -134,7 +134,6 @@ class SearchCoursePage extends React.Component<Props, State> {
                             const { create, search } = forms;
                             switch (name) {
                                 case 'search':
-                                    this.setState({});
                                     create?.setFields(changedFields);
                                     break;
                                 case 'create':

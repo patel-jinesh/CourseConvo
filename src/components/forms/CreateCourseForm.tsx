@@ -74,7 +74,7 @@ class CreateCourseForm extends React.Component<Props, State>{
                     {({ getFieldValue }) =>
                         <Input.Group compact>
                             <Form.Item
-                                normalize={(v: string) => v.toUpperCase().replace(" ", "")}
+                                normalize={(v: string) => v !== "" ? v.toUpperCase().replace(" ", "") : undefined}
                                 name={['identifier', 'subject']}
                                 rules={[
                                     { required: true, message: 'Please input the subject!' },
@@ -94,7 +94,7 @@ class CreateCourseForm extends React.Component<Props, State>{
                                 </AutoComplete>
                             </Form.Item>
                             <Form.Item
-                                normalize={(v: string) => v.toUpperCase().replace(" ", "").substr(0, 4)}
+                                normalize={(v: string) => v !== "" ? v.toUpperCase().replace(" ", "").substr(0, 4) : undefined}
                                 name={['identifier', 'code']}
                                 rules={[
                                     { required: true, message: 'Please input the code!' },

@@ -76,7 +76,7 @@ class CreateCourseForm extends React.Component<Props, State>{
                             style={{ display: 'flex' }}
                             compact>
                             <Form.Item
-                                normalize={(v: string) => v.toUpperCase().replace(/[ \d]/g, "")}
+                                normalize={(v: string) => v !== "" ? v.toUpperCase().replace(/[ \d]/g, "") : undefined}
                                 name={['identifier', 'subject']}
                                 rules={[
                                     { pattern: /^[A-Z]+$/g, message: 'Not a valid subject!' }]
@@ -96,7 +96,7 @@ class CreateCourseForm extends React.Component<Props, State>{
                                 </AutoComplete>
                             </Form.Item>
                             <Form.Item
-                                normalize={(v: string) => v.toUpperCase().replace(" ", "").substr(0, 4)}
+                                normalize={(v: string) => v !== "" ? v.toUpperCase().replace(" ", "").substr(0, 4) : undefined}
                                 name={['identifier', 'code']}
                                 rules={[
                                     { pattern: /^[0-9][A-Z]([A-Z]|[0-9])[0-9]$/g, message: "Not a valid code!" }
