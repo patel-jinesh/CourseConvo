@@ -1,11 +1,8 @@
 import { DeleteOutlined, EditOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Card, Drawer, Layout, notification, PageHeader, Space, Statistic, Table, Tooltip } from 'antd';
-import { FormInstance } from 'antd/lib/form';
+import { Button, Card, Drawer, Layout, PageHeader, Space, Statistic, Table, Tooltip } from 'antd';
 import Column from 'antd/lib/table/Column';
-import moment from 'moment';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '../app/store';
 import { USERID } from '../backend/database';
 import AcademicRecordForm from '../components/forms/AcademicRecordForm';
@@ -28,7 +25,6 @@ Object(Array).prototype.unique = function () {
 type ComponentProps = {}
 type ComponentState = {
     visible: boolean,
-    editing: boolean,
     recordID?: string
 }
 
@@ -54,10 +50,7 @@ type State = ComponentState
 class AcademicRecordPage extends React.Component<Props, State> {
     state: State = {
         visible: false,
-        editing: true,
     }
-
-    form = React.createRef<FormInstance>();
 
     extractSubject = (record: Record) => this.props.courses[record.courseID].identifier.subject;
     extractCourseCode = (record: Record) => `${this.extractSubject(record)} ${this.extractCode(record)}`;
@@ -127,95 +120,11 @@ class AcademicRecordPage extends React.Component<Props, State> {
         }
     }
 
-
-    onFinish = (values: any) => {
-        let course = Object.values(this.props.courses).find(v =>
-            v.identifier.code === values?.identifier?.code &&
-            v.identifier.subject === values?.identifier?.subject &&
-            v.semester.term === values?.semester?.term &&
-            v.semester.year === values?.semester?.year?.year());
-
-        let record = this.props.records.find(r => r.courseID === course?.courseID);
-
-        let courseID = course?.courseID ?? uuidv4();
-
-        if (course === undefined) {
-            this.props.addCourse({
-                courseID: courseID,
-                identifier: { ...values.identifier },
-                instructor: values.instructor,
-                name: values.name,
-                semester: {
-                    term: values.semester.term,
-                    year: values.semester.year.year()
-                }
-            });
-        }
-
-        if (record !== undefined) {
-            const key = `open${Date.now()}`;
-            const btn = (
-                <Button danger type="text" size="small" onClick={
-                    () => {
-                        this.props.edit({
-                            recordID: record!.recordID,
-                            courseID: record!.courseID,
-                            grade: values.grade,
-                            status: values.status,
-                            userID: USERID
-                        });
-                        notification.close(key);
-                    }
-                }>
-                    Overwrite
-                </Button>
-            );
-            notification.warn({
-                message: 'Course Record exists!',
-                description:
-                    `The academic record you just created for ${course?.identifier.subject} ${course?.identifier.code} ${course?.semester.term} ${course?.semester.year} exists. Would you like to overwrite the current record?`,
-                btn,
-                key,
-                placement: 'bottomLeft'
-            });
-        } else if (this.state.recordID !== undefined && this.state.editing) {
-            this.props.edit({
-                recordID: this.state.recordID,
-                courseID: courseID,
-                grade: values.grade,
-                status: values.status,
-                userID: USERID
-            });
-        } else {
-            this.props.addRecord({
-                recordID: uuidv4(),
-                courseID: courseID,
-                grade: values.grade,
-                status: values.status,
-                userID: USERID
-            });
-        }
-
-        this.setState({ visible: false, editing: false, recordID: undefined })
-    }
-
     onEdit = (record: Record) => {
-        this.form.current?.setFieldsValue({
-            name: this.props.courses[record.courseID].name,
-            instructor: this.props.courses[record.courseID].instructor,
-            identifier: this.props.courses[record.courseID].identifier,
-            semester: {
-                term: this.props.courses[record.courseID].semester.term,
-                year: moment(`${this.props.courses[record.courseID].semester.year}`),
-            },
-            status: record.status,
-            grade: record.grade
-        });
-        this.setState({ recordID: record.recordID, editing: true, visible: true });
+        this.setState({ recordID: record.recordID, visible: true });
     }
 
     onAdd = () => {
-        this.form.current?.resetFields();
         this.setState({ visible: true })
     }
 
@@ -235,7 +144,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
                             <Statistic
                                 title="GPA"
                                 value={
-                                    this.props.records.length > 0
+                                    this.props.records.filter(r => r.status === Status.TAKEN).length > 0
                                         ? (this.props.records
                                             .filter(r => r.status === Status.TAKEN)
                                             .map(r => Number(this.extractCode(r).match(/\d+$/g)![0]![0]) * r.grade!)
@@ -361,12 +270,16 @@ class AcademicRecordPage extends React.Component<Props, State> {
                     </Table>
                 </Content>
                 <Drawer
-                    forceRender
-                    onClose={() => this.setState({ visible: false })}
+                    destroyOnClose
+                    onClose={() => this.setState({ visible: false, recordID: undefined })}
                     title="Create a new account"
                     width={467}
                     visible={this.state.visible}>
-                    <AcademicRecordForm form={this.form} onFinish={this.onFinish} onCancel={() => this.setState({ recordID: undefined, editing: false, visible: false })} />
+                    <AcademicRecordForm
+                        key={this.state.recordID ?? "add"}
+                        recordID={this.state.recordID}
+                        onFinish={() => this.setState({visible: false, recordID: undefined})}
+                        onCancel={() => this.setState({ visible: false, recordID: undefined })} />
                 </Drawer>
             </PageHeader>
         );
