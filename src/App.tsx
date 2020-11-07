@@ -10,12 +10,31 @@ import {
   SearchOutlined,
   InfoCircleOutlined
 } from '@ant-design/icons';
-import { Link, Route, Switch, BrowserRouter as Router, useLocation, useHistory } from 'react-router-dom';
+import { Link, Route, Switch, BrowserRouter as Router, useLocation, useHistory, Redirect } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import SearchCoursePage from './pages/SearchCoursePage';
+import CourseInformationPage from './pages/CourseInformationPage';
+import { RootState } from './app/store';
+import { connect, ConnectedProps } from 'react-redux';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
+
+type ComponentProps = {}
+type ComponentState = {}
+
+const mapState = (state: RootState, props: ComponentProps) => ({
+  courses: state.courses
+})
+
+const mapDispatch = {}
+
+const connector = connect(mapState, mapDispatch);
+
+type ReduxProps = ConnectedProps<typeof connector>;
+
+type Props = ReduxProps & ComponentProps;
+type State = ComponentState
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -55,27 +74,36 @@ function Nav() {
   );
 }
 
-function App() {
-  return (
-    <Router>
-      <Layout style={{ minHeight: '100vh' }}>
-        <Nav />
-        <Switch>
-          <Route exact path={"/"}>
-            <HomePage />
-          </Route>
-          <Route path={"/academics"}>
-            <AcademicRecordPage />
-          </Route>
-          <Route path={"/search"}
-            render={
-              props => <SearchCoursePage />
-            }>
-          </Route>
-        </Switch>
-      </Layout>
-    </Router>
-  );
+class App extends React.Component<Props, State> {
+  render() {
+    return (
+      <Router>
+        <Layout style={{ minHeight: '100vh' }}>
+          <Nav />
+          <Switch>
+            <Route exact path={"/"}>
+              <HomePage />
+            </Route>
+            <Route path={"/academics"}>
+              <AcademicRecordPage />
+            </Route>
+            <Route path={"/search"}>
+              <SearchCoursePage />
+            </Route>
+            <Route path={"/information"} render={props => {
+              let query = new URLSearchParams(props.location.search);
+
+              if (query.has('id') && this.props.courses[query.get('id')!] !== undefined)
+                return <CourseInformationPage />
+
+              return <Redirect to="/search" />;
+            }}>
+            </Route>
+          </Switch>
+        </Layout>
+      </Router>
+    );
+  }
 }
 
-export default App;
+export default connector(App);

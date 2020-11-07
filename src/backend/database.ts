@@ -34,7 +34,8 @@ COMPSCI 4X03 - Scientific Computation
  */
 
 const coursesdb: [[Term, number], [string, string], string, string][] = [
-    [[Term.FALL, 2017], ["SFWRENG", "2AA4"], "Spencer Smith"            , "Software Design I - Introduction to Software Development"],
+    [[Term.FALL, 2017], ["SFWRENG", "2AA4"], "Spencer Smith", "Software Design I - Introduction to Software Development"],
+    [[Term.FALL, 2018], ["SFWRENG", "2AA4"], "Spencer Smith"            , "Software Design I - Introduction to Software Development"],
     [[Term.FALL, 2017], ["SFWRENG", "2C03"], "George Karakostas"        , "Data Structures and Algorithms"],
     [[Term.FALL, 2017], ["SFWRENG", "2DA4"], "Ryan Leduc"               , "Digital Systems and Interfacing"],
     [[Term.FALL, 2017], ["SFWRENG", "2DM3"], "Wolfram Kahl"             , "Discrete Mathematics with Applications I"],
