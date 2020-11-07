@@ -8,11 +8,21 @@ import { RadioChangeEvent } from "antd/lib/radio";
 import { format } from "path";
 import { add } from '../../features/courses/course';
 import { courses } from "../../backend/database";
+import { NamePath } from "antd/lib/form/interface";
 
 const { Option } = AutoComplete;
 
+interface FieldData {
+    name: NamePath;
+    value?: any;
+    touched?: boolean;
+    validating?: boolean;
+    errors?: string[];
+}
+
 type ComponentProps = {
-    onValuesChange?: (change: any, values: any) => void,
+    fields?: FieldData[],
+    onFieldsChange?: (changed: FieldData[], all: FieldData[]) => void,
     form: RefObject<FormInstance>,
 }
 
@@ -40,7 +50,7 @@ class CreateCourseForm extends React.Component<Props, State>{
 
     render() {
         return (
-            <Form ref={this.props.form} onValuesChange={this.props.onValuesChange} onFinish={this.onFinish} layout="horizontal" labelCol={{ span: 8 }} labelAlign={"left"}>
+            <Form ref={this.props.form} fields={this.props.fields} onFieldsChange={this.props.onFieldsChange} onFinish={this.onFinish} layout="horizontal" labelCol={{ span: 8 }} labelAlign={"left"}>
                 <Form.Item
                     label="Course Code"
                     shouldUpdate={true}
@@ -91,7 +101,7 @@ class CreateCourseForm extends React.Component<Props, State>{
                         </Input.Group>
                     }
                 </Form.Item>
-                <Form.Item name="semester" label="Semester" required>
+                <Form.Item label="Semester" required>
                     <Input.Group compact>
                         <Form.Item
                             name={['semester', 'term']}
