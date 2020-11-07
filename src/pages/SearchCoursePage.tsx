@@ -24,12 +24,6 @@ const { Title } = Typography;
 const { Content } = Layout;
 const { Option } = Select;
 
-type ComponentProps = {
-    match: match,
-    location: Location,
-    history: History,
-}
-
 interface FieldData {
     name: NamePath;
     value?: any;
@@ -38,8 +32,28 @@ interface FieldData {
     errors?: string[];
 }
 
+interface FormChangeInfo {
+    changedFields: FieldData[],
+    forms: {
+        [name: string]: FormInstance
+    }
+}
+
+type ComponentProps = {
+    match: match,
+    location: Location,
+    history: History,
+}
+
 type ComponentState = {
-    fields: FieldData[]
+    identifier?: {
+        subject?: string,
+        code?: string,
+    },
+    semeseter?: {
+        term?: Term,
+        year?: number
+    }
 }
 
 const mapState = (state: RootState, props: ComponentProps) => ({
@@ -56,27 +70,20 @@ type Props = ReduxProps & ComponentProps;
 type State = ComponentState
 
 class SearchCoursePage extends React.Component<Props, State> {
-    state: State = {
-        fields: []
-    }
+    state: State = {}
 
     createCourseForm = React.createRef<FormInstance>();
     searchCourseForm = React.createRef<FormInstance>();
 
-    onFormFieldsChange = (changed: FieldData[], all: FieldData[]) => {
-        this.setState({
-            fields: [...all]
-        })
+    onSearch = (values: any) => {
+        this.setState({ ...values });
     }
 
     render() {
-        let search = <SearchCourseForm form={this.searchCourseForm} fields={this.state.fields} onFieldsChange={this.onFormFieldsChange}/>
-        let create = <CreateCourseForm form={this.createCourseForm} fields={this.state.fields} onFieldsChange={this.onFormFieldsChange} />
-        
-        let subject = this.searchCourseForm.current?.getFieldValue(['identifier', 'subject']);
-        let code = this.searchCourseForm.current?.getFieldValue(['identifier', 'code']);
-        let term = this.searchCourseForm.current?.getFieldValue(['semester', 'term']);
-        let year = this.searchCourseForm.current?.getFieldValue(['semester', 'year'])?.year();
+        let subject = this.state.identifier?.subject;
+        let code = this.state.identifier?.code;
+        let term = this.state.semeseter?.term;
+        let year = this.state.semeseter?.year;
 
         let allDefined = subject !== undefined && code !== undefined && term !== undefined && year !== undefined;
         let noneDefined = subject === undefined && code === undefined && term === undefined && year === undefined;
@@ -100,7 +107,7 @@ class SearchCoursePage extends React.Component<Props, State> {
                     title="No search results!"
                     subTitle="Try other search parameters! or create the course below"/>
                 <Layout style={{width: '70%', marginRight: 'auto', marginLeft: 'auto'}}>
-                    {create}
+                    <CreateCourseForm />
                 </Layout>
             </>
         } else if (noneDefined) {
@@ -122,12 +129,27 @@ class SearchCoursePage extends React.Component<Props, State> {
                 backIcon={false}
                 title="Search for a course">
                 <Content style={{ padding: 24 }}>
-                    {search}
-                    <Layout>
-                        <Space direction='vertical'>
-                            {content}
-                        </Space>
-                    </Layout>
+                    <Form.Provider
+                        onFormChange={(name, { changedFields, forms }) => {
+                            const { create, search } = forms;
+                            switch (name) {
+                                case 'search':
+                                    this.setState({});
+                                    create?.setFields(changedFields);
+                                    break;
+                                case 'create':
+                                    search?.setFields(changedFields);
+                                    break;
+                            }
+                        }}
+                    >
+                        <SearchCourseForm onSearch={this.onSearch} />
+                        <Layout>
+                            <Space direction='vertical'>
+                                {content}
+                            </Space>
+                        </Layout>
+                    </Form.Provider>
                 </Content>
             </PageHeader>
         );

@@ -1,6 +1,6 @@
 import React, { useState, RefObject } from "react";
 import { Row, Col, AutoComplete, Input, Select, DatePicker, Form, Radio, InputNumber, Button, Space, Tooltip } from "antd";
-import { Record, Status, Term } from "../../data/types";
+import { Record, Status, Term, Course } from "../../data/types";
 import { RootState } from "../../app/store";
 import { connect, ConnectedProps } from "react-redux";
 import { FormInstance } from "antd/lib/form/hooks/useForm";
@@ -27,7 +27,9 @@ interface FieldData {
 type ComponentProps = {
     fields?: FieldData[],
     onFieldsChange?: (changed: FieldData[], all: FieldData[]) => void,
-    form: RefObject<FormInstance>,
+    onValuesChange?: (changed: any, all: any) => void,
+    onSearch: (values: any) => void;
+    form?: RefObject<FormInstance>,
 }
 
 type ComponentState = {}
@@ -46,9 +48,26 @@ type Props = ReduxProps & ComponentProps;
 type State = ComponentState;
 
 class CreateCourseForm extends React.Component<Props, State>{
+    onValuesChange = (changed: any, all: any) => {
+        this.props.onSearch({
+            identifier: {
+                subject: all.identifier.subject,
+                code: all.identifier.code
+            },
+            semester: {
+                year: all.semester.year?.year(),
+                term: all.semester.term
+            },
+            
+        });
+
+        if (this.props.onValuesChange)
+            this.props.onValuesChange(changed, all);
+    }
+
     render() {
         return (
-            <Form ref={this.props.form} fields={this.props.fields} onFieldsChange={this.props.onFieldsChange} layout='horizontal'>
+            <Form name="search" ref={this.props.form} fields={this.props.fields} onFieldsChange={this.props.onFieldsChange} onValuesChange={this.onValuesChange} layout='horizontal'>
                 <Form.Item
                     noStyle
                     shouldUpdate={true}>

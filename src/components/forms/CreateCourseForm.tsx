@@ -24,7 +24,8 @@ interface FieldData {
 type ComponentProps = {
     fields?: FieldData[],
     onFieldsChange?: (changed: FieldData[], all: FieldData[]) => void,
-    form: RefObject<FormInstance>,
+    onValuesChange?: (changed: FieldData[], all: FieldData[]) => void,
+    form?: RefObject<FormInstance>,
 }
 
 type ComponentState = {}
@@ -65,7 +66,7 @@ class CreateCourseForm extends React.Component<Props, State>{
 
     render() {
         return (
-            <Form onFinishFailed={(e) => { console.log(e) }} ref={this.props.form} fields={this.props.fields} onFieldsChange={this.props.onFieldsChange} onFinish={this.onFinish} layout="horizontal" labelCol={{ span: 8 }} labelAlign={"left"}>
+            <Form name='create' ref={this.props.form} fields={this.props.fields} onFieldsChange={this.props.onFieldsChange} onValuesChange={this.props.onValuesChange} onFinish={this.onFinish} layout="horizontal" labelCol={{ span: 8 }} labelAlign={"left"}>
                 <Form.Item
                     label="Course Code"
                     shouldUpdate={true}
@@ -192,7 +193,6 @@ class CreateCourseForm extends React.Component<Props, State>{
 
                         let button = (
                             <Button
-                                onClick={() => this.props.form.current?.submit()}
                                 type="primary"
                                 htmlType="submit"
                                 disabled={
