@@ -50,7 +50,7 @@ type ComponentState = {
         subject?: string,
         code?: string,
     },
-    semeseter?: {
+    semester?: {
         term?: Term,
         year?: number
     }
@@ -76,14 +76,15 @@ class SearchCoursePage extends React.Component<Props, State> {
     searchCourseForm = React.createRef<FormInstance>();
 
     onSearch = (values: any) => {
+        console.log(values);
         this.setState({ ...values });
     }
 
     render() {
         let subject = this.state.identifier?.subject;
         let code = this.state.identifier?.code;
-        let term = this.state.semeseter?.term;
-        let year = this.state.semeseter?.year;
+        let term = this.state.semester?.term;
+        let year = this.state.semester?.year;
 
         let allDefined = subject !== undefined && code !== undefined && term !== undefined && year !== undefined;
         let noneDefined = subject === undefined && code === undefined && term === undefined && year === undefined;
