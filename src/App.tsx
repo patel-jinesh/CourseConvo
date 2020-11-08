@@ -16,7 +16,7 @@ type ComponentProps = {}
 type ComponentState = {}
 
 const mapState = (state: RootState, props: ComponentProps) => ({
-  courses: state.courses
+  instances: state.instances
 })
 
 const mapDispatch = {}
@@ -85,7 +85,7 @@ class App extends React.Component<Props, State> {
             <Route path={"/information"} render={props => {
               let query = new URLSearchParams(props.location.search);
 
-              if (query.has('id') && this.props.courses[query.get('id')!] !== undefined)
+              if (query.has('id') && this.props.instances[query.get('id')!] !== undefined)
                 return <CourseInformationPage />
 
               return <Redirect to="/search" />;

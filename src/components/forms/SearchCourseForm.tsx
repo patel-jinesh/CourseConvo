@@ -28,7 +28,7 @@ type ComponentProps = {
 type ComponentState = {}
 
 const mapState = (state: RootState) => ({
-    courses: Object.values(state.courses),
+    courses: state.courses,
 });
 
 const mapDispatch = {}
@@ -42,16 +42,13 @@ type State = ComponentState;
 
 class CreateCourseForm extends React.Component<Props, State>{
     onValuesChange = (changed: any, all: any) => {
+        console.log(all);
+
         this.props.onSearch({
-            identifier: {
-                subject: all.identifier.subject,
-                code: all.identifier.code
-            },
-            semester: {
-                year: all.semester.year?.year(),
-                term: all.semester.term
-            },
-            
+                subject: all.subject,
+                code: all.code,
+                year: all.year?.year(),
+                term: all.term
         });
 
         if (this.props.onValuesChange)
@@ -70,7 +67,7 @@ class CreateCourseForm extends React.Component<Props, State>{
                             compact>
                             <Form.Item
                                 normalize={(v: string) => v !== "" ? v.toUpperCase().replace(/[ \d]/g, "") : undefined}
-                                name={['identifier', 'subject']}
+                                name='subject'
                                 rules={[
                                     { pattern: /^[A-Z]+$/g, message: 'Not a valid subject!' }]
                                 }
@@ -81,16 +78,16 @@ class CreateCourseForm extends React.Component<Props, State>{
                                     placeholder="Subject"
                                     filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
                                     options={
-                                        this.props.courses
-                                            .map(c => c.identifier.subject)
+                                        Object.values(this.props.courses)
+                                            .map(course => course.subject)
                                             .unique()
-                                            .map(v => ({ value: v }))
+                                            .map(subject => ({ value: subject }))
                                     }>
                                 </AutoComplete>
                             </Form.Item>
                             <Form.Item
                                 normalize={(v: string) => v !== "" ? v.toUpperCase().replace(" ", "").substr(0, 4) : undefined}
-                                name={['identifier', 'code']}
+                                name='code'
                                 rules={[
                                     { pattern: /^[0-9][A-Z]([A-Z]|[0-9])[0-9]$/g, message: "Not a valid code!" }
                                 ]}
@@ -100,9 +97,9 @@ class CreateCourseForm extends React.Component<Props, State>{
                                     size='large'
                                     filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
                                     options={
-                                        this.props.courses
-                                            .filter(c => c.identifier.subject === getFieldValue(['identifier', 'subject']))
-                                            .map(c => c.identifier.code)
+                                        Object.values(this.props.courses)
+                                            .filter(course => course.subject === getFieldValue('subject'))
+                                            .map(course => course.code)
                                             .unique()
                                             .map(code => ({ value: code }))
                                     }
@@ -112,7 +109,7 @@ class CreateCourseForm extends React.Component<Props, State>{
                             <Form.Item >
                                 <Input.Group compact>
                                     <Form.Item
-                                        name={['semester', 'term']}
+                                        name='term'
                                         rules={[{ required: true, message: 'Please input the Term!' }]}
                                         noStyle>
                                         <Select style={{ width: 110 }} size='large' placeholder="Term">
@@ -123,7 +120,7 @@ class CreateCourseForm extends React.Component<Props, State>{
                                         </Select>
                                     </Form.Item>
                                     <Form.Item
-                                        name={['semester', 'year']}
+                                        name='year'
                                         rules={[{ required: true, message: 'Please input the Year!' }]}
                                         noStyle>
                                         <DatePicker size='large' picker="year" />

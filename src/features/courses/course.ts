@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { courses } from "../../backend/database";
+import { courses, instances } from "../../backend/database";
 import { Course } from "../../data/types";
 
 /**
@@ -9,10 +9,10 @@ export interface CoursesState {
     [courseID: string]: Course
 }
 
-const initialState: CoursesState = courses.reduce((r, v) => ({
+const initialState: CoursesState = courses.reduce((r, course) => ({
     ...r,
-    [v.courseID]: v
-}), {})
+    [course.courseID]: course
+}), {});
 
 const coursesRedux = createSlice({
     name: "COURSES",
@@ -21,7 +21,6 @@ const coursesRedux = createSlice({
         add(state, action: PayloadAction<Course>) {
             state[action.payload.courseID] = action.payload;
         },
-
         edit(state, action: PayloadAction<Course>) {
             state[action.payload.courseID] = action.payload;
         }

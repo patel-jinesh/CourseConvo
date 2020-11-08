@@ -7,7 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { RootState } from "../../app/store";
 import { courses } from "../../backend/database";
 import { Term } from "../../data/types";
-import { add } from '../../features/courses/course';
+import { add as addCourse } from '../../features/courses/course';
+import { add as addInstance } from '../../features/courses/instance';
 
 const { Option } = AutoComplete;
 
@@ -23,17 +24,20 @@ type ComponentProps = {
     fields?: FieldData[],
     onFieldsChange?: (changed: FieldData[], all: FieldData[]) => void,
     onValuesChange?: (changed: FieldData[], all: FieldData[]) => void,
+    initialValues?: any,
     form?: RefObject<FormInstance>,
 }
 
 type ComponentState = {}
 
 const mapState = (state: RootState) => ({
-    courses: Object.values(state.courses),
+    courses: state.courses,
+    instances: state.instances,
 });
 
 const mapDispatch = {
-    add: add
+    addCourse: addCourse,
+    addInstance: addInstance,
 }
 
 const connector = connect(mapState, mapDispatch);
@@ -45,26 +49,30 @@ type State = ComponentState;
 
 class CreateCourseForm extends React.Component<Props, State>{
     onFinish = (values: any) => {
-        console.log("here");
-        this.props.add({
-            courseID: uuidv4(),
+        let courseID = uuidv4();
+        let instanceID = uuidv4();
+
+        this.props.addCourse({
+            courseID: courseID,
             name: values.name,
+            code: values.code,
+            subject: values.subject
+        });
+        
+        this.props.addInstance({
+            instanceID: instanceID,
+            courseID: courseID,
             instructor: values.instructor,
-            identifier: {
-                code: values.identifier.code,
-                subject: values.identifier.subject
-            },
-            semester: {
-                term: values.semester.term,
-                year: values.semester.year.year()
-            }
+            term: values.term,
+            year: values.year.year()
         });
     }
 
-
     render() {
+        console.log(this.props.initialValues);
+
         return (
-            <Form name='create' ref={this.props.form} fields={this.props.fields} onFieldsChange={this.props.onFieldsChange} onValuesChange={this.props.onValuesChange} onFinish={this.onFinish} layout="horizontal" labelCol={{ span: 8 }} labelAlign={"left"}>
+            <Form name='create' initialValues={this.props.initialValues} ref={this.props.form} fields={this.props.fields} onFieldsChange={this.props.onFieldsChange} onValuesChange={this.props.onValuesChange} onFinish={this.onFinish} layout="horizontal" labelCol={{ span: 8 }} labelAlign={"left"}>
                 <Form.Item
                     label="Course Code"
                     shouldUpdate={true}
@@ -73,7 +81,7 @@ class CreateCourseForm extends React.Component<Props, State>{
                         <Input.Group compact>
                             <Form.Item
                                 normalize={(v: string) => v !== "" ? v.toUpperCase().replace(" ", "") : undefined}
-                                name={['identifier', 'subject']}
+                                name='subject'
                                 rules={[
                                     { required: true, message: 'Please input the subject!' },
                                     { pattern: /^[A-Z]+$/g, message: 'Not a valid subject!' }]
@@ -84,16 +92,16 @@ class CreateCourseForm extends React.Component<Props, State>{
                                     placeholder="Subject"
                                     filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
                                     options={
-                                        this.props.courses
-                                            .map(c => c.identifier.subject)
+                                        Object.values(this.props.courses)
+                                            .map(course => course.subject)
                                             .unique()
-                                            .map(v => ({ value: v }))
+                                            .map(subject => ({ value: subject }))
                                     }>
                                 </AutoComplete>
                             </Form.Item>
                             <Form.Item
                                 normalize={(v: string) => v !== "" ? v.toUpperCase().replace(" ", "").substr(0, 4) : undefined}
-                                name={['identifier', 'code']}
+                                name='code'
                                 rules={[
                                     { required: true, message: 'Please input the code!' },
                                     { pattern: /^[0-9][A-Z]([A-Z]|[0-9])[0-9]$/g, message: "Not a valid code!" }
@@ -103,9 +111,9 @@ class CreateCourseForm extends React.Component<Props, State>{
                                     style={{ width: '30%' }}
                                     filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
                                     options={
-                                        this.props.courses
-                                            .filter(c => c.identifier.subject === getFieldValue(['identifier', 'subject']))
-                                            .map(c => c.identifier.code)
+                                        Object.values(this.props.courses)
+                                            .filter(course => course.subject === getFieldValue('subject'))
+                                            .map(course => course.code)
                                             .unique()
                                             .map(code => ({ value: code }))
                                     }
@@ -118,7 +126,7 @@ class CreateCourseForm extends React.Component<Props, State>{
                 <Form.Item label="Semester" required>
                     <Input.Group compact>
                         <Form.Item
-                            name={['semester', 'term']}
+                            name='term'
                             rules={[{ required: true, message: 'Please input the Term!' }]}
                             noStyle>
                             <Select style={{ width: "50%" }} placeholder="Term">
@@ -129,7 +137,7 @@ class CreateCourseForm extends React.Component<Props, State>{
                             </Select>
                         </Form.Item>
                         <Form.Item
-                            name={['semester', 'year']}
+                            name='year'
                             rules={[{ required: true, message: 'Please input the Year!' }]}
                             noStyle>
                             <DatePicker style={{ width: "50%" }} picker="year" />
@@ -138,17 +146,22 @@ class CreateCourseForm extends React.Component<Props, State>{
                 </Form.Item>
                 <Form.Item
                     noStyle
-                    dependencies={[['identifier', 'subject'], ['identifier', 'code'], ['semester', 'term'], ['semester', 'year']]}>
+                    dependencies={[['subject'], ['code'], ['term'], ['year']]}>
                     {
                         ({ getFieldValue }) => {
-                            let identifier = getFieldValue('identifier');
-                            let semester = getFieldValue('semester');
+                            let subject = getFieldValue('subject');
+                            let code = getFieldValue('code');
+                            let term = getFieldValue('term');
+                            let year = getFieldValue('year')?.year();
 
-                            let course = this.props.courses.find(v =>
-                                v.identifier.code === identifier?.code &&
-                                v.identifier.subject === identifier?.subject &&
-                                v.semester.term === semester?.term &&
-                                v.semester.year === semester?.year?.year())
+                            let course = Object.values(this.props.courses).find(course =>
+                                course.code === code &&
+                                course.subject === subject);
+
+                            let instance = Object.values(this.props.instances).find(instance =>
+                                instance.courseID === course?.courseID &&
+                                instance.term === term &&
+                                instance.year === year);
 
                             return (
                                 <>
@@ -165,11 +178,11 @@ class CreateCourseForm extends React.Component<Props, State>{
                                         rules={[{ required: true, message: "Please input the instructor name!" }]}
                                         required>
                                         <AutoComplete
-                                            disabled={course !== undefined}
+                                            disabled={instance !== undefined}
                                             filterOption={(i, o) => o?.value.toUpperCase().indexOf(i.toUpperCase()) === 0}
                                             options={
-                                                this.props.courses
-                                                    .map(course => course.instructor)
+                                                Object.values(this.props.instances)
+                                                    .map(instance => instance.instructor)
                                                     .unique()
                                                     .map(instructor => ({ value: instructor }))
                                             }
@@ -182,25 +195,27 @@ class CreateCourseForm extends React.Component<Props, State>{
                 </Form.Item>
                 <Form.Item shouldUpdate={true} label=" " colon={false}>
                     {({ getFieldsError, getFieldValue }) => {
-                        let courseExists = courses.find(course => {
-                            return course.identifier.subject === getFieldValue(["identifier", "subject"]) &&
-                                course.identifier.code === getFieldValue(["identifier", "code"]) &&
-                                course.semester.term === getFieldValue(["semester", "term"]) &&
-                                course.semester.year === getFieldValue(["semester", "year"]).year()
-                        }) !== undefined;
+                        let course = Object.values(this.props.courses).find(course =>
+                            course.subject === getFieldValue('subject') &&
+                            course.code === getFieldValue('code'));
+                        
+                        let instance = Object.values(this.props.instances).find(instance =>
+                            instance.courseID === course?.courseID &&
+                            instance.year === getFieldValue('year')?.year() &&
+                            instance.term === getFieldValue('term'));
 
                         let button = (
                             <Button
                                 type="primary"
                                 htmlType="submit"
                                 disabled={
-                                    courseExists && getFieldsError().map(v => v.errors.length !== 0).reduce((r, c) => (r || c), false)
+                                    (instance !== undefined) && getFieldsError().map(v => v.errors.length !== 0).reduce((r, c) => (r || c), false)
                                 }>
                                 Submit
                             </Button>
                         );
 
-                        if (courseExists)
+                        if (instance !== undefined)
                             return (
                                 <Tooltip title="This course exists">
                                     {button}
