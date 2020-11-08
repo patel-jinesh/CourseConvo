@@ -5,7 +5,7 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
 import moment from 'moment';
-import { upvote, downvote, reply } from '../features/courses/review';
+import { upvote, downvote, reply, unvote } from '../features/courses/review';
 import { USERID } from '../backend/database';
 import TextArea from 'antd/lib/input/TextArea';
 
@@ -31,7 +31,8 @@ const mapState = (state: RootState, props: ComponentProps) => ({
 const mapDispatch = {
     upvote: upvote,
     downvote: downvote,
-    reply: reply
+    reply: reply,
+    unvote: unvote
 }
 
 const connector = connect(mapState, mapDispatch);
@@ -45,11 +46,10 @@ class Review extends React.Component<Props, State> {
     state: State = {
         showing: false,
         replying: false,
-        editing: false
+        editing: false,
     }
 
     render() {
-        console.log(this.props.user);
         return (
             <Comment
                 author={<a>{this.props.user.name}</a>}
@@ -74,14 +74,14 @@ class Review extends React.Component<Props, State> {
                     </Tooltip>
                 }
                 actions={[
-                    <Tooltip key="comment-basic-like" title="Like">
-                        <span onClick={() => this.props.upvote({ reviewID: this.props.reviewID, userID: USERID })}>
+                    <Tooltip title="Like">
+                        <span onClick={() => (this.props.review.upvoterIDs[USERID] ? this.props.unvote : this.props.upvote)({ reviewID: this.props.reviewID, userID: USERID })}>
                             {this.props.review.upvoterIDs[USERID] ? <LikeTwoTone /> : <LikeFilled />}
                             <span className="comment-action">{Object.keys(this.props.review.upvoterIDs).length}</span>
                         </span>
                     </Tooltip>,
-                    <Tooltip key="comment-basic-dislike" title="Dislike">
-                        <span onClick={() => this.props.downvote({ reviewID: this.props.reviewID, userID: USERID })}>
+                    <Tooltip title="Dislike">
+                        <span onClick={() => (this.props.review.upvoterIDs[USERID] ? this.props.unvote : this.props.downvote)({ reviewID: this.props.reviewID, userID: USERID })}>
                             {this.props.review.downvoterIDs[USERID] ? <DislikeTwoTone /> : <DislikeFilled />}
                             <span className="comment-action">{Object.keys(this.props.review.downvoterIDs).length}</span>
                         </span>
@@ -126,7 +126,6 @@ class Review extends React.Component<Props, State> {
                         avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
                         content: <p>{reply.comment}</p>,
                         datetime: moment(reply.datetime).fromNow()
-
                     }))}
                     header={`${Object.entries(this.props.review.replies).length} ${Object.entries(this.props.review.replies).length > 1 ? 'replies' : 'reply'}`}
                     itemLayout="horizontal"

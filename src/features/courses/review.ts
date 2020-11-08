@@ -46,6 +46,10 @@ const reviewsRedux = createSlice({
         downvote(state, action: PayloadAction<{ reviewID: string, userID: string }>) {
             state[action.payload.reviewID].downvoterIDs[action.payload.userID] = true;
             delete state[action.payload.reviewID].upvoterIDs[action.payload.userID];
+        },
+        unvote(state, action: PayloadAction<{ reviewID: string, userID: string }>) {
+            delete state[action.payload.reviewID].upvoterIDs[action.payload.userID];
+            delete state[action.payload.reviewID].downvoterIDs[action.payload.userID];
         }
     }
 });
@@ -56,7 +60,8 @@ export const {
     remove,
     upvote,
     downvote,
-    reply
+    reply,
+    unvote
 } = reviewsRedux.actions;
 
 export default reviewsRedux.reducer;

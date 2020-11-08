@@ -42,8 +42,6 @@ type State = ComponentState;
 
 class CreateCourseForm extends React.Component<Props, State>{
     onValuesChange = (changed: any, all: any) => {
-        console.log(all);
-
         this.props.onSearch({
                 subject: all.subject,
                 code: all.code,
