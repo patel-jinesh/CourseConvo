@@ -36,10 +36,13 @@ class InstanceCard extends React.Component<Props> {
                             <Button
                                 type='link'
                                 icon={<InfoCircleOutlined />}
-                                onClick={() => this.props.history.push({ pathname: '/information', search: `?id=${this.props.instanceID}` })}></Button>
+                                onClick={() => this.props.history.push({ pathname: '/information', search: `?id=${this.props.instanceID}` })}/>
                         </Tooltip>
                         <Tooltip title='Breakdown'>
-                            <Button type='link' icon={<PieChartOutlined />} />
+                            <Button
+                                type='link'
+                                icon={<PieChartOutlined />}
+                                onClick={() => this.props.history.push({ pathname: '/information', search: `?id=${this.props.instance.courseID}` })} />
                         </Tooltip>
                         <Tooltip title='Reviews'>
                             <Button type='link' icon={<CommentOutlined />} />
