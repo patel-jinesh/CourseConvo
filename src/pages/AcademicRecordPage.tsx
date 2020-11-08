@@ -137,6 +137,14 @@ class AcademicRecordPage extends React.Component<Props, State> {
     }
 
     render() {
+        let taken = this.props.records.filter(r => r.status === Status.TAKEN);
+        let totalUnits = taken
+            .map(record => Number(this.extractCode(record).match(/\d+$/g)![0]![0]))
+            .reduce((p, c) => p + c);
+        let earnedUnits = taken
+            .map(record => Number(this.extractCode(record).match(/\d+$/g)![0]![0]) * record.grade!)
+            .reduce((p, c) => p + c);
+
         return (
             <PageHeader
                 style={{ minWidth: 896, width: "100%" }}
@@ -144,24 +152,20 @@ class AcademicRecordPage extends React.Component<Props, State> {
                 title="Your Academic Record">
                 <Content style={{ padding: 24 }}>
                     <Card style={{ marginBottom: 25 }} title={"Academic Report"}>
-                        <Card.Grid hoverable={false}>
+                        <Card.Grid hoverable={false} style={{display: 'flex'}}>
                             <Statistic
-                                title="GPA"
-                                value={
-                                    this.props.records.filter(r => r.status === Status.TAKEN).length > 0
-                                        ? (this.props.records
-                                            .filter(record => record.status === Status.TAKEN)
-                                            .map(record => Number(this.extractCode(record).match(/\d+$/g)![0]![0]) * record.grade!)
-                                            .reduce((p, c) => p + c)
-                                            /
-                                            this.props.records
-                                                .filter(record => record.status === Status.TAKEN)
-                                                .map(record => Number(this.extractCode(record).match(/\d+$/g)![0]![0]))
-                                                .reduce((p, c) => p + c) / 3)
-                                        : "N/A"
-                                }
+                                style={{ width: '50%'}}
+                                title="4.0 GPA"
+                                value={taken.length > 0 ? earnedUnits / totalUnits / 3 : "N/A"}
                                 precision={2}
                                 suffix="/ 4"
+                            />
+                            <Statistic
+                                style={{ width: '50%' }}
+                                title="12.0 GPA"
+                                value={taken.length > 0 ? earnedUnits / totalUnits : "N/A"}
+                                precision={2}
+                                suffix="/ 12"
                             />
                         </Card.Grid>
                         <Card.Grid hoverable={false}>
