@@ -38,7 +38,7 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type Props = ReduxProps & ComponentProps;
 type State = ComponentState
 
-class CourseReviewsPage extends React.Component<Props, State> {
+class CourseBreakdownPage extends React.Component<Props, State> {
     state: State = {}
 
     render() {
@@ -55,4 +55,4 @@ class CourseReviewsPage extends React.Component<Props, State> {
     }
 }
 
-export default withRouter(connector(CourseReviewsPage));
+export default withRouter(connector(CourseBreakdownPage));

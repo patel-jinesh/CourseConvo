@@ -9,6 +9,9 @@ import AcademicRecordPage from './pages/AcademicRecordPage';
 import CourseInformationPage from './pages/CourseInformationPage';
 import HomePage from './pages/HomePage';
 import SearchCoursePage from './pages/SearchCoursePage';
+import { instances } from './backend/database';
+import CourseBreakdownPage from './pages/CourseBreakdownPage';
+import CourseReviewsPage from './pages/CourseReviewsPage';
 
 const { Sider } = Layout;
 
@@ -16,7 +19,8 @@ type ComponentProps = {}
 type ComponentState = {}
 
 const mapState = (state: RootState, props: ComponentProps) => ({
-  instances: state.instances
+  courses: Object.keys(state.courses),
+  instances: Object.keys(state.instances)
 })
 
 const mapDispatch = {}
@@ -85,8 +89,26 @@ class App extends React.Component<Props, State> {
             <Route path={"/information"} render={props => {
               let query = new URLSearchParams(props.location.search);
 
-              if (query.has('instanceID'))
+              if (query.has('instanceID') && this.props.instances.includes(query.get('instanceID')!))
                 return <CourseInformationPage />
+
+              return <Redirect to="/search" />;
+            }}>
+            </Route>
+            <Route path={"/breakdowns"} render={props => {
+              let query = new URLSearchParams(props.location.search);
+
+              if (query.has('courseID') && this.props.courses.includes(query.get('courseID')!))
+                return <CourseBreakdownPage />
+
+              return <Redirect to="/search" />;
+            }}>
+            </Route>
+            <Route path={"/reviews"} render={props => {
+              let query = new URLSearchParams(props.location.search);
+
+              if (query.has('courseID') && this.props.courses.includes(query.get('courseID')!))
+                return <CourseReviewsPage />
 
               return <Redirect to="/search" />;
             }}>
