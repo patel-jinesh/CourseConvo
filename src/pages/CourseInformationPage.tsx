@@ -18,20 +18,15 @@ type ComponentProps = {
 type ComponentState = {}
 
 const mapState = (state: RootState, props: ComponentProps) => {
-    let queryID = (new URLSearchParams(props.location.search)).get('id')!;
+    let query = new URLSearchParams(props.location.search)
+    let instanceID = query.get('instanceID')!;
 
     return {
-        breakdowns: Object.values(state.breakdowns).filter(breakdown => breakdown.instanceID === queryID),
-        reviews: Object.values(state.reviews).filter(review => review.instanceID === queryID),
-        course: state.courses[state.instances[queryID].courseID],
-        instance: state.instances[queryID],
-        semesters: Object.values(state.instances)
-            .filter(instance => instance.courseID === state.instances[queryID].courseID)
-            .map(instance => ({
-                term: instance.term,
-                year: instance.year,
-                courseID: instance.courseID
-            }))
+        breakdowns: Object.values(state.breakdowns).filter(breakdown => breakdown.instanceID === instanceID),
+        reviews: Object.values(state.reviews).filter(review => review.instanceID === instanceID),
+        course: state.courses[state.instances[instanceID].courseID],
+        instance: state.instances[instanceID],
+        instances: Object.fromEntries(Object.entries(state.instances).filter(([_, instance]) => instance.courseID == state.instances[instanceID].courseID))
     }
 }
 
@@ -50,15 +45,15 @@ class CourseInformationPage extends React.Component<Props, State> {
     render() {
         let selectSemester = <Select
             size='large'
-            style={{width: 150}}
+            style={{ width: 150 }}
             defaultValue={`${this.props.instance.term} ${this.props.instance.year}`}
             onSelect={(value, option) => {
-                this.props.history.push({ pathname: '/information', search: `?id=${option.courseID}` })
+                this.props.history.push({ pathname: '/information', search: `?instanceID=${option.instanceID}` })
             }}
-            options={this.props.semesters.map(semester => ({
-                value: `${semester.term} ${semester.year}`,
-                courseID: semester.courseID
-        }))}>
+            options={Object.values(this.props.instances).map(instance => ({
+                value: `${instance.term} ${instance.year}`,
+                instnaceID: instance.instanceID
+            }))}>
         </Select>
 
         return (
@@ -82,13 +77,13 @@ class CourseInformationPage extends React.Component<Props, State> {
                         <TabPane tab="Top Reviews" key="2">
                             <Content style={{ paddingTop: 20 }}>
                                 {this.props.reviews.map(review => {
-                                    return <Review reviewID={review.reviewID} key={review.reviewID}/>
+                                    return <Review reviewID={review.reviewID} key={review.reviewID} />
                                 })}
                             </Content>
                         </TabPane>
                     </Tabs>
                 }>
-                    <p>Overview Information</p>
+                <p>Overview Information</p>
             </PageHeader>
         );
     }
