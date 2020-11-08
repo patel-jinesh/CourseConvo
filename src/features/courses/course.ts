@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { courses, instances } from "../../backend/database";
+import { courses } from "../../backend/database";
 import { Course } from "../../data/types";
 
 /**

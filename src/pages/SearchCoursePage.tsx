@@ -1,7 +1,5 @@
 import { FrownOutlined } from '@ant-design/icons';
 import { Form, Layout, PageHeader, Result, Space } from "antd";
-import { FormInstance } from "antd/lib/form";
-import { NamePath } from "antd/lib/form/interface";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
@@ -13,21 +11,6 @@ import SearchCourseForm from "../components/forms/SearchCourseForm";
 import { Term } from "../data/types";
 
 const { Content } = Layout;
-
-interface FieldData {
-    name: NamePath;
-    value?: any;
-    touched?: boolean;
-    validating?: boolean;
-    errors?: string[];
-}
-
-interface FormChangeInfo {
-    changedFields: FieldData[],
-    forms: {
-        [name: string]: FormInstance
-    }
-}
 
 type ComponentProps = {
     match: match,

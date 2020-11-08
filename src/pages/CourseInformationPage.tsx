@@ -59,10 +59,6 @@ class CourseInformationPage extends React.Component<Props, State> {
         }))}>
         </Select>
 
-        let points = [
-            { x: 0, y: 0 },
-            { x: 100, y: 100 }
-        ]
         return (
             <PageHeader
                 style={{ width: "100%" }}

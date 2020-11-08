@@ -5,7 +5,6 @@ import React, { RefObject } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
 import { RootState } from "../../app/store";
-import { courses } from "../../backend/database";
 import { Term } from "../../data/types";
 import { add as addCourse } from '../../features/courses/course';
 import { add as addInstance } from '../../features/courses/instance';
