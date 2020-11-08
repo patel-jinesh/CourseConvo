@@ -5,7 +5,7 @@ import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
-import CourseCard from "../components/InstanceCard";
+import InstanceCard from "../components/InstanceCard";
 import CreateCourseForm from "../components/forms/CreateCourseForm";
 import SearchCourseForm from "../components/forms/SearchCourseForm";
 import { Term } from "../data/types";
@@ -84,7 +84,7 @@ class SearchCoursePage extends React.Component<Props, State> {
             />
         } else {
             content = results.map(instance =>
-                <CourseCard key={instance.instanceID} instanceID={instance.instanceID} />
+                <InstanceCard key={instance.instanceID} instanceID={instance.instanceID} />
             );
         }
         

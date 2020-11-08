@@ -15,7 +15,7 @@ const initialState: CourseInstancesState = instances.reduce((r, instance) => ({
 }), {});
 
 const instancesRedux = createSlice({
-    name: "COURSES",
+    name: "INSTRANCES",
     initialState,
     reducers: {
         add(state, action: PayloadAction<CourseInstance>) {

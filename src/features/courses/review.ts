@@ -3,6 +3,7 @@ import { Review } from "../../data/types";
 import { reviews } from "../../backend/database";
 import { stat } from "fs";
 import { act } from "react-dom/test-utils";
+import moment from "moment";
 
 /**
  * Redux Section
@@ -29,6 +30,15 @@ const reviewsRedux = createSlice({
         remove(state, action: PayloadAction<string>) {
             delete state[action.payload];
         },
+        reply(state, action: PayloadAction<{ reviewID: string, userID: string, comment: string }>) {
+            state[action.payload.reviewID].replies[action.payload.userID] = {
+                datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
+                comment: action.payload.comment
+            }
+        },
+        unreply(state, action: PayloadAction<{ reviewID: string, userID: string }>) {
+            delete state[action.payload.reviewID].replies[action.payload.userID];
+        },
         upvote(state, action: PayloadAction<{ reviewID: string, userID: string }>) {
             state[action.payload.reviewID].upvoterIDs[action.payload.userID] = true;
             delete state[action.payload.reviewID].downvoterIDs[action.payload.userID];
@@ -46,6 +56,7 @@ export const {
     remove,
     upvote,
     downvote,
+    reply
 } = reviewsRedux.actions;
 
 export default reviewsRedux.reducer;

@@ -9,9 +9,9 @@ export interface BreakdownsState {
     [breakdownID: string]: Breakdown
 }
 
-const initialState: BreakdownsState = breakdowns.reduce((r, v) => ({
+const initialState: BreakdownsState = breakdowns.reduce((r, breakdown) => ({
     ...r,
-    [v.breakdownID]: v
+    [breakdown.breakdownID]: breakdown
 }), {})
 
 const breakdownsRedux = createSlice({

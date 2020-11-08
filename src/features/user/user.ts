@@ -9,13 +9,13 @@ export interface UsersState {
     [userID: string]: User
 }
 
-const initialState: UsersState = users.reduce((r, v) => ({
+const initialState: UsersState = users.reduce((r, user) => ({
     ...r,
-    [v.userID]: v
+    [user.userID]: user
 }), {})
 
 const usersRedux = createSlice({
-    name: "COURSES",
+    name: "USERS",
     initialState,
     reducers: {}
 });

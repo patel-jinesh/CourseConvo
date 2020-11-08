@@ -174,6 +174,12 @@ export const reviews: Review[] = [
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
-        datetime: moment().format('LLLL')
+        datetime: moment().format('LLLL'),
+        replies: {
+            [users[1].userID]: {
+                comment: "I agree",
+                datetime: moment().format('LLLL')
+            }
+        }
     }
 ]

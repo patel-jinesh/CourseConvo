@@ -5,13 +5,13 @@ import { Record } from "../../data/types";
 /**
  * Redux Section
  */
-export interface Records {
+export interface RecordsState {
     [recordID: string]: Record
 }
 
-const initialState: Records = records.reduce((r, v) => ({
+const initialState: RecordsState = records.reduce((r, record) => ({
     ...r,
-    [v.recordID]: v
+    [record.recordID]: record
 }), {})
 
 const recordsRedux = createSlice({

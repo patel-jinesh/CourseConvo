@@ -6,7 +6,6 @@ import { connect, ConnectedProps } from 'react-redux';
 import { match, withRouter } from 'react-router-dom';
 import { RootState } from '../app/store';
 
-
 type ComponentProps = {
     instanceID: string,
 
