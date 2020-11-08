@@ -4,6 +4,7 @@ import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
+import Review from "../components/Review";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -20,6 +21,7 @@ const mapState = (state: RootState, props: ComponentProps) => {
     let queryID = (new URLSearchParams(props.location.search)).get('id')!;
 
     return {
+        breakdowns: Object.values(state.breakdowns).filter(breakdown => breakdown.instanceID === queryID),
         reviews: Object.values(state.reviews).filter(review => review.instanceID === queryID),
         course: state.courses[state.instances[queryID].courseID],
         instance: state.instances[queryID],
@@ -69,7 +71,7 @@ class CourseInformationPage extends React.Component<Props, State> {
                     <Tabs defaultActiveKey="0">
                         <TabPane tab="Statistics" key="0">
                             <Content style={{ paddingTop: 20 }}>
-
+                                <p>Stats stuff</p>
                             </Content>
                         </TabPane>
                         <TabPane tab="Top Breakdowns" key="1">
@@ -79,7 +81,9 @@ class CourseInformationPage extends React.Component<Props, State> {
                         </TabPane>
                         <TabPane tab="Top Reviews" key="2">
                             <Content style={{ paddingTop: 20 }}>
-                                <p>Top Reviews stuff</p>
+                                {this.props.reviews.map(review => {
+                                    return <Review reviewID={review.reviewID} key={review.reviewID}/>
+                                })}
                             </Content>
                         </TabPane>
                     </Tabs>

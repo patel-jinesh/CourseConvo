@@ -67,4 +67,7 @@ export interface Review {
     instanceID: string;
     userID: string;
     isAnonymous: boolean;
+    upvoterIDs: { [userID: string] : true };
+    downvoterIDs: { [userID: string]: true };
+    datetime: string;
 };

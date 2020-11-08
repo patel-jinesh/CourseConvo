@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Review } from "../../data/types";
 import { reviews } from "../../backend/database";
+import { stat } from "fs";
+import { act } from "react-dom/test-utils";
 
 /**
  * Redux Section
@@ -26,6 +28,14 @@ const reviewsRedux = createSlice({
         },
         remove(state, action: PayloadAction<string>) {
             delete state[action.payload];
+        },
+        upvote(state, action: PayloadAction<{ reviewID: string, userID: string }>) {
+            state[action.payload.reviewID].upvoterIDs[action.payload.userID] = true;
+            delete state[action.payload.reviewID].downvoterIDs[action.payload.userID];
+        },
+        downvote(state, action: PayloadAction<{ reviewID: string, userID: string }>) {
+            state[action.payload.reviewID].downvoterIDs[action.payload.userID] = true;
+            delete state[action.payload.reviewID].upvoterIDs[action.payload.userID];
         }
     }
 });
@@ -33,7 +43,9 @@ const reviewsRedux = createSlice({
 export const {
     add,
     edit,
-    remove
+    remove,
+    upvote,
+    downvote,
 } = reviewsRedux.actions;
 
 export default reviewsRedux.reducer;

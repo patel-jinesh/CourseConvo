@@ -1,5 +1,6 @@
 import { Course, Term, Record, Status, User, Breakdown, Review, CourseInstance } from "../data/types";
 import { v4 as uuidv4 } from 'uuid'
+import moment from "moment";
 
 /**
 COMPSCI 3AC3 - Algorithms and Complexity
@@ -143,12 +144,36 @@ export const records: Record[] = [
  * The breakdowns in our fake database.
  */
 export const breakdowns: Breakdown[] = [
-
+    {
+        breakdownID: uuidv4(),
+        instanceID: instances[0].instanceID,
+        userID: users[1].userID,
+        marks: [
+            {
+                type: "Assignments",
+                weight: 12,
+                count: 1
+            }
+        ],
+        isAnonymous: false
+    }
 ]
 
 /**
  * The reviews in our fake database.
  */
 export const reviews: Review[] = [
-
+    {
+        reviewID: uuidv4(),
+        instanceID: instances[0].instanceID,
+        userID: users[1].userID,
+        difficulty: 3.5,
+        enjoyability: 2,
+        workload: 1,
+        comment: "Best course ever",
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().format('LLLL')
+    }
 ]
