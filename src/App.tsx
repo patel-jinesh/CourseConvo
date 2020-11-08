@@ -51,13 +51,13 @@ function Nav() {
           <Menu.Item key="/search" icon={<SearchOutlined />}>
             <Link to={{ pathname: '/search' }}>Search</Link>
           </Menu.Item>
-          <Menu.Item key="/information" disabled={!query.has('id')} icon={<InfoCircleOutlined />}>
+          <Menu.Item key="/information" disabled={!query.has('instanceID')} icon={<InfoCircleOutlined />}>
             <Link to={{ pathname: '/information', search: query.toString() }}>Information</Link>
           </Menu.Item>
-          <Menu.Item key="/breakdown" disabled={!query.has('id')} icon={<PieChartOutlined />}>
-            <Link to={{ pathname: '/breakdown', search: query.toString() }}>Breakdown</Link>
+          <Menu.Item key="/breakdown" disabled={!query.has('courseID')} icon={<PieChartOutlined />}>
+            <Link to={{ pathname: '/breakdowns', search: query.toString() }}>Breakdowns</Link>
           </Menu.Item>
-          <Menu.Item key="/reviews" disabled={!query.has('id')} icon={<CommentOutlined />}>
+          <Menu.Item key="/reviews" disabled={!query.has('courseID')} icon={<CommentOutlined />}>
             <Link to={{ pathname: '/reviews', search: query.toString() }}>Reviews</Link>
           </Menu.Item>
         </Menu.ItemGroup>
@@ -85,7 +85,7 @@ class App extends React.Component<Props, State> {
             <Route path={"/information"} render={props => {
               let query = new URLSearchParams(props.location.search);
 
-              if (query.has('id') && this.props.instances[query.get('id')!] !== undefined)
+              if (query.has('instanceID'))
                 return <CourseInformationPage />
 
               return <Redirect to="/search" />;
