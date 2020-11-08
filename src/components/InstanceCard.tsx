@@ -8,7 +8,7 @@ import { RootState } from '../app/store';
 
 
 type ComponentProps = {
-    courseID: string,
+    instanceID: string,
 
     /** React router props */
     match: match,
@@ -17,7 +17,8 @@ type ComponentProps = {
 }
 
 const mapState = (state: RootState, props: ComponentProps) => ({
-    course: state.courses[props.courseID]
+    instance: state.instances[props.instanceID],
+    course: state.courses[state.instances[props.instanceID].courseID]
 });
 
 const connector = connect(mapState);
@@ -25,18 +26,18 @@ const connector = connect(mapState);
 type ReduxProps = ConnectedProps<typeof connector>;
 type Props = ReduxProps & ComponentProps;
 
-class CourseCard extends React.Component<Props> {
+class InstanceCard extends React.Component<Props> {
     render() {
         return (
             <Card
-                title={`${this.props.course.identifier.subject} ${this.props.course.identifier.code} - ${this.props.course.semester.term} ${this.props.course.semester.year}`}
+                title={`${this.props.course.subject} ${this.props.course.code} - ${this.props.instance.term} ${this.props.instance.year}`}
                 extra={
                     <Space>
                         <Tooltip title='Information'>
                             <Button
                                 type='link'
                                 icon={<InfoCircleOutlined />}
-                                onClick={() => this.props.history.push({ pathname: '/information', search: `?id=${this.props.courseID}` })}></Button>
+                                onClick={() => this.props.history.push({ pathname: '/information', search: `?id=${this.props.instanceID}` })}></Button>
                         </Tooltip>
                         <Tooltip title='Breakdown'>
                             <Button type='link' icon={<PieChartOutlined />} />
@@ -47,10 +48,10 @@ class CourseCard extends React.Component<Props> {
                     </Space>
                 }>
                 {this.props.course.name}<br />
-                {this.props.course.instructor}
+                {this.props.instance.instructor}
             </Card>
         );
     }
 }
 
-export default withRouter(connector(CourseCard));
+export default withRouter(connector(InstanceCard));

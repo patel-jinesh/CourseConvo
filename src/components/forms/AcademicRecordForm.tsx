@@ -9,7 +9,8 @@ import { RootState } from "../../app/store";
 import { USERID } from "../../backend/database";
 import { Status, Term } from "../../data/types";
 import { add as addCourse } from '../../features/courses/course';
-import { add as addRecord, edit } from '../../features/courses/record';
+import { add as addInstance } from '../../features/courses/instance';
+import { add as addRecord, edit as editRecord } from '../../features/courses/record';
 
 const { Option } = AutoComplete;
 
@@ -23,16 +24,19 @@ type ComponentProps = {
 type ComponentState = {}
 
 const mapState = (state: RootState, props: ComponentProps) => ({
-    courses: Object.values(state.courses),
+    courses: state.courses,
     records: Object.values(state.records).filter(record => record.userID === USERID),
+    instances: state.instances,
     record: props.recordID !== undefined ? state.records[props.recordID] : undefined,
-    course: props.recordID !== undefined ? state.courses[state.records[props.recordID].courseID] : undefined
+    course: props.recordID !== undefined ? state.courses[state.instances[state.records[props.recordID].instanceID].courseID] : undefined,
+    instance: props.recordID !== undefined ? state.instances[state.records[props.recordID].instanceID] : undefined
 });
 
 const mapDispatch = {
-    edit: edit,
+    editRecord: editRecord,
     addRecord: addRecord,
-    addCourse: addCourse
+    addCourse: addCourse,
+    addInstance: addInstance
 }
 
 const connector = connect(mapState, mapDispatch);
@@ -46,56 +50,65 @@ class AcademicRecordForm extends React.Component<Props, State>{
     form = React.createRef<FormInstance>();
 
     onValuesChange = (_: any, values: any) => {
-        let identifier = values.identifier;
-        let semester = values.semester;
+        let course = Object.values(this.props.courses).find(course =>
+            course.code === values.code &&
+            course.subject === values.subject)
+        
+        let instance = Object.values(this.props.instances).find(instance =>
+            instance.courseID === course?.courseID &&
+            instance.term === values.term &&
+            instance.year === values.year)
 
-        let course = this.props.courses.find(v =>
-            v.identifier.code === identifier?.code &&
-            v.identifier.subject === identifier?.subject &&
-            v.semester.term === semester?.term &&
-            v.semester.year === semester?.year?.year())
-
-        if (course !== undefined && (values.name !== course.name || values.instructor !== course.instructor))
-            this.form.current?.setFieldsValue({ name: course.name, instructor: course.instructor })
+        if (course !== undefined && values.name !== course.name)
+            this.form.current?.setFieldsValue({ name: course.name });
+        if (instance !== undefined && values.instructor !== instance.instructor)
+            this.form.current?.setFieldsValue({ instructor: instance.instructor });
     }
 
 
     onFinish = (values: any) => {
-        let code = values.identifier.code;
-        let subject = values.identifier.subject;
-        let term = values.semester.term;
-        let year = values.semester.year.year();
+        let code = values.code;
+        let subject = values.subject;
+        let term = values.term;
+        let year = values.year.year();
         let name = values.name;
         let instructor = values.instructor;
 
         let course = Object.values(this.props.courses).find(v =>
-            v.identifier.code === code &&
-            v.identifier.subject === subject &&
-            v.semester.term === term &&
-            v.semester.year === year);
+            v.code === code &&
+            v.subject === subject)
         
-        let courseID = this.props.record?.courseID ?? course?.courseID ?? uuidv4();
-
-        if (this.props.record ?? course === undefined) {
+        let instance = Object.values(this.props.instances).find(v =>
+            v.courseID === course?.courseID &&
+            v.term === term &&
+            v.year === year);
+        
+        let courseID = course?.courseID ?? uuidv4();
+        let instanceID = instance?.instanceID ?? uuidv4();
+        
+        if (course === undefined) {
             this.props.addCourse({
                 courseID: courseID,
                 name: name,
+                subject: subject,
+                code: code
+            });
+        }
+
+        if (instance === undefined) {
+            this.props.addInstance({
+                term: term,
+                year: year,
                 instructor: instructor,
-                identifier: {
-                    subject: subject,
-                    code: code
-                },
-                semester: {
-                    term: term,
-                    year: year
-                }
-            })
+                courseID: courseID,
+                instanceID: instanceID
+            });
         }
         
         if (this.props.recordID !== undefined) {
-            this.props.edit({
+            this.props.editRecord({
                 recordID: this.props.recordID,
-                courseID: courseID,
+                instanceID: instanceID,
                 grade: values.grade,
                 status: values.status,
                 userID: USERID
@@ -103,7 +116,7 @@ class AcademicRecordForm extends React.Component<Props, State>{
         } else {
             this.props.addRecord({
                 recordID: uuidv4(),
-                courseID: courseID,
+                instanceID: instanceID,
                 grade: values.grade,
                 status: values.status,
                 userID: USERID
@@ -115,20 +128,22 @@ class AcademicRecordForm extends React.Component<Props, State>{
     }
 
     validateCourse = (getFieldValue : (name: NamePath) => any) => {
-        let code = getFieldValue(['identifier', 'code']);
-        let subject = getFieldValue(['identifier', 'subject']);
-        let term = getFieldValue(['semester', 'term']);
-        let year = getFieldValue(['semester', 'year'])?.year();
+        let code = getFieldValue('code');
+        let subject = getFieldValue('subject');
+        let term = getFieldValue('term');
+        let year = getFieldValue('year')?.year();
 
-        let course = Object.values(this.props.courses).find(v =>
-            v.identifier.code === code &&
-            v.identifier.subject === subject &&
-            v.semester.term === term &&
-            v.semester.year === year);
+        let record = this.props.records.find(record => {
+            let instance = this.props.instances[record.instanceID];
+            let course = this.props.courses[instance.courseID];
 
-        let record = this.props.records.find(record =>
-            record.courseID === course?.courseID
-        );
+            let matchCode = code === course.code;
+            let matchSubject = subject === course.subject;
+            let matchTerm = term === instance.term;
+            let matchYear = year === instance.year;
+
+            return matchCode && matchSubject && matchTerm && matchYear;
+        });
 
         if (record !== undefined && record.recordID !== this.props.recordID)
             return Promise.reject("You already have a record for this course!")
@@ -138,18 +153,10 @@ class AcademicRecordForm extends React.Component<Props, State>{
 
     render() {
         let initialValues = {
-            name: this.props.course?.name,
-            instructor: this.props.course?.instructor,
-            identifier: {
-                subject: this.props.course?.identifier.subject,
-                code: this.props.course?.identifier.code
-            },
-            semester: {
-                term: this.props.course?.semester.term,
-                year: this.props.course?.semester.year === undefined ? undefined : moment(`${this.props.course?.semester.year}`)
-            },
-            status: this.props.record?.status,
-            grade: this.props.record?.grade
+            ...this.props.course,
+            ...this.props.instance,
+            ...this.props.record,
+            year: this.props.instance?.year === undefined ? undefined : moment(`${this.props.instance?.year}`)
         }
 
         return (
@@ -163,7 +170,7 @@ class AcademicRecordForm extends React.Component<Props, State>{
                         <Input.Group compact>
                             <Form.Item
                                 normalize={(v: string) => v.toUpperCase().replace(" ", "")}
-                                name={['identifier', 'subject']}
+                                name='subject'
                                 rules={[
                                     { required: true, message: 'Please input the subject!' },
                                     { pattern: /^[A-Z]+$/g, message: 'Not a valid subject!' },
@@ -177,16 +184,16 @@ class AcademicRecordForm extends React.Component<Props, State>{
                                     placeholder="Subject"
                                     filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
                                     options={
-                                        this.props.courses
-                                            .map(c => c.identifier.subject)
+                                        Object.values(this.props.courses)
+                                            .map(course => course.subject)
                                             .unique()
-                                            .map(v => ({ value: v }))
+                                            .map(subject => ({ value: subject }))
                                     }>
                                 </AutoComplete>
                             </Form.Item>
                             <Form.Item
                                 normalize={(v: string) => v.toUpperCase().replace(" ", "").substr(0, 4)}
-                                name={['identifier', 'code']}
+                                name='code'
                                 rules={[
                                     { required: true, message: 'Please input the code!' },
                                     { pattern: /^[0-9][A-Z]([A-Z]|[0-9])[0-9]$/g, message: "Not a valid code!" },
@@ -199,9 +206,9 @@ class AcademicRecordForm extends React.Component<Props, State>{
                                     style={{ width: '30%' }}
                                     filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
                                     options={
-                                        this.props.courses
-                                            .filter(c => c.identifier.subject === getFieldValue(['identifier', 'subject']))
-                                            .map(c => c.identifier.code)
+                                        Object.values(this.props.courses)
+                                            .filter(course => course.subject === getFieldValue('subject'))
+                                            .map(course => course.code)
                                             .unique()
                                             .map(code => ({ value: code }))
                                     }
@@ -211,7 +218,7 @@ class AcademicRecordForm extends React.Component<Props, State>{
                             </Input.Group>
                             <Input.Group compact style={{marginTop: 5}}>
                                 <Form.Item
-                                    name={['semester', 'term']}
+                                    name='term'
                                     rules={[
                                         { required: true, message: 'Please input the Term!' },
                                         ({ getFieldValue }) => ({
@@ -227,7 +234,7 @@ class AcademicRecordForm extends React.Component<Props, State>{
                                     </Select>
                                 </Form.Item>
                                 <Form.Item
-                                    name={['semester', 'year']}
+                                    name='year'
                                     rules={[
                                         { required: true, message: 'Please input the Year!' },
                                         ({ getFieldValue }) => ({
@@ -243,17 +250,22 @@ class AcademicRecordForm extends React.Component<Props, State>{
                 </Form.Item>
                 <Form.Item
                     noStyle
-                    dependencies={[['identifier', 'subject'], ['identifier', 'code'], ['semester', 'term'], ['semester', 'year']]}>
+                    dependencies={[['subject'], ['code'], ['term'], ['year']]}>
                     {
                         ({ getFieldValue }) => {
-                            let identifier = getFieldValue('identifier');
-                            let semester = getFieldValue('semester');
+                            let subject = getFieldValue('subject');
+                            let code = getFieldValue('code');
+                            let term = getFieldValue('term');
+                            let year = getFieldValue('year')?.year();
 
-                            let course = this.props.courses.find(v =>
-                                v.identifier.code === identifier?.code &&
-                                v.identifier.subject === identifier?.subject &&
-                                v.semester.term === semester?.term &&
-                                v.semester.year === semester?.year?.year())
+                            let course = Object.values(this.props.courses).find(course =>
+                                course.code === code &&
+                                course.subject === subject);
+                            
+                            let instance = Object.values(this.props.instances).find(instance =>
+                                instance.courseID === course?.courseID &&
+                                instance.term === term &&
+                                instance.year === year);
 
                             return (
                                 <>
@@ -270,11 +282,11 @@ class AcademicRecordForm extends React.Component<Props, State>{
                                         rules={[{ required: true, message: "Please input the instructor name!" }]}
                                         required>
                                         <AutoComplete
-                                            disabled={course !== undefined}
+                                            disabled={instance !== undefined}
                                             filterOption={(i, o) => o?.value.toUpperCase().indexOf(i.toUpperCase()) === 0}
                                             options={
-                                                this.props.courses
-                                                    .map(course => course.instructor)
+                                                Object.values(this.props.instances)
+                                                    .map(instance => instance.instructor)
                                                     .unique()
                                                     .map(instructor => ({ value: instructor }))
                                             }
@@ -286,7 +298,7 @@ class AcademicRecordForm extends React.Component<Props, State>{
                     }
                 </Form.Item>
                 <Form.Item
-                    name="status"
+                    name='status'
                     label="Status"
                     rules={[{ required: true, message: "Please select one of the options!" }]}>
                     <Radio.Group>
@@ -302,13 +314,10 @@ class AcademicRecordForm extends React.Component<Props, State>{
                         if (getFieldValue('status') === Status.TAKEN) {
                             return (
                                 <Form.Item
-                                    name="grade"
+                                    name='grade'
                                     label="Grade"
                                     rules={[{ required: true, message: "Please enter your grade!" }]}>
-                                    <InputNumber
-                                        min={0}
-                                        max={12}
-                                    />
+                                    <InputNumber min={0} max={12} />
                                 </Form.Item>
                             )
                         }

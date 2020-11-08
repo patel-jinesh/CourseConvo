@@ -20,16 +20,16 @@ const mapState = (state: RootState, props: ComponentProps) => {
     let queryID = (new URLSearchParams(props.location.search)).get('id')!;
 
     return {
-        reviews: Object.values(state.courses).filter(course => course.courseID === queryID),
-        semesters: Object.values(state.courses).filter(course => {
-            let matchSubject = course.identifier.subject === state.courses[queryID].identifier.subject;
-            let matchCode = course.identifier.code === state.courses[queryID].identifier.code;
-            return matchSubject && matchCode;
-        }).map(course => ({
-            semester: course.semester,
-            courseID: course.courseID
-        })),
-        course: state.courses[queryID]
+        reviews: Object.values(state.reviews).filter(review => review.instanceID === queryID),
+        course: state.courses[state.instances[queryID].courseID],
+        instance: state.instances[queryID],
+        semesters: Object.values(state.instances)
+            .filter(instance => instance.courseID === state.instances[queryID].courseID)
+            .map(instance => ({
+                term: instance.term,
+                year: instance.year,
+                courseID: instance.courseID
+            }))
     }
 }
 
@@ -49,26 +49,31 @@ class CourseInformationPage extends React.Component<Props, State> {
         let selectSemester = <Select
             size='large'
             style={{width: 150}}
-            defaultValue={`${this.props.course.semester.term} ${this.props.course.semester.year}`}
+            defaultValue={`${this.props.instance.term} ${this.props.instance.year}`}
             onSelect={(value, option) => {
                 this.props.history.push({ pathname: '/information', search: `?id=${option.courseID}` })
             }}
-            options={this.props.semesters.map(option => ({
-            value: `${option.semester.term} ${option.semester.year}`,
-            courseID: option.courseID
+            options={this.props.semesters.map(semester => ({
+                value: `${semester.term} ${semester.year}`,
+                courseID: semester.courseID
         }))}>
         </Select>
+
+        let points = [
+            { x: 0, y: 0 },
+            { x: 100, y: 100 }
+        ]
         return (
             <PageHeader
                 style={{ width: "100%" }}
                 backIcon={false}
-                title={`${this.props.course?.identifier.subject} ${this.props.course?.identifier.code} - ${this.props.course?.name}`}
+                title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}
                 subTitle={selectSemester}
                 footer={
                     <Tabs defaultActiveKey="0">
                         <TabPane tab="Statistics" key="0">
                             <Content style={{ paddingTop: 20 }}>
-                                <p>Stats stuff</p>
+
                             </Content>
                         </TabPane>
                         <TabPane tab="Top Breakdowns" key="1">

@@ -7,7 +7,7 @@ import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
-import CourseCard from "../components/CourseCard";
+import CourseCard from "../components/InstanceCard";
 import CreateCourseForm from "../components/forms/CreateCourseForm";
 import SearchCourseForm from "../components/forms/SearchCourseForm";
 import { Term } from "../data/types";
@@ -36,18 +36,15 @@ type ComponentProps = {
 }
 
 type ComponentState = {
-    identifier?: {
-        subject?: string,
-        code?: string,
-    },
-    semester?: {
-        term?: Term,
-        year?: number
-    }
+    subject?: string,
+    code?: string,
+    term?: Term,
+    year?: number
 }
 
 const mapState = (state: RootState, props: ComponentProps) => ({
-    courses: Object.values(state.courses),
+    courses: state.courses,
+    instances: state.instances,
 });
 
 const mapDispatch = {}
@@ -67,20 +64,18 @@ class SearchCoursePage extends React.Component<Props, State> {
     }
 
     render() {
-        let subject = this.state.identifier?.subject;
-        let code = this.state.identifier?.code;
-        let term = this.state.semester?.term;
-        let year = this.state.semester?.year;
-
         // let allDefined = subject !== undefined && code !== undefined && term !== undefined && year !== undefined;
-        let noneDefined = subject === undefined && code === undefined && term === undefined && year === undefined;
+        let noneDefined = this.state.subject === undefined && this.state.code === undefined && this.state.term === undefined && this.state.year === undefined;
 
-        let results = this.props.courses
-            .filter(course => {
-                let matchSubject = subject === undefined || course.identifier.subject.indexOf(subject) === 0;
-                let matchCode = code === undefined || course.identifier.code.indexOf(code) === 0;
-                let matchTerm = term === undefined || course.semester.term === term;
-                let matchYear = year === undefined || course.semester.year === year;
+        let results = Object.values(this.props.instances)
+            .filter(instance => {
+                let course = this.props.courses[instance.courseID];
+
+                let matchSubject = this.state.subject === undefined || course.subject.indexOf(this.state.subject) === 0;
+                let matchCode = this.state.code === undefined || course.code.indexOf(this.state.code) === 0;
+                let matchTerm = this.state.term === undefined || instance.term === this.state.term;
+                let matchYear = this.state.year === undefined || instance.year === this.state.year;
+
                 return matchSubject && matchCode && matchTerm && matchYear;
             })
         
@@ -94,7 +89,7 @@ class SearchCoursePage extends React.Component<Props, State> {
                     title="No search results!"
                     subTitle="Try other search parameters! or create the course below"/>
                 <Layout style={{width: '70%', marginRight: 'auto', marginLeft: 'auto'}}>
-                    <CreateCourseForm />
+                    <CreateCourseForm initialValues={this.state} />
                 </Layout>
             </>
         } else if (noneDefined) {
@@ -105,8 +100,8 @@ class SearchCoursePage extends React.Component<Props, State> {
                 subTitle="Please enter search parameters!"
             />
         } else {
-            content = results.map(course =>
-                <CourseCard key={course.courseID} courseID={course.courseID} />
+            content = results.map(instance =>
+                <CourseCard key={instance.instanceID} instanceID={instance.instanceID} />
             );
         }
         
@@ -120,12 +115,8 @@ class SearchCoursePage extends React.Component<Props, State> {
                         onFormChange={(name, { changedFields, forms }) => {
                             const { create, search } = forms;
                             switch (name) {
-                                case 'search':
-                                    create?.setFields(changedFields);
-                                    break;
-                                case 'create':
-                                    search?.setFields(changedFields);
-                                    break;
+                                case 'search': create?.setFields(changedFields); break;
+                                case 'create': search?.setFields(changedFields); break;
                             }
                         }}
                     >

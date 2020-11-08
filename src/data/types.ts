@@ -16,7 +16,7 @@ export interface Mark {
 
 export interface Breakdown {
     breakdownID: string,
-    courseID: string;
+    instanceID: string;
     userID: string;
     marks: Mark[];
     isAnonymous: boolean;
@@ -32,16 +32,17 @@ export enum Term {
 export interface Course {
     courseID: string;
     name: string;
-    identifier: {
-        code: string,
-        subject: string
-    };
-    instructor: string;
-    semester: {
-        term: Term,
-        year: number
-    };
+    code: string,
+    subject: string
 };
+
+export interface CourseInstance {
+    instanceID: string,
+    courseID: string,
+    instructor: string,
+    term: Term,
+    year: number
+}
 
 export enum Status {
     IN_PROGRESS = "In progress",
@@ -52,7 +53,7 @@ export enum Status {
 export interface Record {
     userID: string;
     recordID: string,
-    courseID: string;
+    instanceID: string;
     status: Status;
     grade?: number;
 }
@@ -63,7 +64,7 @@ export interface Review {
     enjoyability: number;
     workload: number;
     comment: string;
-    courseID: string;
+    instanceID: string;
     userID: string;
     isAnonymous: boolean;
 };

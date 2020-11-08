@@ -30,6 +30,7 @@ type ComponentState = {
 
 const mapState = (state: RootState) => ({
     courses: state.courses,
+    instances: state.instances,
     records: Object.values(state.records).filter(record => record.userID === USERID)
 });
 
@@ -52,14 +53,17 @@ class AcademicRecordPage extends React.Component<Props, State> {
         visible: false,
     }
 
-    extractSubject = (record: Record) => this.props.courses[record.courseID].identifier.subject;
+    getCourse = (record: Record) => this.props.courses[this.props.instances[record.instanceID].courseID];
+    getInstance = (record: Record) => this.props.instances[record.instanceID];
+
+    extractSubject = (record: Record) => this.getCourse(record).subject;
     extractCourseCode = (record: Record) => `${this.extractSubject(record)} ${this.extractCode(record)}`;
-    extractCode = (record: Record) => this.props.courses[record.courseID].identifier.code;
-    extractName = (record: Record) => this.props.courses[record.courseID].name;
-    extractTerm = (record: Record) => this.props.courses[record.courseID].semester.term;
-    extractYear = (record: Record) => this.props.courses[record.courseID].semester.year;
+    extractCode = (record: Record) => this.getCourse(record).code;
+    extractName = (record: Record) => this.getCourse(record).name;
+    extractTerm = (record: Record) => this.getInstance(record).term;
+    extractYear = (record: Record) => this.getInstance(record).year;
     extractSemester = (record: Record) => `${this.extractTerm(record)} ${this.extractYear(record)}`;
-    extractInstructor = (record: Record) => this.props.courses[record.courseID].instructor;
+    extractInstructor = (record: Record) => this.getInstance(record).instructor;
     extractGrade = (record: Record) => `${record.grade ?? "-"}`;
     extractStatus = (record: Record) => record.status;
 
@@ -146,13 +150,13 @@ class AcademicRecordPage extends React.Component<Props, State> {
                                 value={
                                     this.props.records.filter(r => r.status === Status.TAKEN).length > 0
                                         ? (this.props.records
-                                            .filter(r => r.status === Status.TAKEN)
-                                            .map(r => Number(this.extractCode(r).match(/\d+$/g)![0]![0]) * r.grade!)
+                                            .filter(record => record.status === Status.TAKEN)
+                                            .map(record => Number(this.extractCode(record).match(/\d+$/g)![0]![0]) * record.grade!)
                                             .reduce((p, c) => p + c)
                                             /
                                             this.props.records
-                                                .filter(r => r.status === Status.TAKEN)
-                                                .map(r => Number(this.extractCode(r).match(/\d+$/g)![0]![0]))
+                                                .filter(record => record.status === Status.TAKEN)
+                                                .map(record => Number(this.extractCode(record).match(/\d+$/g)![0]![0]))
                                                 .reduce((p, c) => p + c) / 3)
                                         : "N/A"
                                 }
@@ -163,13 +167,13 @@ class AcademicRecordPage extends React.Component<Props, State> {
                         <Card.Grid hoverable={false}>
                             <Statistic
                                 title="Courses In Progress"
-                                value={this.props.records.filter(r => r.status === Status.IN_PROGRESS).length}
+                                value={this.props.records.filter(record => record.status === Status.IN_PROGRESS).length}
                             />
                         </Card.Grid>
                         <Card.Grid hoverable={false}>
                             <Statistic
                                 title="Courses Completed"
-                                value={this.props.records.filter(r => r.status !== Status.IN_PROGRESS).length}
+                                value={this.props.records.filter(record => record.status !== Status.IN_PROGRESS).length}
                             />
                         </Card.Grid>
                         <Card.Grid hoverable={false}>
@@ -197,7 +201,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
                                 valueStyle={{ color: "#F00" }}
                                 value={
                                     this.props.records
-                                        .map(r => r.grade)
+                                        .map(record => record.grade)
                                         .reduce(
                                             (p, c) => {
                                                 if (p === undefined)
@@ -215,7 +219,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
                                 valueStyle={{ color: "#0F0" }}
                                 value={
                                     this.props.records
-                                        .map(r => r.grade)
+                                        .map(record => record.grade)
                                         .reduce(
                                             (p, c) => {
                                                 if (p === undefined)
