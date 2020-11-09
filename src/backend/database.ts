@@ -78,6 +78,11 @@ export const users: User[] = [
         name: "Jane Doe",
         avatar_url: "https://thispersondoesnotexist.com/image"
     },
+    {
+        userID: uuidv4(),
+        name: "Allan Poe",
+        avatar_url: "https://thispersondoesnotexist.com/image"
+    },
 ]
 
 /**
@@ -98,13 +103,13 @@ export const courses: Course[] = coursesdb.map(([subject, code, name]) => {
 })
 
 export const instances: CourseInstance[] = [
-    {
+    ...Array(10).fill(undefined).map((_, i) => ({
         instanceID: uuidv4(),
         courseID: courses[0].courseID,
         instructor: "Spencer Smith",
         term: Term.FALL,
-        year: 2017
-    },
+        year: 2015 + i
+    })),
     {
         instanceID: uuidv4(),
         courseID: courses[2].courseID,
@@ -134,12 +139,20 @@ export const records: Record[] = [
     {
         recordID: uuidv4(),
         status: Status.TAKEN,
-        instanceID: instances[1].instanceID,
+        instanceID: instances[0].instanceID,
         userID: users[1].userID,
         grade: 9
-    }
+    },
+    ...(instances.map(instance => (
+        Array(10).fill(undefined).map(_ => ({
+            recordID: uuidv4(),
+            status: Status.TAKEN,
+            instanceID: instance.instanceID,
+            userID: users[2].userID,
+            grade: Math.floor(Math.random() * (12 + 1))
+        }))
+    )).flat())
 ]
-
 /**
  * The breakdowns in our fake database.
  */

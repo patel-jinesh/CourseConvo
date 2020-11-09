@@ -4,6 +4,7 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { BrowserRouter as Router, Link, Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import './App.css';
+import '../node_modules/react-vis/dist/style.css';
 import { RootState } from './app/store';
 import AcademicRecordPage from './pages/AcademicRecordPage';
 import CourseInformationPage from './pages/CourseInformationPage';
