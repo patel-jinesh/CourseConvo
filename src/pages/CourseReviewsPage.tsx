@@ -1,5 +1,5 @@
 import { FrownOutlined } from '@ant-design/icons';
-import { Form, Layout, PageHeader, Result, Space } from "antd";
+import { Form, Layout, PageHeader, Result, Space, List } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
@@ -9,6 +9,7 @@ import InstanceCard from "../components/InstanceCard";
 import CreateCourseForm from "../components/forms/CreateCourseForm";
 import SearchCourseForm from "../components/forms/SearchCourseForm";
 import { Term } from "../data/types";
+import Review from '../components/Review';
 
 const { Content } = Layout;
 
@@ -25,6 +26,7 @@ const mapState = (state: RootState, props: ComponentProps) => {
 
     return {
         reviews: Object.values(state.reviews).filter(review => state.instances[review.instanceID].courseID === queryID),
+        users: state.users,
         course: state.courses[queryID],
     }
 };
@@ -47,9 +49,17 @@ class CourseReviewsPage extends React.Component<Props, State> {
                 style={{ width: "100%" }}
                 backIcon={false}
                 title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}>
-                <Content style={{ padding: 24 }}>
-
-                </Content>
+                    <List
+                        dataSource={this.props.reviews.reverse().map(review => ({
+                            reviewID: review.reviewID,
+                            replyable: true,
+                            showreplies: true,
+                            editable: true
+                        }))}
+                        header={`${this.props.reviews.length} ${this.props.reviews.length > 1 ? 'reviews' : 'review'}`}
+                        itemLayout="horizontal"
+                        renderItem={props => <Review {...props} />}
+                    />
             </PageHeader>
         );
     }

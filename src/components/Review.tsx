@@ -81,7 +81,7 @@ class Review extends React.Component<Props, State> {
                         </span>
                     </Tooltip>,
                     <Tooltip title="Dislike">
-                        <span onClick={() => (this.props.review.upvoterIDs[USERID] ? this.props.unvote : this.props.downvote)({ reviewID: this.props.reviewID, userID: USERID })}>
+                        <span onClick={() => (this.props.review.downvoterIDs[USERID] ? this.props.unvote : this.props.downvote)({ reviewID: this.props.reviewID, userID: USERID })}>
                             {this.props.review.downvoterIDs[USERID] ? <DislikeTwoTone /> : <DislikeFilled />}
                             <span className="comment-action">{Object.keys(this.props.review.downvoterIDs).length}</span>
                         </span>
