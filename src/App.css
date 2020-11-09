@@ -43,3 +43,25 @@
 .header {
   padding: 0;
 }
+
+.noselect {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.test:active {
+    cursor: grabbing;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
+}
+
+.test {
+  cursor: grab;
+}
+
+.test .rv-highlight {
+  opacity: 0;
+  cursor: grab;
+}

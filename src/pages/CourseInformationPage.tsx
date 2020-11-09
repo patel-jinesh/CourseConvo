@@ -6,16 +6,8 @@ import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
 import Review from "../components/Review";
 
-import {
-    FlexibleXYPlot,
-    XAxis,
-    YAxis,
-    VerticalGridLines,
-    Crosshair,
-    LineMarkSeries,
-    Voronoi
-} from 'react-vis';
 import { Term, Status } from "../data/types";
+import GPAGraph from "../components/graphs/GPAGraph";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -69,71 +61,6 @@ class CourseInformationPage extends React.Component<Props, State> {
             }))}>
         </Select>
 
-        let counts: { [semester: string]: { total: number, count: number } } = {};
-        let minsem: { term: Term, year: number } | undefined = undefined;
-        let maxsem: { term: Term, year: number } | undefined = undefined;
-
-        let termmap = {
-            [Term.WINTER]: 0,
-            [Term.SPRING]: 1,
-            [Term.SUMMER]: 2,
-            [Term.FALL]: 3,
-        }
-        let termmaprev = [
-            Term.WINTER,
-            Term.SPRING,
-            Term.SUMMER,
-            Term.FALL,
-        ]
-
-
-        for (let record of this.props.records) {
-            let instance = this.props.instances[record.instanceID];
-            let term = instance.term;
-            let year = instance.year;
-            let semester = `${term} ${year}`;
-
-            counts[semester] = {
-                total: (counts[semester]?.total ?? 0) + record.grade!,
-                count: (counts[semester]?.count ?? 0) + 1
-            }
-
-            minsem = minsem === undefined || year < minsem.year || (year === minsem.year && termmap[minsem.term] < termmap[term])
-                ? { term: term, year: year }
-                : minsem;
-            maxsem = maxsem === undefined || year > maxsem.year || (year === maxsem.year && termmap[maxsem.term] > termmap[term])
-                ? { term: term, year: year }
-                : maxsem;
-        }
-
-        let averages = Object.entries(counts).reduce<{ [semester: string]: number }>((r, [semester, { total, count }]) => ({
-            ...r,
-            [semester]: total / count
-        }), {});
-
-        let data: any[] = [];
-        let ticks: number[] = [];
-
-        for (let semval = minsem!.year + (termmap[minsem!.term] / 4); semval <= maxsem!.year + (termmap[maxsem!.term] / 4); semval += 0.25) {
-            let semester = `${termmaprev[(semval % 1) * 4]} ${semval - (semval % 1)}`;
-
-            if (averages[semester] !== undefined)
-                data.push({ x: semval, y: averages[semester] });
-            
-            ticks.push(semval);
-        }
-
-        console.log(minsem, maxsem);
-        console.log(data);
-
-        let formatter = (v: number) => {
-            if (v % 1 === 0) return `${Term.WINTER} ${v}`;
-            if (v % 1 === 0.25) return `${Term.SPRING} ${v - 0.25}`;
-            if (v % 1 === 0.5) return `${Term.SUMMER} ${v - 0.5}`;
-            if (v % 1 === 0.75) return `${Term.FALL} ${v - 0.75}`;
-            return "?";
-        }
-
         return (
             <PageHeader
                 style={{ width: "100%" }}
@@ -144,16 +71,7 @@ class CourseInformationPage extends React.Component<Props, State> {
                     <Tabs defaultActiveKey="0">
                         <TabPane tab="Statistics" key="0">
                             <Content style={{ paddingTop: 20 }}>
-                                <Statistic title="Course Average" valueRender={() => <FlexibleXYPlot xPadding={0.25} margin={{bottom: 100}} height={400} yDomain={[-1, 13]}>
-                                    <VerticalGridLines style={{ stroke: 'rgb(100, 100, 100)' }} />
-                                    <XAxis height={400} tickValues={ticks} tickLabelAngle={-45} tickFormat={v => formatter(v)} title="Semester" style={{ text: { fill: 'white' }, title: { fill: 'white' } }} />
-                                    <YAxis tickValues={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]} style={{ text: { fill: 'white' } }} />
-                                    <LineMarkSeries curve={'curveMonotoneX'} style={{ fill: "none" }} data={data} />
-                                    {/* <Crosshair
-                                        values={this.state.crosshairValues}
-                                        className={'test-class-name'}
-                                    /> */}
-                                </FlexibleXYPlot>}>
+                                <Statistic className="noselect" title="Course Average" valueRender={() => <GPAGraph records={this.props.records} />}>
 
                                 </Statistic>
                             </Content>
