@@ -57,14 +57,13 @@ class AcademicRecordForm extends React.Component<Props, State>{
         let instance = Object.values(this.props.instances).find(instance =>
             instance.courseID === course?.courseID &&
             instance.term === values.term &&
-            instance.year === values.year)
+            instance.year === values.year?.year())
 
         if (course !== undefined && values.name !== course.name)
             this.form.current?.setFieldsValue({ name: course.name });
         if (instance !== undefined && values.instructor !== instance.instructor)
             this.form.current?.setFieldsValue({ instructor: instance.instructor });
     }
-
 
     onFinish = (values: any) => {
         let code = values.code;

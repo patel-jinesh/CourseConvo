@@ -8,6 +8,7 @@ import { RootState } from "../../app/store";
 import { Term } from "../../data/types";
 import { add as addCourse } from '../../features/courses/course';
 import { add as addInstance } from '../../features/courses/instance';
+import moment from "moment";
 
 const { Option } = AutoComplete;
 
@@ -21,6 +22,7 @@ interface FieldData {
 
 type ComponentProps = {
     fields?: FieldData[],
+    onFinish?: (values: any) => void,
     onFieldsChange?: (changed: FieldData[], all: FieldData[]) => void,
     onValuesChange?: (changed: FieldData[], all: FieldData[]) => void,
     initialValues?: any,
@@ -46,7 +48,9 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type Props = ReduxProps & ComponentProps;
 type State = ComponentState;
 
-class CreateCourseForm extends React.Component<Props, State>{
+class CreateCourseForm extends React.Component<Props, State> {
+    form = this.props.form ?? React.createRef<FormInstance>();
+
     onFinish = (values: any) => {
         let courseID = uuidv4();
         let instanceID = uuidv4();
@@ -65,13 +69,41 @@ class CreateCourseForm extends React.Component<Props, State>{
             term: values.term,
             year: values.year.year()
         });
+
+        if (this.props.onFinish)
+            this.props.onFinish({
+                ...values,
+                year: values.year.year()
+            });
+    }
+
+    onValuesChange = (_: any, values: any) => {
+        let course = Object.values(this.props.courses).find(course =>
+            course.code === values.code &&
+            course.subject === values.subject)
+
+        let instance = Object.values(this.props.instances).find(instance =>
+            instance.courseID === course?.courseID &&
+            instance.term === values.term &&
+            instance.year === values.year.year())
+
+        if (course !== undefined && values.name !== course.name)
+            this.form.current?.setFieldsValue({ name: course.name });
+        if (instance !== undefined && values.instructor !== instance.instructor)
+            this.form.current?.setFieldsValue({ instructor: instance.instructor });
+        
+        if (this.props.onValuesChange)
+            this.props.onValuesChange(_, values);
     }
 
     render() {
-        console.log(this.props.initialValues);
+        let initialValues = {
+            ...this.props.initialValues,
+            year: this.props.initialValues.year !== undefined ? moment(`${this.props.initialValues.year}`) : undefined
+        }
 
         return (
-            <Form name='create' initialValues={this.props.initialValues} ref={this.props.form} fields={this.props.fields} onFieldsChange={this.props.onFieldsChange} onValuesChange={this.props.onValuesChange} onFinish={this.onFinish} layout="horizontal" labelCol={{ span: 8 }} labelAlign={"left"}>
+            <Form name='create' initialValues={initialValues} ref={this.props.form} fields={this.props.fields} onFieldsChange={this.props.onFieldsChange} onValuesChange={this.onValuesChange} onFinish={this.onFinish} layout="horizontal" labelCol={{ span: 8 }} labelAlign={"left"}>
                 <Form.Item
                     label="Course Code"
                     shouldUpdate={true}
@@ -161,7 +193,7 @@ class CreateCourseForm extends React.Component<Props, State>{
                                 instance.courseID === course?.courseID &&
                                 instance.term === term &&
                                 instance.year === year);
-
+                            
                             return (
                                 <>
                                     <Form.Item
