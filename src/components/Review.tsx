@@ -133,12 +133,14 @@ class Review extends React.Component<Props, State> {
                 />
                 }
                 {this.state.showing && <List
-                    dataSource={Object.entries(this.props.review.replies).reverse().map(([userID, reply]) => ({
-                        author: this.props.users[userID].name,
-                        avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-                        content: <p>{reply.comment}</p>,
-                        datetime: moment(reply.datetime).fromNow()
-                    }))}
+                    dataSource={
+                        this.props.review.replies.map(reply => ({
+                                author: this.props.users[reply.userID].name,
+                                avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+                                content: <p>{reply.comment}</p>,
+                                datetime: moment(reply.datetime).fromNow()
+                        })).reverse()
+                    }
                     header={`${Object.entries(this.props.review.replies).length} ${Object.entries(this.props.review.replies).length > 1 ? 'replies' : 'reply'}`}
                     itemLayout="horizontal"
                     renderItem={props => <Comment {...props} />}

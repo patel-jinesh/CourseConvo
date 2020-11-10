@@ -70,7 +70,5 @@ export interface Review {
     upvoterIDs: { [userID: string] : true };
     downvoterIDs: { [userID: string]: true };
     datetime: string;
-    replies: {
-        [userID: string]: { datetime: string, comment: string }
-    };
+    replies: { userID: string, datetime: string, comment: string }[]
 };

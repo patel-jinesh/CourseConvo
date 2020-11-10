@@ -188,11 +188,10 @@ export const reviews: Review[] = [
         upvoterIDs: {},
         downvoterIDs: {},
         datetime: moment().format('LLLL'),
-        replies: {
-            [users[1].userID]: {
-                comment: "I agree",
-                datetime: moment().format('LLLL')
-            }
-        }
+        replies: [{
+            userID: users[1].userID,
+            comment: "I agree",
+            datetime: moment().format('LLLL')
+        }]
     }
 ]
