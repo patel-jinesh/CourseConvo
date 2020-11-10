@@ -85,7 +85,7 @@ class CreateCourseForm extends React.Component<Props, State> {
         let instance = Object.values(this.props.instances).find(instance =>
             instance.courseID === course?.courseID &&
             instance.term === values.term &&
-            instance.year === values.year.year())
+            instance.year === values.year?.year())
 
         if (course !== undefined && values.name !== course.name)
             this.form.current?.setFieldsValue({ name: course.name });
@@ -98,8 +98,8 @@ class CreateCourseForm extends React.Component<Props, State> {
 
     render() {
         let initialValues = {
-            ...this.props.initialValues,
-            year: this.props.initialValues.year !== undefined ? moment(`${this.props.initialValues.year}`) : undefined
+            ...(this.props.initialValues ?? {}),
+            year: this.props.initialValues?.year !== undefined ? moment(`${this.props.initialValues.year}`) : undefined
         }
 
         return (
@@ -229,7 +229,7 @@ class CreateCourseForm extends React.Component<Props, State> {
                         let course = Object.values(this.props.courses).find(course =>
                             course.subject === getFieldValue('subject') &&
                             course.code === getFieldValue('code'));
-                        
+
                         let instance = Object.values(this.props.instances).find(instance =>
                             instance.courseID === course?.courseID &&
                             instance.year === getFieldValue('year')?.year() &&
