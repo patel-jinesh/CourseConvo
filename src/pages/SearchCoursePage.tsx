@@ -1,5 +1,6 @@
+import { CommentOutlined, InfoCircleOutlined, PieChartOutlined } from '@ant-design/icons';
 import { FrownOutlined } from '@ant-design/icons';
-import { Form, Layout, PageHeader, Result, Space } from "antd";
+import { Form, Layout, PageHeader, Result, Space, List, Button, Tooltip } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
@@ -62,7 +63,7 @@ class SearchCoursePage extends React.Component<Props, State> {
                 return matchSubject && matchCode && matchTerm && matchYear;
             })
         
-        let content : JSX.Element | JSX.Element[];
+        let content : JSX.Element;
 
         if (!noneDefined && results.length === 0) {
             content = <>
@@ -83,9 +84,40 @@ class SearchCoursePage extends React.Component<Props, State> {
                 subTitle="Please enter search parameters!"
             />
         } else {
-            content = results.map(instance =>
-                <InstanceCard key={instance.instanceID} instanceID={instance.instanceID} />
-            );
+            content = <List
+                header={`${results.length} ${results.length > 1 ? 'results' : 'result'}`}
+                itemLayout="vertical"
+                dataSource={results}
+                renderItem={instance => (
+                    <List.Item
+                        key={instance.courseID}
+                        actions={[
+                            <Button
+                                type='link'
+                                icon={<InfoCircleOutlined />}
+                                onClick={() => this.props.history.push({ pathname: '/information', search: `?instanceID=${instance.instanceID}&courseID=${instance.courseID}` })}>Information</Button>,
+                            <Button
+                                type='link'
+                                icon={<PieChartOutlined />}
+                                onClick={() => this.props.history.push({ pathname: '/breakdowns', search: `?instanceID=${instance.instanceID}&courseID=${instance.courseID}` })}>Breakdowns</Button>,
+                            <Button
+                                type='link'
+                                icon={<CommentOutlined />}
+                                onClick={() => this.props.history.push({ pathname: '/reviews', search: `?instanceID=${instance.instanceID}&courseID=${instance.courseID}` })}>Reviews</Button>
+                        ]}
+                    >
+                        <List.Item.Meta
+                            title={`${this.props.courses[instance.courseID].subject} ${this.props.courses[instance.courseID].code} - ${instance.term} ${instance.year}`}
+                            description={
+                                <>
+                                    <p>{this.props.courses[instance.courseID].name}</p>
+                                    <p>{instance.instructor}</p>
+                                </>
+                            }
+                        />
+                    </List.Item>
+                )}
+            />
         }
         
         return (
