@@ -1,5 +1,5 @@
 import { FrownOutlined } from '@ant-design/icons';
-import { Form, Layout, PageHeader, Result, Space, List } from "antd";
+import { Form, Layout, PageHeader, Result, Space, List, Comment, Card } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
@@ -54,7 +54,14 @@ class CourseReviewsPage extends React.Component<Props, State> {
                 backIcon={false}
                 title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}
             >
-                {<ReviewForm/>}
+                {
+                    <Comment
+                        avatar={this.props.users[USERID].avatar_url}
+                        author={this.props.users[USERID].name}
+                        content={
+                            <Card style={{width: '60%'}}><ReviewForm initialValues={{ name: this.props.course.name, subject: this.props.course.subject, code: this.props.course.code }} /></Card>
+                    }/>
+                }
                     <List
                         dataSource={this.props.reviews.reverse().map(review => ({
                             reviewID: review.reviewID,
