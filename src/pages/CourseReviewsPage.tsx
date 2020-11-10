@@ -10,6 +10,8 @@ import CreateCourseForm from "../components/forms/CreateCourseForm";
 import SearchCourseForm from "../components/forms/SearchCourseForm";
 import { Term } from "../data/types";
 import Review from '../components/Review';
+import { USERID } from '../backend/database';
+import ReviewForm from '../components/forms/ReviewForm';
 
 const { Content } = Layout;
 
@@ -44,11 +46,15 @@ class CourseReviewsPage extends React.Component<Props, State> {
     state: State = {}
 
     render() {
+        let userreview = this.props.reviews.find(review => review.userID === USERID);
+
         return (
             <PageHeader
                 style={{ width: "100%" }}
                 backIcon={false}
-                title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}>
+                title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}
+            >
+                {<ReviewForm/>}
                     <List
                         dataSource={this.props.reviews.reverse().map(review => ({
                             reviewID: review.reviewID,

@@ -1,4 +1,4 @@
-import { Comment, Tooltip, Rate, Descriptions, Button, List, Form } from 'antd';
+import { Comment, Tooltip, Rate, Descriptions, Button, List, Form, Card } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import { LikeFilled, LikeTwoTone, DislikeFilled, DislikeTwoTone } from '@ant-design/icons';
 import React from 'react';
@@ -8,6 +8,7 @@ import moment from 'moment';
 import { upvote, downvote, reply, unvote } from '../features/courses/review';
 import { USERID } from '../backend/database';
 import TextArea from 'antd/lib/input/TextArea';
+import ReportForm from './forms/ReportForm';
 
 type ComponentProps = {
     reviewID: string
@@ -19,7 +20,8 @@ type ComponentProps = {
 type ComponentState = {
     showing: boolean,
     replying: boolean,
-    editing: boolean
+    editing: boolean,
+    reporting: boolean,
 }
 
 const mapState = (state: RootState, props: ComponentProps) => ({
@@ -47,6 +49,7 @@ class Review extends React.Component<Props, State> {
         showing: false,
         replying: false,
         editing: false,
+        reporting: false,
     }
 
     render() {
@@ -60,7 +63,7 @@ class Review extends React.Component<Props, State> {
                 }
                 content={
                     <>
-                        <Descriptions size='small' style={{width: 'max-content'}} bordered column={1}>
+                        <Descriptions size='small' style={{ width: 'max-content' }} bordered column={1}>
                             <Descriptions.Item label="Difficulty"><Rate defaultValue={this.props.review.difficulty} disabled allowHalf></Rate></Descriptions.Item>
                             <Descriptions.Item label="Workload"><Rate defaultValue={this.props.review.workload} disabled allowHalf></Rate></Descriptions.Item>
                             <Descriptions.Item label="Enjoyability"><Rate defaultValue={this.props.review.enjoyability} disabled allowHalf></Rate></Descriptions.Item>
@@ -88,9 +91,18 @@ class Review extends React.Component<Props, State> {
                     </Tooltip>,
                     this.props.editable && this.props.review.userID === USERID && <span onClick={() => this.setState({ editing: true })}>Edit</span>,
                     this.props.replyable && this.props.review.userID !== USERID && <span onClick={() => this.setState({ replying: true })}>Reply to</span>,
-                    this.props.showreplies && <span onClick={() => this.setState({ showing: !this.state.showing })}>{this.state.showing ? "Hide" : "Show"} replies</span>
+                    this.props.showreplies && <span onClick={() => this.setState({ showing: !this.state.showing })}>{this.state.showing ? "Hide" : "Show"} replies</span>,
+                    this.props.review.userID !== USERID && <span className="report" onClick={() => this.setState({ reporting: !this.state.reporting })}>{this.state.reporting ? "Cancel Report" : "Report"}</span>
                 ]}
             >
+                {this.state.reporting && <Comment style={{width: '50%', minWidth: '500px'}}
+                    content={
+                        <>
+                            <Card title={`You are reporting ${this.props.user.name}`}><ReportForm></ReportForm></Card>
+                        </>
+                    }
+                />
+                }
                 {this.state.replying && <Comment
                     avatar={
                         <Avatar
