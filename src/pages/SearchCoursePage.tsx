@@ -1,12 +1,11 @@
 import { CommentOutlined, InfoCircleOutlined, PieChartOutlined } from '@ant-design/icons';
 import { FrownOutlined } from '@ant-design/icons';
-import { Form, Layout, PageHeader, Result, Space, List, Button, Tooltip } from "antd";
+import { Form, Layout, PageHeader, Result, Space, List, Button, Tooltip, Row, Col, Radio, Card, Affix, Divider, Checkbox, Select, Tag, Pagination } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
-import InstanceCard from "../components/InstanceCard";
 import CreateCourseForm from "../components/forms/CreateCourseForm";
 import SearchCourseForm from "../components/forms/SearchCourseForm";
 import { Term } from "../data/types";
@@ -23,9 +22,7 @@ type ComponentProps = {
 
 type ComponentState = {
     subject?: string,
-    code?: string,
-    term?: Term,
-    year?: number
+    code?: string
 }
 
 const mapState = (state: RootState, props: ComponentProps) => ({
@@ -45,6 +42,7 @@ type State = ComponentState
 class SearchCoursePage extends React.Component<Props, State> {
     state: State = {}
     formSearchCourse = React.createRef<FormInstance>();
+    formCreateCourse = React.createRef<FormInstance>();
 
     onSearch = (values: any) => {
         this.setState({ ...values });
@@ -61,19 +59,24 @@ class SearchCoursePage extends React.Component<Props, State> {
 
     render() {
         // let allDefined = subject !== undefined && code !== undefined && term !== undefined && year !== undefined;
-        let noneDefined = this.state.subject === undefined && this.state.code === undefined && this.state.term === undefined && this.state.year === undefined;
+        let noneDefined = this.state.subject === undefined && this.state.code === undefined;
 
-        let results = Object.values(this.props.instances)
-            .filter(instance => {
-                let course = this.props.courses[instance.courseID];
-
+        let results = Object.values(this.props.courses)
+            .filter(course => {
                 let matchSubject = this.state.subject === undefined || course.subject.indexOf(this.state.subject) === 0;
                 let matchCode = this.state.code === undefined || course.code.indexOf(this.state.code) === 0;
-                let matchTerm = this.state.term === undefined || instance.term === this.state.term;
-                let matchYear = this.state.year === undefined || instance.year === this.state.year;
 
-                return matchSubject && matchCode && matchTerm && matchYear;
+                return matchSubject && matchCode;
             })
+        
+        let instancebuckets = Object
+            .values(this.props.instances)
+            .reduce<{ [courseID: string]: string[] }>((result, instance) => ({
+            ...result,
+            [instance.courseID]: [...(result[instance.courseID] ?? []), instance.instanceID]
+            }), {});
+        
+        console.log(instancebuckets);
         
         let content : JSX.Element;
 
@@ -84,15 +87,8 @@ class SearchCoursePage extends React.Component<Props, State> {
                 course.code === this.state.code &&
                 course.subject === this.state.subject)
 
-            let instance = Object.values(this.props.instances).find(instance =>
-                instance.courseID === course?.courseID &&
-                instance.term === this.state.term &&
-                instance.year === this.state.year)
-
             if (course !== undefined)
                 initialValues.name = course.name;
-            if (instance !== undefined)
-                initialValues.instructor = instance.instructor
 
             content = <>
                 <Result
@@ -101,7 +97,7 @@ class SearchCoursePage extends React.Component<Props, State> {
                     title="No search results!"
                     subTitle="Try other search parameters! or create the course below"/>
                 <Layout style={{width: '70%', marginRight: 'auto', marginLeft: 'auto'}}>
-                    <CreateCourseForm initialValues={initialValues} onFinish={this.onCreateCourseFormFinish}/>
+                    <CreateCourseForm form={this.formCreateCourse} initialValues={initialValues} onFinish={this.onCreateCourseFormFinish}/>
                 </Layout>
             </>
         } else if (noneDefined) {
@@ -116,30 +112,31 @@ class SearchCoursePage extends React.Component<Props, State> {
                 header={`${results.length} ${results.length > 1 ? 'results' : 'result'}`}
                 itemLayout="vertical"
                 dataSource={results}
-                renderItem={instance => (
+                renderItem={course => (
                     <List.Item
-                        key={instance.instanceID}
+                        key={course.courseID}
                         actions={[
                             <Button
                                 type='link'
                                 icon={<InfoCircleOutlined />}
-                                onClick={() => this.props.history.push({ pathname: '/information', search: `?instanceID=${instance.instanceID}&courseID=${instance.courseID}` })}>Information</Button>,
+                                onClick={() => this.props.history.push({ pathname: '/information', search: `?courseID=${course.courseID}` })}>Information</Button>,
                             <Button
                                 type='link'
                                 icon={<PieChartOutlined />}
-                                onClick={() => this.props.history.push({ pathname: '/breakdowns', search: `?instanceID=${instance.instanceID}&courseID=${instance.courseID}` })}>Breakdowns</Button>,
+                                onClick={() => this.props.history.push({ pathname: '/breakdowns', search: `?courseID=${course.courseID}` })}>Breakdowns</Button>,
                             <Button
                                 type='link'
                                 icon={<CommentOutlined />}
-                                onClick={() => this.props.history.push({ pathname: '/reviews', search: `?instanceID=${instance.instanceID}&courseID=${instance.courseID}` })}>Reviews</Button>
+                                onClick={() => this.props.history.push({ pathname: '/reviews', search: `?courseID=${course.courseID}` })}>Reviews</Button>
                         ]}
                     >
                         <List.Item.Meta
-                            title={`${this.props.courses[instance.courseID].subject} ${this.props.courses[instance.courseID].code} - ${instance.term} ${instance.year}`}
+                            title={`${course.subject} ${course.code} - ${course.name}`}
                             description={
                                 <>
-                                    <p>{this.props.courses[instance.courseID].name}</p>
-                                    <p>{instance.instructor}</p>
+                                    {instancebuckets[course.courseID]
+                                        ?.map(instanceID =>
+                                            <p>{`${this.props.instances[instanceID].term} ${this.props.instances[instanceID].year}`}</p>)}
                                 </>
                             }
                         />
@@ -147,20 +144,14 @@ class SearchCoursePage extends React.Component<Props, State> {
                 )}
             />
         }
-        
+
         return (
             <PageHeader
                 style={{ width: "100%" }}
                 backIcon={false}
                 title="Search for a course">
-                <Content style={{ padding: 24 }}>
-                    <SearchCourseForm form={this.formSearchCourse} onSearch={this.onSearch} />
-                    <Layout>
-                        <Space direction='vertical'>
-                            {content}
-                        </Space>
-                    </Layout>
-                </Content>
+                <SearchCourseForm form={this.formSearchCourse} onSearch={this.onSearch} />
+                {content}
             </PageHeader>
         );
     }

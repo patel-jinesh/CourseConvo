@@ -103,7 +103,7 @@ class CreateCourseForm extends React.Component<Props, State> {
         }
 
         return (
-            <Form name='create' initialValues={initialValues} ref={this.props.form} fields={this.props.fields} onFieldsChange={this.props.onFieldsChange} onValuesChange={this.onValuesChange} onFinish={this.onFinish} layout="horizontal" labelCol={{ span: 8 }} labelAlign={"left"}>
+            <Form name='create' initialValues={initialValues} ref={this.form} fields={this.props.fields} onFieldsChange={this.props.onFieldsChange} onValuesChange={this.onValuesChange} onFinish={this.onFinish} layout="horizontal" labelCol={{ span: 8 }} labelAlign={"left"}>
                 <Form.Item
                     label="Course Code"
                     shouldUpdate={true}
