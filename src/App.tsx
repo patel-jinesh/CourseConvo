@@ -59,7 +59,7 @@ function Nav() {
           <Menu.Item key="/information" disabled={!query.has('courseID')} icon={<InfoCircleOutlined />}>
             <Link to={{ pathname: '/information', search: query.toString() }}>Information</Link>
           </Menu.Item>
-          <Menu.Item key="/breakdown" disabled={!query.has('courseID')} icon={<PieChartOutlined />}>
+          <Menu.Item key="/breakdowns" disabled={!query.has('courseID')} icon={<PieChartOutlined />}>
             <Link to={{ pathname: '/breakdowns', search: query.toString() }}>Breakdowns</Link>
           </Menu.Item>
           <Menu.Item key="/reviews" disabled={!query.has('courseID')} icon={<CommentOutlined />}>
