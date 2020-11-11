@@ -22,16 +22,14 @@ type ComponentState = {}
 
 const mapState = (state: RootState, props: ComponentProps) => {
     let query = new URLSearchParams(props.location.search)
-    let instanceID = query.get('instanceID')!;
     let courseID = query.get('courseID')!;
 
     return {
-        breakdowns: Object.values(state.breakdowns).filter(breakdown => breakdown.instanceID === instanceID),
+        breakdowns: Object.values(state.breakdowns).filter(breakdown => state.instances[breakdown.instanceID].courseID === courseID),
         records: Object.values(state.records).filter(record => state.instances[record.instanceID].courseID === courseID && record.status === Status.TAKEN),
-        reviews: Object.values(state.reviews).filter(review => review.instanceID === instanceID),
-        course: state.courses[state.instances[instanceID].courseID],
-        instance: state.instances[instanceID],
-        instances: Object.fromEntries(Object.entries(state.instances).filter(([_, instance]) => instance.courseID === state.instances[instanceID].courseID))
+        reviews: Object.values(state.reviews).filter(review => state.instances[review.instanceID].courseID === courseID),
+        course: state.courses[courseID],
+        instances: Object.fromEntries(Object.entries(state.instances).filter(([_, instance]) => instance.courseID === courseID))
     }
 }
 
@@ -48,25 +46,11 @@ class CourseInformationPage extends React.Component<Props, State> {
     state: State = {}
 
     render() {
-        let selectSemester = <Select
-            size='large'
-            style={{ width: 150 }}
-            defaultValue={`${this.props.instance.term} ${this.props.instance.year}`}
-            onSelect={(value, option) => {
-                this.props.history.push({ pathname: '/information', search: `?instanceID=${option.instanceID}` })
-            }}
-            options={Object.values(this.props.instances).map(instance => ({
-                value: `${instance.term} ${instance.year}`,
-                instnaceID: instance.instanceID
-            }))}>
-        </Select>
-
         return (
             <PageHeader
                 style={{ width: "100%" }}
                 backIcon={false}
                 title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}
-                subTitle={selectSemester}
                 footer={
                     <Tabs defaultActiveKey="0">
                         <TabPane tab="Statistics" key="0">

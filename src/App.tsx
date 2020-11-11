@@ -56,7 +56,7 @@ function Nav() {
           <Menu.Item key="/search" icon={<SearchOutlined />}>
             <Link to={{ pathname: '/search' }}>Search</Link>
           </Menu.Item>
-          <Menu.Item key="/information" disabled={!query.has('instanceID')} icon={<InfoCircleOutlined />}>
+          <Menu.Item key="/information" disabled={!query.has('courseID')} icon={<InfoCircleOutlined />}>
             <Link to={{ pathname: '/information', search: query.toString() }}>Information</Link>
           </Menu.Item>
           <Menu.Item key="/breakdown" disabled={!query.has('courseID')} icon={<PieChartOutlined />}>
@@ -90,7 +90,7 @@ class App extends React.Component<Props, State> {
             <Route path={"/information"} render={props => {
               let query = new URLSearchParams(props.location.search);
 
-              if (query.has('instanceID') && this.props.instances.includes(query.get('instanceID')!))
+              if (query.has('courseID') && this.props.courses.includes(query.get('courseID')!))
                 return <CourseInformationPage />
 
               return <Redirect to="/search" />;
