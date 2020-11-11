@@ -95,6 +95,7 @@ class CourseReviewsPage extends React.Component<Props, State> {
                     {
                         <Col style={{width: 300}}>
                             <Affix offsetTop={26}>
+                                <Layout>
                                 <Card bordered={false}>
                                     <List header="Filters">
                                         <Space style={{ width: '100%', marginTop: 10 }} direction='vertical'>
@@ -125,7 +126,8 @@ class CourseReviewsPage extends React.Component<Props, State> {
                                             <Radio style={{ display: 'block' }} value={"Date"}>Date</Radio>
                                         </Radio.Group>
                                     </List>
-                                </Card>
+                                    </Card>
+                                    </Layout>
                             </Affix>
                         </Col>
                     }
