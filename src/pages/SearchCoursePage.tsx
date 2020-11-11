@@ -10,6 +10,8 @@ import InstanceCard from "../components/InstanceCard";
 import CreateCourseForm from "../components/forms/CreateCourseForm";
 import SearchCourseForm from "../components/forms/SearchCourseForm";
 import { Term } from "../data/types";
+import { FormInstance } from 'antd/lib/form';
+import moment from 'moment';
 
 const { Content } = Layout;
 
@@ -42,9 +44,19 @@ type State = ComponentState
 
 class SearchCoursePage extends React.Component<Props, State> {
     state: State = {}
+    formSearchCourse = React.createRef<FormInstance>();
 
     onSearch = (values: any) => {
         this.setState({ ...values });
+    }
+
+    onCreateCourseFormFinish = (values: any) => {
+        this.formSearchCourse.current?.setFieldsValue({
+            ...values,
+            year: moment(`${values.year}`)
+        });
+
+        this.onSearch(values)
     }
 
     render() {
@@ -66,6 +78,22 @@ class SearchCoursePage extends React.Component<Props, State> {
         let content : JSX.Element;
 
         if (!noneDefined && results.length === 0) {
+            let initialValues : ComponentState & {name?: string, instructor?: string} = this.state;
+            
+            let course = Object.values(this.props.courses).find(course =>
+                course.code === this.state.code &&
+                course.subject === this.state.subject)
+
+            let instance = Object.values(this.props.instances).find(instance =>
+                instance.courseID === course?.courseID &&
+                instance.term === this.state.term &&
+                instance.year === this.state.year)
+
+            if (course !== undefined)
+                initialValues.name = course.name;
+            if (instance !== undefined)
+                initialValues.instructor = instance.instructor
+
             content = <>
                 <Result
                     status='warning'
@@ -73,7 +101,7 @@ class SearchCoursePage extends React.Component<Props, State> {
                     title="No search results!"
                     subTitle="Try other search parameters! or create the course below"/>
                 <Layout style={{width: '70%', marginRight: 'auto', marginLeft: 'auto'}}>
-                    <CreateCourseForm initialValues={this.state} />
+                    <CreateCourseForm initialValues={initialValues} onFinish={this.onCreateCourseFormFinish}/>
                 </Layout>
             </>
         } else if (noneDefined) {
@@ -126,22 +154,12 @@ class SearchCoursePage extends React.Component<Props, State> {
                 backIcon={false}
                 title="Search for a course">
                 <Content style={{ padding: 24 }}>
-                    <Form.Provider
-                        onFormChange={(name, { changedFields, forms }) => {
-                            const { create, search } = forms;
-                            switch (name) {
-                                case 'search': create?.setFields(changedFields); break;
-                                case 'create': search?.setFields(changedFields); break;
-                            }
-                        }}
-                    >
-                        <SearchCourseForm onSearch={this.onSearch} />
-                        <Layout>
-                            <Space direction='vertical'>
-                                {content}
-                            </Space>
-                        </Layout>
-                    </Form.Provider>
+                    <SearchCourseForm form={this.formSearchCourse} onSearch={this.onSearch} />
+                    <Layout>
+                        <Space direction='vertical'>
+                            {content}
+                        </Space>
+                    </Layout>
                 </Content>
             </PageHeader>
         );

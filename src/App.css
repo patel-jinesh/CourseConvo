@@ -65,3 +65,11 @@
   opacity: 0;
   cursor: grab;
 }
+
+.report {
+  color:rgba(255, 0, 0, 0.5) !important;
+}
+
+.report:hover {
+  color:rgba(255, 0, 0, 0.70) !important;
+}
