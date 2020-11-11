@@ -165,8 +165,28 @@ export const breakdowns: Breakdown[] = [
             {
                 type: "Assignments",
                 weight: 12,
+                count: 3
+            },
+            {
+                type: "Midterms",
+                weight: 30,
                 count: 1
-            }
+            },
+            {
+                type: "Exams",
+                weight: 50,
+                count: 1
+            },
+            {
+                type: "Labs",
+                weight: 0,
+                count: 0
+            },
+            {
+                type: "Quizzes",
+                weight: 8,
+                count: 4
+            },
         ],
         isAnonymous: false
     }
