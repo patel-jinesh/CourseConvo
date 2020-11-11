@@ -151,7 +151,7 @@ class ReviewForm extends React.Component<Props, State> {
                 <Form.Item required name="comment" label="Comment">
                     <TextArea rows={4} />
                 </Form.Item>
-                <Form.Item required name="anonymous" label="Anonymous">
+                <Form.Item required name="anonymous" label="Anonymous" valuePropName="checked">
                     <Switch></Switch>
                 </Form.Item>
                 <Form.Item shouldUpdate={true} label=" " colon={false}>
