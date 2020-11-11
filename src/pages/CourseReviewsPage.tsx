@@ -11,6 +11,7 @@ import { Term } from "../data/types";
 import Review from '../components/Review';
 import { USERID } from '../backend/database';
 import ReviewForm from '../components/forms/ReviewForm';
+import { RadioChangeEvent } from 'antd/lib/radio';
 
 const { Content } = Layout;
 
@@ -22,7 +23,13 @@ type ComponentProps = {
 
 type ComponentState = {
     visible: boolean,
-    hide: boolean
+    hide: boolean,
+    filters: {
+        semesters: string[],
+        minimumrating: number
+    },
+    sortorder: "Ascending" | "Descending",
+    sortprop: "Date" | "Rating" | "Semester"
 }
 
 const mapState = (state: RootState, props: ComponentProps) => {
@@ -49,6 +56,16 @@ class CourseReviewsPage extends React.Component<Props, State> {
     state: State = {
         visible: false,
         hide: false,
+        filters: {
+            semesters: ["All"],
+            minimumrating: 0
+        },
+        sortorder: "Descending",
+        sortprop: "Date"
+    }
+
+    onSortOrderChange = (e: RadioChangeEvent) => {
+        
     }
 
     render() {
@@ -72,7 +89,20 @@ class CourseReviewsPage extends React.Component<Props, State> {
 
         let semesters = this.props.reviews.map(review => `${this.props.instances[review.instanceID].term} ${this.props.instances[review.instanceID].year}`)
 
-        let datasouce = this.props.reviews.reverse().filter(review => review.userID !== USERID).map(review => ({
+        let datasource = this.props.reviews.reverse()
+            .filter(review => review.userID !== USERID)
+            .filter(review => {
+                let rating = (review.difficulty + review.workload + review.enjoyability) / 3;
+
+                if (this.state.filters.semesters.length === 1 && this.state.filters.semesters[0] === "All")
+                    return this.state.filters.minimumrating <= rating;
+                
+                if (this.state.filters.semesters.includes(`${this.props.instances[review.instanceID].term} ${this.props.instances[review.instanceID].year}`))
+                    return this.state.filters.minimumrating <= rating;
+                
+                return false;
+            })
+            .map(review => ({
             reviewID: review.reviewID,
             replyable: true,
             showreplies: true,
@@ -80,7 +110,7 @@ class CourseReviewsPage extends React.Component<Props, State> {
         }));
 
         let header = <>
-            <span>{`${datasouce.length} ${datasouce.length > 1 ? 'reviews' : 'review'}`}</span>
+            <span>{`${datasource.length} ${datasource.length > 1 ? 'reviews' : 'review'}`}</span>
         </>
 
         return (
@@ -101,21 +131,56 @@ class CourseReviewsPage extends React.Component<Props, State> {
                                         <Space style={{ width: '100%', marginTop: 10 }} direction='vertical'>
                                             <span>Semesters</span>
                                             <Select key={userreview?.userID} mode="tags" style={{ width: '100%' }} placeholder="Semesters"
-                                                defaultValue={semesters}
-                                                options={
-                                                    semesters.map(semester => ({
-                                                        value: semester
-                                                    }))
-                                                }>
+                                                    value={this.state.filters.semesters}
+                                                    onDeselect={(value) => {
+                                                        if (value === "All" && this.state.filters.semesters.length === 1)
+                                                            return
+                                                        if (this.state.filters.semesters.length === 1)
+                                                            this.setState({
+                                                                filters: {
+                                                                    ...this.state.filters,
+                                                                    semesters: ["All"]
+                                                                }
+                                                            })
+                                                        else  
+                                                            this.setState({
+                                                                filters: {
+                                                                    ...this.state.filters,
+                                                                    semesters: this.state.filters.semesters.filter(semester => semester !== value)
+                                                                }
+                                                            })
+                                                    }}
+                                                    onSelect={(value) => {
+                                                        if (value === "All")
+                                                            this.setState({
+                                                                filters: {
+                                                                    ...this.state.filters,
+                                                                    semesters: ["All"]
+                                                                }
+                                                            });
+                                                        else
+                                                            this.setState({
+                                                                filters: {
+                                                                    ...this.state.filters,
+                                                                    semesters: [...this.state.filters.semesters.filter(semester => semester !== "All"), value]
+                                                                }
+                                                            })
+                                                    }}
+                                                    options={
+                                                        [{value: 'All'}, 
+                                                        ...semesters.map(semester => ({
+                                                            value: semester
+                                                        }))]
+                                                    }>
                                             </Select>
                                             <span>Minimum Overall Rating</span>
-                                            <Rate allowHalf allowClear></Rate>
+                                            <Rate allowHalf allowClear onChange={value => this.setState({filters:{...this.state.filters, minimumrating: value}})}></Rate>
                                         </Space>
                                     </List>
                                 </Card>
                                 <Card bordered={false} style={{marginTop: 5}}>
                                     <List header="Sort by">
-                                        <Radio.Group style={{marginTop: 10}} defaultValue="Ascending">
+                                        <Radio.Group onChange={this.onSortOrderChange} style={{marginTop: 10}} defaultValue="Descending">
                                             <Radio style={{ display: 'block' }} value={"Ascending"}>Ascending</Radio>
                                             <Radio style={{ display: 'block' }} value={"Descending"}>Descending</Radio>
                                         </Radio.Group>
@@ -138,7 +203,7 @@ class CourseReviewsPage extends React.Component<Props, State> {
                             <Review reviewID={userreview.reviewID} />
                         </List>}
                         <List
-                    dataSource={datasouce}
+                    dataSource={datasource}
                     header={header}
                     itemLayout="horizontal"
                     renderItem={props => <Review {...props} />}/>
