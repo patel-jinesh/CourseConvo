@@ -137,7 +137,7 @@ class SearchCoursePage extends React.Component<Props, State> {
                                 <>
                                     {instancebuckets[course.courseID]
                                         ?.map(instanceID =>
-                                            <p>{`${this.props.instances[instanceID].term} ${this.props.instances[instanceID].year}`}</p>)}
+                                            <p key={instanceID}>{`${this.props.instances[instanceID].term} ${this.props.instances[instanceID].year}`}</p>)}
                                 </>
                             }
                         />
