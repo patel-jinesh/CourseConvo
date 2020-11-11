@@ -1,4 +1,4 @@
-import { Comment, Tooltip, Rate, Descriptions, Button, List, Form, Card } from 'antd';
+import { Comment, Tooltip, Rate, Descriptions, Button, List, Form, Card, Tag } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import { LikeFilled, LikeTwoTone, DislikeFilled, DislikeTwoTone } from '@ant-design/icons';
 import React from 'react';
@@ -55,7 +55,7 @@ class Review extends React.Component<Props, State> {
     render() {
         return (
             <Comment
-                author={<a>{this.props.user.name}</a>}
+                author={<span>{this.props.user.name}</span>}
                 avatar={
                     <Avatar
                         src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"

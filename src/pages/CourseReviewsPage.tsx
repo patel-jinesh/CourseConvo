@@ -1,11 +1,10 @@
-import { FrownOutlined } from '@ant-design/icons';
-import { Form, Layout, PageHeader, Result, Space, List, Comment, Card, Drawer, Divider, Button } from "antd";
+import { FrownOutlined, FilterOutlined } from '@ant-design/icons';
+import { Form, Layout, PageHeader, Result, Space, List, Comment, Card, Drawer, Divider, Button, Row, Col, Affix, Pagination, Checkbox, Tag, Dropdown, Menu, Rate, Select, Radio } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
-import InstanceCard from "../components/InstanceCard";
 import CreateCourseForm from "../components/forms/CreateCourseForm";
 import SearchCourseForm from "../components/forms/SearchCourseForm";
 import { Term } from "../data/types";
@@ -31,6 +30,7 @@ const mapState = (state: RootState, props: ComponentProps) => {
     return {
         reviews: Object.values(state.reviews).filter(review => state.instances[review.instanceID].courseID === queryID),
         users: state.users,
+        instances: Object.fromEntries(Object.entries(state.instances).filter(([instnaceID, instance]) => instance.courseID === queryID)),
         course: state.courses[queryID],
     }
 };
@@ -46,7 +46,7 @@ type State = ComponentState
 
 class CourseReviewsPage extends React.Component<Props, State> {
     state: State = {
-        visible: false
+        visible: false,
     }
 
     render() {
@@ -69,25 +69,75 @@ class CourseReviewsPage extends React.Component<Props, State> {
                 extra={<Button onClick={() => this.setState({visible: true})} type="primary">Write a review!</Button>}/>
         }
 
+        let semesters = this.props.reviews.map(review => `${this.props.instances[review.instanceID].term} ${this.props.instances[review.instanceID].year}`)
+
+        let datasouce = this.props.reviews.reverse().filter(review => review.userID !== USERID).map(review => ({
+            reviewID: review.reviewID,
+            replyable: true,
+            showreplies: true,
+            editable: true
+        }));
+
+        let header = <>
+            <p>{`${datasouce.length} ${datasouce.length > 1 ? 'reviews' : 'review'}`}</p>
+        </>
+
         return (
             <PageHeader
-                style={{ width: "100%" }}
+                style={{ width: "100%", minWidth: 900 }}
                 backIcon={false}
                 title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}>
                 {content}
-                <List
-                    dataSource={this.props.reviews.reverse().map(review => ({
-                        reviewID: review.reviewID,
-                        replyable: true,
-                        showreplies: true,
-                        editable: true
-                    }))}
-                    header={`${this.props.reviews.length} ${this.props.reviews.length > 1 ? 'reviews' : 'review'}`}
+                <Row gutter={24} >
+                    {
+                        <Col style={{width: 300}}>
+                            <Affix offsetTop={26}>
+                                <Card bordered={false}>
+                                    <List header="Filters">
+                                        <Space style={{ width: '100%', marginTop: 10 }} direction='vertical'>
+                                            <span>Semesters</span>
+                                            <Select mode="tags" style={{ width: '100%' }} placeholder="Semesters"
+                                                defaultValue={semesters}
+                                                options={
+                                                    semesters.map(semester => ({
+                                                        value: semester
+                                                    }))
+                                                }>
+                                            </Select>
+                                            <span>Minimum Overall Rating</span>
+                                            <Rate allowHalf allowClear></Rate>
+                                        </Space>
+                                    </List>
+                                </Card>
+                                <Card bordered={false} style={{marginTop: 5}}>
+                                    <List header="Sort by">
+                                        <Radio.Group style={{marginTop: 10}}>
+                                            <Radio style={{ display: 'block' }} value={1}>Ascending</Radio>
+                                            <Radio style={{ display: 'block' }} value={2}>Descending</Radio>
+                                        </Radio.Group>
+                                        <Divider style={{margin: '10px 0'}}></Divider>
+                                        <Radio.Group>
+                                            <Radio style={{ display: 'block' }} value={2}>Semester</Radio>
+                                            <Radio style={{ display: 'block' }} value={1}>Course Rating</Radio>
+                                            <Radio style={{ display: 'block' }} value={2}>Date</Radio>
+                                        </Radio.Group>
+                                    </List>
+                                </Card>
+                            </Affix>
+                        </Col>
+                    }
+                    {<Col flex={1}>
+                        <List
+                    dataSource={datasouce}
+                    header={header}
                     itemLayout="horizontal"
                     renderItem={props => <Review {...props} />}/>
+                    </Col>}
+                </Row>
+                
                 <Drawer
                     onClose={() => this.setState({ visible: false })}
-                    title="Create a new account"
+                    title="Write a Review"
                     width={467}
                     visible={this.state.visible}>
                     <ReviewForm
