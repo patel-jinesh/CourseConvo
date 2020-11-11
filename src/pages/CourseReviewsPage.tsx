@@ -21,7 +21,8 @@ type ComponentProps = {
 }
 
 type ComponentState = {
-    visible: boolean
+    visible: boolean,
+    hide: boolean
 }
 
 const mapState = (state: RootState, props: ComponentProps) => {
@@ -47,6 +48,7 @@ type State = ComponentState
 class CourseReviewsPage extends React.Component<Props, State> {
     state: State = {
         visible: false,
+        hide: false,
     }
 
     render() {
@@ -54,19 +56,18 @@ class CourseReviewsPage extends React.Component<Props, State> {
 
         let content: JSX.Element | undefined = undefined;
 
-        if (userreview) {
-            content = <List
-                itemLayout="horizontal"
-                header={"Your review"}>
-                <Review reviewID={userreview.reviewID} />
-            </List>
-        } else {
+        if (!userreview && !this.state.hide) {
             content = <Result
                 status='warning'
                 icon={< FrownOutlined />}
                 title="Seems like you haven't written a review for this course!"
-                subTitle="You can add one by clicking the button below!"
-                extra={<Button onClick={() => this.setState({visible: true})} type="primary">Write a review!</Button>}/>
+                subTitle="If you have taken the course, you can add one by clicking the button below!"
+                extra={
+                    <>
+                        <Button onClick={() => this.setState({ visible: true })} type="primary">Write a review!</Button>
+                        <Button onClick={() => this.setState({ hide: true })}>Hide</Button>
+                    </>
+                } />
         }
 
         let semesters = this.props.reviews.map(review => `${this.props.instances[review.instanceID].term} ${this.props.instances[review.instanceID].year}`)
@@ -79,14 +80,16 @@ class CourseReviewsPage extends React.Component<Props, State> {
         }));
 
         let header = <>
-            <p>{`${datasouce.length} ${datasouce.length > 1 ? 'reviews' : 'review'}`}</p>
+            <span>{`${datasouce.length} ${datasouce.length > 1 ? 'reviews' : 'review'}`}</span>
         </>
 
         return (
             <PageHeader
                 style={{ width: "100%", minWidth: 900 }}
                 backIcon={false}
-                title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}>
+                title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}
+                extra={this.state.hide && <Button onClick={() => this.setState({ visible: true })} type="primary">Write a review!</Button>}
+            >
                 {content}
                 <Row gutter={24} >
                     {
@@ -96,7 +99,7 @@ class CourseReviewsPage extends React.Component<Props, State> {
                                     <List header="Filters">
                                         <Space style={{ width: '100%', marginTop: 10 }} direction='vertical'>
                                             <span>Semesters</span>
-                                            <Select mode="tags" style={{ width: '100%' }} placeholder="Semesters"
+                                            <Select key={userreview?.userID} mode="tags" style={{ width: '100%' }} placeholder="Semesters"
                                                 defaultValue={semesters}
                                                 options={
                                                     semesters.map(semester => ({
@@ -111,15 +114,15 @@ class CourseReviewsPage extends React.Component<Props, State> {
                                 </Card>
                                 <Card bordered={false} style={{marginTop: 5}}>
                                     <List header="Sort by">
-                                        <Radio.Group style={{marginTop: 10}}>
-                                            <Radio style={{ display: 'block' }} value={1}>Ascending</Radio>
-                                            <Radio style={{ display: 'block' }} value={2}>Descending</Radio>
+                                        <Radio.Group style={{marginTop: 10}} defaultValue="Ascending">
+                                            <Radio style={{ display: 'block' }} value={"Ascending"}>Ascending</Radio>
+                                            <Radio style={{ display: 'block' }} value={"Descending"}>Descending</Radio>
                                         </Radio.Group>
                                         <Divider style={{margin: '10px 0'}}></Divider>
-                                        <Radio.Group>
-                                            <Radio style={{ display: 'block' }} value={2}>Semester</Radio>
-                                            <Radio style={{ display: 'block' }} value={1}>Course Rating</Radio>
-                                            <Radio style={{ display: 'block' }} value={2}>Date</Radio>
+                                        <Radio.Group defaultValue="Date">
+                                            <Radio style={{ display: 'block' }} value={"Semester"}>Semester</Radio>
+                                            <Radio style={{ display: 'block' }} value={"Rating"}>Course Rating</Radio>
+                                            <Radio style={{ display: 'block' }} value={"Date"}>Date</Radio>
                                         </Radio.Group>
                                     </List>
                                 </Card>
@@ -127,6 +130,11 @@ class CourseReviewsPage extends React.Component<Props, State> {
                         </Col>
                     }
                     {<Col flex={1}>
+                        {userreview && <List
+                            itemLayout="horizontal"
+                            header={"Your review"}>
+                            <Review reviewID={userreview.reviewID} />
+                        </List>}
                         <List
                     dataSource={datasouce}
                     header={header}
