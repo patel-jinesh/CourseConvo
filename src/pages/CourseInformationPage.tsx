@@ -18,6 +18,7 @@ import {
     Voronoi
 } from 'react-vis';
 import { Term, Status } from "../data/types";
+import GPAGraph from "../components/graphs/GPAGraph";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -130,18 +131,7 @@ class CourseInformationPage extends React.Component<Props, State> {
                     <Tabs defaultActiveKey="0">
                         <TabPane tab="Statistics" key="0">
                             <Content style={{ paddingTop: 20 }}>
-                                <Statistic title="Course Average" valueRender={() => <FlexibleXYPlot xPadding={0.25} margin={{bottom: 100}} height={400} yDomain={[-1, 13]}>
-                                    <VerticalGridLines style={{ stroke: 'rgb(100, 100, 100)' }} />
-                                    <XAxis height={400} tickValues={ticks} tickLabelAngle={-45} tickFormat={(v : any) => formatter(v)} title="Semester" style={{ text: { fill: 'white' }, title: { fill: 'white' } }} />
-                                    <YAxis tickValues={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]} style={{ text: { fill: 'white' } }} />
-                                    <LineMarkSeries curve={'curveMonotoneX'} style={{ fill: "none" }} data={data} />
-                                    {/* <Crosshair
-                                        values={this.state.crosshairValues}
-                                        className={'test-class-name'}
-                                    /> */}
-                                </FlexibleXYPlot>}>
-
-                                </Statistic>
+                                <Statistic className="noselect" title="Course Average" valueRender={() => <GPAGraph records={this.props.records} />}></Statistic>
                             </Content>
                         </TabPane>
                         <TabPane tab="Top Breakdowns" key="1">
