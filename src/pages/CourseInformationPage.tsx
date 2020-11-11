@@ -1,8 +1,9 @@
-import { Layout, PageHeader, Select, Tabs, Statistic, Descriptions, Badge } from "antd";
+import { Layout, PageHeader, Select, Tabs, Statistic, Descriptions, Badge, Button } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { match, withRouter } from "react-router-dom";
+import { PlusOutlined } from '@ant-design/icons';
 import { RootState } from "../app/store";
 import Review from "../components/Review";
 import Breakdown from "../components/Breakdown";
@@ -160,6 +161,7 @@ class CourseInformationPage extends React.Component<Props, State> {
                             </Content>
                         </TabPane>
                         <TabPane tab="Top Breakdowns" key="1">
+                            <Button style={{ marginTop: 30 }} type="primary" icon={<PlusOutlined />}>Add Breakdown</Button>
                             <Content style={{ paddingTop: 20 }}>
                                 {this.props.breakdowns.map(breakdown => {
                                     return <Breakdown breakdownID={breakdown.breakdownID} instanceID={breakdown.instanceID} key={breakdown.breakdownID} />

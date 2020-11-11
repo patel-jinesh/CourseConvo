@@ -88,7 +88,7 @@ class Breakdown extends React.Component<Props> {
                     {this.addPanels()}
                 </Descriptions.Item>
                 <Descriptions.Item label="Lectures">In-Person</Descriptions.Item>
-            </Descriptions>         
+            </Descriptions>       
         );
     }
 }
