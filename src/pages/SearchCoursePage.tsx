@@ -118,7 +118,7 @@ class SearchCoursePage extends React.Component<Props, State> {
                 dataSource={results}
                 renderItem={instance => (
                     <List.Item
-                        key={instance.courseID}
+                        key={instance.instanceID}
                         actions={[
                             <Button
                                 type='link'
