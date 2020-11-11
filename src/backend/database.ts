@@ -213,5 +213,41 @@ export const reviews: Review[] = [
             comment: "I agree",
             datetime: moment().format('LLLL')
         }]
+    },
+    {
+        reviewID: uuidv4(),
+        instanceID: instances[1].instanceID,
+        userID: users[0].userID,
+        difficulty: 3.5,
+        enjoyability: 2,
+        workload: 1,
+        comment: "Best course ever",
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().format('LLLL'),
+        replies: [{
+            userID: users[1].userID,
+            comment: "I agree",
+            datetime: moment().format('LLLL')
+        }]
+    },
+    {
+        reviewID: uuidv4(),
+        instanceID: instances[2].instanceID,
+        userID: users[2].userID,
+        difficulty: 3.5,
+        enjoyability: 2,
+        workload: 1,
+        comment: "Best course ever",
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().format('LLLL'),
+        replies: [{
+            userID: users[1].userID,
+            comment: "I agree",
+            datetime: moment().format('LLLL')
+        }]
     }
 ]

@@ -12,6 +12,8 @@ import Review from '../components/Review';
 import { USERID } from '../backend/database';
 import ReviewForm from '../components/forms/ReviewForm';
 import { RadioChangeEvent } from 'antd/lib/radio';
+import { reverse } from 'dns';
+import moment from 'moment';
 
 const { Content } = Layout;
 
@@ -64,10 +66,6 @@ class CourseReviewsPage extends React.Component<Props, State> {
         sortprop: "Date"
     }
 
-    onSortOrderChange = (e: RadioChangeEvent) => {
-        
-    }
-
     render() {
         let userreview = this.props.reviews.find(review => review.userID === USERID);
 
@@ -86,8 +84,11 @@ class CourseReviewsPage extends React.Component<Props, State> {
                     </>
                 } />
         }
-
-        let semesters = this.props.reviews.map(review => `${this.props.instances[review.instanceID].term} ${this.props.instances[review.instanceID].year}`)
+        
+        let semesters = this.props.reviews
+            .map(review => `${this.props.instances[review.instanceID].term} ${this.props.instances[review.instanceID].year}`)
+            .unique()
+            .sort();
 
         let datasource = this.props.reviews.reverse()
             .filter(review => review.userID !== USERID)
@@ -102,13 +103,31 @@ class CourseReviewsPage extends React.Component<Props, State> {
                 
                 return false;
             })
-            .map(review => ({
-            reviewID: review.reviewID,
-            replyable: true,
-            showreplies: true,
-            editable: true
-        }));
+            .sort((a, b) => {
+                if (this.state.sortprop === "Date")
+                    return moment(a.datetime).diff(moment(b.datetime)) ? 0 : 1
+                
+                if (this.state.sortprop === "Rating") {
+                    let arating = (a.difficulty + a.workload + a.enjoyability) / 3;
+                    let brating = (b.difficulty + b.workload + b.enjoyability) / 3;
 
+                    return arating - brating;
+                }
+
+                let asem = `${this.props.instances[a.instanceID].term} ${this.props.instances[a.instanceID].year}`;
+                let bsem = `${this.props.instances[b.instanceID].term} ${this.props.instances[b.instanceID].year}`;
+
+                return asem.localeCompare(bsem);
+            })
+            .map(review => ({
+                reviewID: review.reviewID,
+                replyable: true,
+                showreplies: true,
+                editable: true
+            }))
+
+        console.log(datasource)
+        
         let header = <>
             <span>{`${datasource.length} ${datasource.length > 1 ? 'reviews' : 'review'}`}</span>
         </>
@@ -180,12 +199,12 @@ class CourseReviewsPage extends React.Component<Props, State> {
                                 </Card>
                                 <Card bordered={false} style={{marginTop: 5}}>
                                     <List header="Sort by">
-                                        <Radio.Group onChange={this.onSortOrderChange} style={{marginTop: 10}} defaultValue="Descending">
+                                        <Radio.Group onChange={e => this.setState({ sortorder: e.target.value })} style={{marginTop: 10}} defaultValue="Descending">
                                             <Radio style={{ display: 'block' }} value={"Ascending"}>Ascending</Radio>
                                             <Radio style={{ display: 'block' }} value={"Descending"}>Descending</Radio>
                                         </Radio.Group>
                                         <Divider style={{margin: '10px 0'}}></Divider>
-                                        <Radio.Group defaultValue="Date">
+                                        <Radio.Group onChange={e => this.setState({ sortprop: e.target.value })} defaultValue="Date">
                                             <Radio style={{ display: 'block' }} value={"Semester"}>Semester</Radio>
                                             <Radio style={{ display: 'block' }} value={"Rating"}>Course Rating</Radio>
                                             <Radio style={{ display: 'block' }} value={"Date"}>Date</Radio>
