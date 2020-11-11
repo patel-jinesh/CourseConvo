@@ -109,6 +109,7 @@ class SearchCoursePage extends React.Component<Props, State> {
             />
         } else {
             content = <List
+                rowKey={course => course.courseID}
                 header={`${results.length} ${results.length > 1 ? 'results' : 'result'}`}
                 itemLayout="vertical"
                 dataSource={results}
@@ -136,7 +137,7 @@ class SearchCoursePage extends React.Component<Props, State> {
                                 <>
                                     {instancebuckets[course.courseID]
                                         ?.map(instanceID =>
-                                            <p>{`${this.props.instances[instanceID].term} ${this.props.instances[instanceID].year}`}</p>)}
+                                            <p key={instanceID}>{`${this.props.instances[instanceID].term} ${this.props.instances[instanceID].year}`}</p>)}
                                 </>
                             }
                         />
