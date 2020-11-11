@@ -103,6 +103,27 @@ export const courses: Course[] = coursesdb.map(([subject, code, name]) => {
 })
 
 export const instances: CourseInstance[] = [
+    {
+        instanceID: uuidv4(),
+        courseID: courses[2].courseID,
+        instructor: "Ryan Leduc",
+        term: Term.FALL,
+        year: 2017
+    },
+    {
+        instanceID: uuidv4(),
+        courseID: courses[3].courseID,
+        instructor: "Wolfram Kahl",
+        term: Term.FALL,
+        year: 2017
+    },
+    {
+        instanceID: uuidv4(),
+        courseID: courses[4].courseID,
+        instructor: "Willam Farmer",
+        term: Term.WINTER,
+        year: 2018
+    },
     ...Array(10).fill(undefined).map((_, i) => ({
         instanceID: uuidv4(),
         courseID: courses[0].courseID,
@@ -110,13 +131,6 @@ export const instances: CourseInstance[] = [
         term: Term.FALL,
         year: 2015 + i
     })),
-    {
-        instanceID: uuidv4(),
-        courseID: courses[2].courseID,
-        instructor: "Ryan Leduc",
-        term: Term.FALL,
-        year: 2017
-    }
 ]
 
 /**
@@ -180,7 +194,26 @@ export const reviews: Review[] = [
         reviewID: uuidv4(),
         instanceID: instances[0].instanceID,
         userID: users[1].userID,
-        difficulty: 3.5,
+        difficulty: 5.5,
+        enjoyability: 2.7,
+        workload: 1,
+        comment: "Best course ever",
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().format('LLLL'),
+        replies: {
+            [users[1].userID]: {
+                comment: "I agree",
+                datetime: moment().format('LLLL')
+            }
+        }
+    },
+    {
+        reviewID: uuidv4(),
+        instanceID: instances[1].instanceID,
+        userID: users[1].userID,
+        difficulty: 4.5,
         enjoyability: 2,
         workload: 1,
         comment: "Best course ever",
@@ -194,5 +227,66 @@ export const reviews: Review[] = [
                 datetime: moment().format('LLLL')
             }
         }
-    }
+    },
+
+
+    // {
+    //     reviewID: uuidv4(),
+    //     instanceID: instances[1].instanceID,
+    //     userID: users[1].userID,
+    //     difficulty: 4.5,
+    //     enjoyability: 2,
+    //     workload: 1,
+    //     comment: "Best course ever",
+    //     isAnonymous: false,
+    //     upvoterIDs: {},
+    //     downvoterIDs: {},
+    //     datetime: moment().format('LLLL'),
+    //     replies: {
+    //         [users[1].userID]: {
+    //             comment: "I agree",
+    //             datetime: moment().format('LLLL')
+    //         }
+    //     },
+    // },
+
+    // {
+    //     reviewID: uuidv4(),
+    //     instanceID: instances[2].instanceID,
+    //     userID: users[1].userID,
+    //     difficulty: 4.5,
+    //     enjoyability: 2,
+    //     workload: 1,
+    //     comment: "Best course ever",
+    //     isAnonymous: false,
+    //     upvoterIDs: {},
+    //     downvoterIDs: {},
+    //     datetime: moment().format('LLLL'),
+    //     replies: {
+    //         [users[1].userID]: {
+    //             comment: "I agree",
+    //             datetime: moment().format('LLLL')
+    //         }
+    //     },
+    // },
+
+    // {
+    //     reviewID: uuidv4(),
+    //     instanceID: instances[3].instanceID,
+    //     userID: users[1].userID,
+    //     difficulty: 4.5,
+    //     enjoyability: 2,
+    //     workload: 1,
+    //     comment: "Best course ever",
+    //     isAnonymous: false,
+    //     upvoterIDs: {},
+    //     downvoterIDs: {},
+    //     datetime: moment().format('LLLL'),
+    //     replies: {
+    //         [users[1].userID]: {
+    //             comment: "I agree",
+    //             datetime: moment().format('LLLL')
+    //         }
+    //     },
+    // },
 ]

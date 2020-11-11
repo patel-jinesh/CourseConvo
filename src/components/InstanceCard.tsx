@@ -42,7 +42,7 @@ class InstanceCard extends React.Component<Props> {
                             <Button
                                 type='link'
                                 icon={<PieChartOutlined />}
-                                onClick={() => this.props.history.push({ pathname: '/breakdowns', search: `?instanceID=${this.props.instanceID}&courseID=${this.props.course.courseID}` })}/>
+                                onClick={() => this.props.history.push({ pathname: '/breakdowns', search: `?instanceID=${this.props.instanceID}&courseID=${this.props.course.courseID}` })} />
                         </Tooltip>
                         <Tooltip title='Reviews'>
                             <Button
