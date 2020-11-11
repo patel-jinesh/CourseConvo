@@ -109,6 +109,7 @@ class SearchCoursePage extends React.Component<Props, State> {
             />
         } else {
             content = <List
+                rowKey={course => course.courseID}
                 header={`${results.length} ${results.length > 1 ? 'results' : 'result'}`}
                 itemLayout="vertical"
                 dataSource={results}
