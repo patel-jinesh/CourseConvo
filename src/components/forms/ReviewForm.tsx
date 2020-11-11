@@ -140,18 +140,18 @@ class ReviewForm extends React.Component<Props, State> {
                     }
                 </Form.Item>
                 <Form.Item required name="difficulty" label="Difficulty">
-                    <Rate allowHalf allowClear></Rate>
+                    <Rate allowHalf></Rate>
                 </Form.Item>
                 <Form.Item required name="enjoyability" label="Enjoyability">
-                    <Rate allowHalf allowClear></Rate>
+                    <Rate allowHalf></Rate>
                 </Form.Item>
                 <Form.Item required name="workload" label="Workload">
-                    <Rate allowHalf allowClear></Rate>
+                    <Rate allowHalf></Rate>
                 </Form.Item>
-                <Form.Item required name="comment" label="Comment">
+                <Form.Item name="comment" label="Comment">
                     <TextArea rows={4} />
                 </Form.Item>
-                <Form.Item required name="anonymous" label="Anonymous" valuePropName="checked">
+                <Form.Item name="anonymous" label="Anonymous" valuePropName="checked">
                     <Switch></Switch>
                 </Form.Item>
                 <Form.Item shouldUpdate={true} label=" " colon={false}>
