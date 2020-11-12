@@ -105,7 +105,7 @@ class ReviewForm extends React.Component<Props, State> {
                         {addDateForm("50", "middle")}
                     </Input.Group>
                 </Form.Item>
-                {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.INSTRUCTOR])}
+                {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.INSTRUCTOR], this.props.courseID)}
                 <Form.Item required name="difficulty" label="Difficulty">
                     <SmileRate></SmileRate>
                 </Form.Item>

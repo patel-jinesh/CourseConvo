@@ -124,7 +124,7 @@ function collectForms(course: any, instance: any, instances: CourseInstance[], f
     return formList;
 }
 
-export function addForms(courses: Course[], instances: CourseInstance[], forms: FormType[]) {
+export function addForms(courses: Course[], instances: CourseInstance[], forms: FormType[], courseID?: string) {
     return (
         <Form.Item
             noStyle
@@ -141,7 +141,7 @@ export function addForms(courses: Course[], instances: CourseInstance[], forms: 
                         course.subject === subject);
                     
                     let instance = instances.find(instance =>
-                        instance.courseID === course?.courseID &&
+                        instance.courseID === (courseID ?? course?.courseID) &&
                         instance.term === term &&
                         instance.year === year);
 
