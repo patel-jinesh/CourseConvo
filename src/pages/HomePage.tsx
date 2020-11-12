@@ -20,6 +20,7 @@ type State = ComponentState
 class HomePage extends React.Component<Props, State> {
     render() {
         return (
+            //Page header
             <PageHeader
                 title="Home">
             </PageHeader>

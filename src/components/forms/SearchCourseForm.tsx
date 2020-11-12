@@ -6,6 +6,7 @@ import React, { RefObject } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../../app/store";
 import { Term } from "../../data/types";
+import { addTermForm, addDateForm } from "../../utilities/formUtils";
 
 const { Option } = AutoComplete;
 
@@ -106,23 +107,8 @@ class CreateCourseForm extends React.Component<Props, State>{
                             </Form.Item>
                             <Form.Item >
                                 <Input.Group compact>
-                                    <Form.Item
-                                        name='term'
-                                        rules={[{ required: true, message: 'Please input the Term!' }]}
-                                        noStyle>
-                                        <Select style={{ width: 110 }} size='large' placeholder="Term">
-                                            <Option value={Term.FALL}>{Term.FALL}</Option>
-                                            <Option value={Term.WINTER}>{Term.WINTER}</Option>
-                                            <Option value={Term.SPRING}>{Term.SPRING}</Option>
-                                            <Option value={Term.SUMMER}>{Term.SUMMER}</Option>
-                                        </Select>
-                                    </Form.Item>
-                                    <Form.Item
-                                        name='year'
-                                        rules={[{ required: true, message: 'Please input the Year!' }]}
-                                        noStyle>
-                                        <DatePicker size='large' picker="year" />
-                                    </Form.Item>
+                                    {addTermForm("32.5", "large")}
+                                    {addDateForm("67", "large")}
                                 </Input.Group>
                             </Form.Item>
                             <Form.Item>

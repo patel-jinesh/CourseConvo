@@ -7,10 +7,11 @@ import { connect, ConnectedProps } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
 import { RootState } from "../../app/store";
 import { USERID } from "../../backend/database";
-import { Status, Term } from "../../data/types";
+import { Status, Term, FormType } from "../../data/types";
 import { add as addCourse } from '../../features/courses/course';
 import { add as addInstance } from '../../features/courses/instance';
 import { add as addRecord, edit as editRecord } from '../../features/courses/record';
+import { addForms, addTermForm } from "../../utilities/formUtils";
 
 const { Option } = AutoComplete;
 
@@ -247,55 +248,7 @@ class AcademicRecordForm extends React.Component<Props, State>{
                             </>
                     }
                 </Form.Item>
-                <Form.Item
-                    noStyle
-                    dependencies={[['subject'], ['code'], ['term'], ['year']]}>
-                    {
-                        ({ getFieldValue }) => {
-                            let subject = getFieldValue('subject');
-                            let code = getFieldValue('code');
-                            let term = getFieldValue('term');
-                            let year = getFieldValue('year')?.year();
-
-                            let course = Object.values(this.props.courses).find(course =>
-                                course.code === code &&
-                                course.subject === subject);
-                            
-                            let instance = Object.values(this.props.instances).find(instance =>
-                                instance.courseID === course?.courseID &&
-                                instance.term === term &&
-                                instance.year === year);
-
-                            return (
-                                <>
-                                    <Form.Item
-                                        name="name"
-                                        label="Course Name"
-                                        rules={[{ required: true, message: 'Please input the course name!' }]}
-                                        required>
-                                        <Input disabled={course !== undefined}></Input>
-                                    </Form.Item>
-                                    <Form.Item
-                                        name="instructor"
-                                        label="Instructor"
-                                        rules={[{ required: true, message: "Please input the instructor name!" }]}
-                                        required>
-                                        <AutoComplete
-                                            disabled={instance !== undefined}
-                                            filterOption={(i, o) => o?.value.toUpperCase().indexOf(i.toUpperCase()) === 0}
-                                            options={
-                                                Object.values(this.props.instances)
-                                                    .map(instance => instance.instructor)
-                                                    .unique()
-                                                    .map(instructor => ({ value: instructor }))
-                                            }
-                                        />
-                                    </Form.Item>
-                                </>
-                            )
-                        }
-                    }
-                </Form.Item>
+                {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.COURSE, FormType.INSTRUCTOR])}
                 <Form.Item
                     name='status'
                     label="Status"
