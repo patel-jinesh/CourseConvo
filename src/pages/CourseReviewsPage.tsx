@@ -9,6 +9,7 @@ import { USERID } from '../backend/database';
 import ReviewForm from '../components/forms/ReviewForm';
 import NumericRate from '../components/NumericRate';
 import Review from '../components/Review';
+import ReportForm from '../components/forms/ReportForm';
 
 type ComponentProps = {
     match: match,
@@ -219,7 +220,7 @@ class CourseReviewsPage extends React.Component<Props, State> {
                         {userreview && <List
                             itemLayout="horizontal"
                             header={"Your review"}>
-                            <Review editable reviewID={userreview.reviewID} />
+                            <Review showreplies editable reviewID={userreview.reviewID} />
                         </List>}
                         <List
                             rowKey={review => review.reviewID}
@@ -229,7 +230,7 @@ class CourseReviewsPage extends React.Component<Props, State> {
                     renderItem={props => <Review {...props} />}/>
                     </Col>}
                 </Row>
-                
+
                 <Drawer
                     onClose={() => this.setState({ visible: false })}
                     title="Write a Review"

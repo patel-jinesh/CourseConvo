@@ -1,10 +1,13 @@
-import { AutoComplete, Button, Form, Radio } from 'antd';
+import { AutoComplete, Button, Form, Radio, Space, Select } from 'antd';
 import TextArea from 'antd/lib/input/TextArea';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../app/store';
 
-type ComponentProps = {}
+type ComponentProps = {
+    onFinish?: () => void,
+    onCancel?: () => void,
+}
 
 type ComponentState = {}
 
@@ -24,14 +27,14 @@ class ReportForm extends React.Component<Props, State> {
 
     render() {
         return (
-            <Form layout="horizontal" labelCol={{ flex: '100px' }} labelAlign={"left"}>
-                <Form.Item required name="type" label="Report Type">
-                    <AutoComplete options={[{ value: "Bot account" }, { value: "Foul language" }]}></AutoComplete>
+            <Form layout="horizontal" labelCol={{ flex: '100px' }} labelAlign={"left"} onFinish={this.props.onFinish}>
+                <Form.Item rules={[{ required: true, message: "Please specify type" }]} name="type" label="Report Type">
+                    <Select mode="tags" options={[{ value: "Bot account" }, { value: "Foul language" }]}></Select>
                 </Form.Item>
-                <Form.Item required name="context" label="Context">
+                <Form.Item rules={[{ required: true, message: "Please provide context" }]} name="context" label="Context">
                     <TextArea rows={4}></TextArea>
                 </Form.Item>
-                <Form.Item required name="severity" label="Severity">
+                <Form.Item rules={[{required: true, message: "Please specify severity"}]} name="severity" label="Severity">
                     <Radio.Group
                         options={["Severe", "High", "Medium", "Low"]}
                         optionType="button"
@@ -39,7 +42,10 @@ class ReportForm extends React.Component<Props, State> {
                     />
                 </Form.Item>
                 <Form.Item label=" " colon={false}>
-                    <Button type='primary' htmlType='submit'>Submit</Button>
+                    <Space direction='horizontal'>
+                        <Button type='primary' htmlType='submit'>Submit</Button>
+                        <Button type='default' onClick={this.props.onCancel}>Cancel</Button>
+                    </Space>
                 </Form.Item>
             </Form>
         );
