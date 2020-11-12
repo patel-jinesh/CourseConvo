@@ -1,16 +1,11 @@
-import { SearchOutlined } from '@ant-design/icons';
-import { AutoComplete, Button, DatePicker, Form, Input, Select } from "antd";
+import { AutoComplete, DatePicker, Form, Input, Select } from "antd";
 import { SizeType } from 'antd/lib/config-provider/SizeContext';
-import { FormInstance } from "antd/lib/form/hooks/useForm";
-import { NamePath } from "antd/lib/form/interface";
 import React, { RefObject } from "react";
-import { connect, ConnectedProps } from "react-redux";
-import { RootState } from "../app/store";
 import { Course, CourseInstance, FormType, Term } from "../data/types";
 
 const { Option } = AutoComplete;
 
-export function addTermForm(width: string, s: SizeType) {
+export function addTermForm(width: any, s: SizeType) {
     return (
         <Form.Item
             name='term'
@@ -26,13 +21,57 @@ export function addTermForm(width: string, s: SizeType) {
     );
 }
 
-export function addDateForm(width: string, s: SizeType) {
+export function addDateForm(width: any, s: SizeType) {
     return (
         <Form.Item
             name='year'
             rules={[{ required: true, message: 'Please input the Year!' }]}
             noStyle>
             <DatePicker style={{ width: width + "%" }} size={s} picker="year" />
+        </Form.Item>
+    );
+}
+
+function mapForm(courses: Course[], name: string, getFieldValue: any)
+{
+    if (name == "subject") {
+        return (
+            courses
+                .map(course => course.subject)
+                .unique()
+                .map(subject => ({ value: subject }))
+        );
+    }
+    else if (name == "code") {
+        return (
+            courses
+                .filter(course => course.subject === getFieldValue('subject'))
+                .map(course => course.code)
+                .unique()
+                .map(code => ({ value: code }))
+        );
+    }
+}
+
+export function addFilterForm(courses: Course[], name: string, pattern: RegExp,  width: any, length: any, sz: SizeType, getFieldValue: any) {
+    return (
+        <Form.Item
+            normalize={(v: string) => v !== "" ? v.toUpperCase().replace(" ", "").substr(0,length) : undefined}
+            name={name}
+            rules={[
+                { required: true, message: 'Please input the ' + name + '!' },
+                { pattern: pattern, message: 'Not a valid ' + name + '!' }]
+            }
+            noStyle>
+            <AutoComplete
+                style={{ width: width + '%' }}
+                size={sz}
+                placeholder={name.charAt(0).toUpperCase() + name.slice(1)}
+                filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
+                options={
+                    mapForm(courses, name, getFieldValue)
+                }>
+            </AutoComplete>
         </Form.Item>
     );
 }
