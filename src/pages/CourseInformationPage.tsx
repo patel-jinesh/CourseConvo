@@ -1,24 +1,15 @@
-import { Layout, PageHeader, Select, Tabs, Statistic, Descriptions, Badge, Button } from "antd";
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Layout, PageHeader, Statistic, Tabs } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { match, withRouter } from "react-router-dom";
-import { PlusOutlined } from '@ant-design/icons';
 import { RootState } from "../app/store";
-import Review from "../components/Review";
 import Breakdown from "../components/Breakdown";
-
-import {
-    FlexibleXYPlot,
-    XAxis,
-    YAxis,
-    VerticalGridLines,
-    Crosshair,
-    LineMarkSeries,
-    Voronoi
-} from 'react-vis';
-import { Term, Status } from "../data/types";
 import GPAGraph from "../components/graphs/GPAGraph";
+import Review from "../components/Review";
+import { Status, Term } from "../data/types";
+
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -109,17 +100,6 @@ class CourseInformationPage extends React.Component<Props, State> {
                 data.push({ x: semval, y: averages[semester] });
             
             ticks.push(semval);
-        }
-
-        console.log(minsem, maxsem);
-        console.log(data);
-
-        let formatter = (v: number) => {
-            if (v % 1 === 0) return `${Term.WINTER} ${v}`;
-            if (v % 1 === 0.25) return `${Term.SPRING} ${v - 0.25}`;
-            if (v % 1 === 0.5) return `${Term.SUMMER} ${v - 0.5}`;
-            if (v % 1 === 0.75) return `${Term.FALL} ${v - 0.75}`;
-            return "?";
         }
 
         return (

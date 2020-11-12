@@ -1,13 +1,8 @@
-import { Comment, Tooltip, Rate, Descriptions, Button, List, Form, Select, Input, AutoComplete, Radio } from 'antd';
-import Avatar from 'antd/lib/avatar/avatar';
-import { LikeFilled, LikeTwoTone, DislikeFilled, DislikeTwoTone } from '@ant-design/icons';
+import { AutoComplete, Button, Form, Radio } from 'antd';
+import TextArea from 'antd/lib/input/TextArea';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../app/store';
-import moment from 'moment';
-import { upvote, downvote, reply, unvote } from '../../features/courses/review';
-import { USERID } from '../../backend/database';
-import TextArea from 'antd/lib/input/TextArea';
 
 type ComponentProps = {}
 

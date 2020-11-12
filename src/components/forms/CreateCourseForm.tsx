@@ -1,19 +1,17 @@
-import { AutoComplete, Button, DatePicker, Form, Input, Select, Tooltip, Space } from "antd";
+import { Button, Form, Input, Space, Tooltip } from "antd";
 import { FormInstance } from "antd/lib/form/hooks/useForm";
 import { NamePath } from "antd/lib/form/interface";
+import { History, Location } from "history";
+import moment from "moment";
 import React, { RefObject } from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { match, withRouter } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import { RootState } from "../../app/store";
-import { FormType, Term } from "../../data/types";
+import { FormType } from "../../data/types";
 import { add as addCourse } from '../../features/courses/course';
 import { add as addInstance } from '../../features/courses/instance';
-import moment from "moment";
-import { History, Location } from "history";
-import { match, withRouter } from "react-router-dom";
 import { addDateForm, addFilterForm, addForms, addTermForm } from "../../utilities/formUtils";
-
-const { Option } = AutoComplete;
 
 interface FieldData {
     name: NamePath;

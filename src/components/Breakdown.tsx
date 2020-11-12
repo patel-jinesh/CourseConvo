@@ -1,10 +1,8 @@
-import { Descriptions, Badge, Collapse, Button} from 'antd';
-import Avatar from 'antd/lib/avatar/avatar';
 import { CaretRightOutlined } from '@ant-design/icons';
+import { Collapse, Descriptions } from 'antd';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
-import { USERID } from '../backend/database';
 import { Mark } from '../data/types';
 import { add } from '../features/courses/course';
 
@@ -46,8 +44,8 @@ class Breakdown extends React.Component<Props> {
     //Add a specific assessment panel
     addAssessment (type: string) {
         return (
-            this.props.breakdown.marks.map (mark => {
-                if ( (mark.type == type) && (mark.count > 0)) {
+            this.props.breakdown.marks.map(mark => {
+                if ( (mark.type === type) && (mark.count > 0)) {
                     return (    
                             <Collapse
                                 bordered={false}
@@ -59,6 +57,8 @@ class Breakdown extends React.Component<Props> {
                             </Collapse>
                     );
                 }
+
+                return undefined;
             }
             )
         );

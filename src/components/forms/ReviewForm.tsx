@@ -1,22 +1,15 @@
-import { Comment, Tooltip, Rate, Descriptions, Button, List, Form, Select, Input, AutoComplete, Radio, Layout, Row, Col, Divider, DatePicker, Switch, Space } from 'antd';
-import Avatar from 'antd/lib/avatar/avatar';
-import { LikeFilled, LikeTwoTone, DislikeFilled, DislikeTwoTone } from '@ant-design/icons';
+import { Button, Form, Input, Space, Switch } from 'antd';
+import TextArea from 'antd/lib/input/TextArea';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '../../app/store';
-import moment from 'moment';
-import { upvote, downvote, reply, unvote, add as addReview, edit as editReview } from '../../features/courses/review';
-import { add as addInstance } from '../../features/courses/instance';
-import { USERID } from '../../backend/database';
-import TextArea from 'antd/lib/input/TextArea';
-import CreateCourseForm from './CreateCourseForm';
-import { FormType, Term } from '../../data/types';
 import { v4 as uuidv4 } from 'uuid';
-import SmileRate from '../SmileRate';
-import NumericRate from '../NumericRate';
+import { RootState } from '../../app/store';
+import { USERID } from '../../backend/database';
+import { FormType } from '../../data/types';
+import { add as addInstance } from '../../features/courses/instance';
+import { add as addReview, edit as editReview } from '../../features/courses/review';
 import { addDateForm, addForms, addTermForm } from "../../utilities/formUtils";
-
-const { Option } = Select;
+import SmileRate from '../SmileRate';
 
 type ComponentProps = {
     initialValues?: any;

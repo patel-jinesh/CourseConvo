@@ -1,17 +1,16 @@
-import { Comment, Tooltip, Rate, Descriptions, Button, List, Form, Card, Tag, Row, Col, Space, Divider, Typography, Drawer } from 'antd';
-import { FrownOutlined, MehOutlined, SmileOutlined } from '@ant-design/icons';
+import { DislikeFilled, DislikeTwoTone, LikeFilled, LikeTwoTone, UserOutlined } from '@ant-design/icons';
+import { Button, Card, Col, Comment, Drawer, Form, List, Row, Space, Tooltip, Typography } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
-import { LikeFilled, LikeTwoTone, DislikeFilled, DislikeTwoTone, UserOutlined } from '@ant-design/icons';
+import TextArea from 'antd/lib/input/TextArea';
+import moment from 'moment';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
-import moment from 'moment';
-import { upvote, downvote, reply, unvote } from '../features/courses/review';
 import { USERID } from '../backend/database';
-import TextArea from 'antd/lib/input/TextArea';
+import { downvote, reply, unvote, upvote } from '../features/courses/review';
 import ReportForm from './forms/ReportForm';
-import SmileRate from './SmileRate';
 import ReviewForm from './forms/ReviewForm';
+import SmileRate from './SmileRate';
 
 const { Paragraph } = Typography;
 

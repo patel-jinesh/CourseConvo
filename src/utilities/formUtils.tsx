@@ -1,6 +1,6 @@
 import { AutoComplete, DatePicker, Form, Input, Select } from "antd";
 import { SizeType } from 'antd/lib/config-provider/SizeContext';
-import React, { RefObject, CSSProperties } from "react";
+import React, { CSSProperties } from "react";
 import { Course, CourseInstance, FormType, Term } from "../data/types";
 
 const { Option } = AutoComplete;
@@ -34,7 +34,7 @@ export function addDateForm(width: any, s: SizeType) {
 
 function mapForm(courses: Course[], name: string, getFieldValue: any)
 {
-    if (name == "subject") {
+    if (name === "subject") {
         return (
             courses
                 .map(course => course.subject)
@@ -42,7 +42,7 @@ function mapForm(courses: Course[], name: string, getFieldValue: any)
                 .map(subject => ({ value: subject }))
         );
     }
-    else if (name == "code") {
+    else if (name === "code") {
         return (
             courses
                 .filter(course => course.subject === getFieldValue('subject'))
@@ -115,9 +115,9 @@ function collectForms(course: any, instance: any, instances: CourseInstance[], f
 
     for (i = 0; i < forms.length; i++)
     {
-        if (forms[i] == "Course")
+        if (forms[i] === "Course")
             formList.push(addCourseForm(course))
-        else if (forms[i] == "Instructor")
+        else if (forms[i] === "Instructor")
             formList.push(addInstructorForm(instance, instances))
     }
 

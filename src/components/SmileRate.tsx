@@ -1,9 +1,9 @@
-import { RootState } from "../app/store";
-import { connect, ConnectedProps } from "react-redux";
-import React from "react";
-import { Rate } from "antd";
-
 import { FrownOutlined, MehOutlined, SmileOutlined } from '@ant-design/icons';
+import { Rate } from "antd";
+import React from "react";
+import { connect, ConnectedProps } from "react-redux";
+import { RootState } from "../app/store";
+
 
 type ComponentProps = {
     tooltips?: string[]

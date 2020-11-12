@@ -1,14 +1,10 @@
-import { SearchOutlined } from '@ant-design/icons';
-import { AutoComplete, Button, DatePicker, Form, Input, Select } from "antd";
+import { Form, Input } from "antd";
 import { FormInstance } from "antd/lib/form/hooks/useForm";
 import { NamePath } from "antd/lib/form/interface";
 import React, { RefObject } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../../app/store";
-import { Term } from "../../data/types";
-import { addTermForm, addDateForm, addFilterForm } from "../../utilities/formUtils";
-
-const { Option } = AutoComplete;
+import { addFilterForm } from "../../utilities/formUtils";
 
 interface FieldData {
     name: NamePath;

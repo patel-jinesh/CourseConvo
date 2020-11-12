@@ -1,22 +1,14 @@
-import { FrownOutlined, FilterOutlined } from '@ant-design/icons';
-import { Form, Layout, PageHeader, Result, Space, List, Comment, Card, Drawer, Divider, Button, Row, Col, Affix, Pagination, Checkbox, Tag, Dropdown, Menu, Rate, Select, Radio } from "antd";
+import { FrownOutlined } from '@ant-design/icons';
+import { Affix, Button, Card, Col, Divider, Drawer, Layout, List, PageHeader, Radio, Result, Row, Select, Space } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
-import CreateCourseForm from "../components/forms/CreateCourseForm";
-import SearchCourseForm from "../components/forms/SearchCourseForm";
-import { Term, CourseInstance } from "../data/types";
-import Review from '../components/Review';
 import { USERID } from '../backend/database';
 import ReviewForm from '../components/forms/ReviewForm';
-import { RadioChangeEvent } from 'antd/lib/radio';
-import { reverse } from 'dns';
-import moment from 'moment';
 import NumericRate from '../components/NumericRate';
-
-const { Content } = Layout;
+import Review from '../components/Review';
 
 type ComponentProps = {
     match: match,
@@ -33,25 +25,6 @@ type ComponentState = {
     },
     sortorder: "Ascending" | "Descending",
     sortprop: "Date" | "Rating" | "Semester"
-}
-
-const instance = (instanceID: string, state: RootState) => {
-    const { courseID, ...instance } = state.instances[instanceID];
-
-    return {
-        ...instance,
-        course: state.courses[courseID]
-    }
-}
-
-const review = (reviewID: string, state: RootState) => {
-    const { instanceID, userID, ...review } = state.reviews[reviewID];
-
-    return {
-        ...review,
-        instance: instance(instanceID, state),
-        user: state.users[userID],
-    }
 }
 
 const mapState = (state: RootState, props: ComponentProps) => {

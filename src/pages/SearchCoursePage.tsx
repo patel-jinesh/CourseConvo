@@ -1,18 +1,14 @@
-import { CommentOutlined, InfoCircleOutlined, PieChartOutlined } from '@ant-design/icons';
-import { FrownOutlined } from '@ant-design/icons';
-import { Form, Layout, PageHeader, Result, Space, List, Button, Tooltip, Row, Col, Radio, Card, Affix, Divider, Checkbox, Select, Tag, Pagination } from "antd";
+import { CommentOutlined, FrownOutlined, InfoCircleOutlined, PieChartOutlined } from '@ant-design/icons';
+import { Button, Layout, List, PageHeader, Result } from "antd";
+import { FormInstance } from 'antd/lib/form';
 import { History, Location } from "history";
+import moment from 'moment';
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
 import CreateCourseForm from "../components/forms/CreateCourseForm";
 import SearchCourseForm from "../components/forms/SearchCourseForm";
-import { Term } from "../data/types";
-import { FormInstance } from 'antd/lib/form';
-import moment from 'moment';
-
-const { Content } = Layout;
 
 type ComponentProps = {
     match: match,

@@ -7,11 +7,11 @@ import { connect, ConnectedProps } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
 import { RootState } from "../../app/store";
 import { USERID } from "../../backend/database";
-import { Status, Term, FormType } from "../../data/types";
+import { FormType, Status, Term } from "../../data/types";
 import { add as addCourse } from '../../features/courses/course';
 import { add as addInstance } from '../../features/courses/instance';
 import { add as addRecord, edit as editRecord } from '../../features/courses/record';
-import { addForms, addTermForm } from "../../utilities/formUtils";
+import { addForms } from "../../utilities/formUtils";
 
 const { Option } = AutoComplete;
 
