@@ -6,7 +6,7 @@ import React, { RefObject } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../../app/store";
 import { Term } from "../../data/types";
-import { addTermForm, addDateForm } from "../../utilities/formUtils";
+import { addTermForm, addDateForm, addFilterForm } from "../../utilities/formUtils";
 
 const { Option } = AutoComplete;
 
@@ -64,51 +64,12 @@ class CreateCourseForm extends React.Component<Props, State>{
                         <Input.Group
                             style={{ display: 'flex' }}
                             compact>
-                            <Form.Item
-                                normalize={(v: string) => v !== "" ? v.toUpperCase().replace(/[ \d]/g, "") : undefined}
-                                name='subject'
-                                rules={[
-                                    { pattern: /^[A-Z]+$/g, message: 'Not a valid subject!' }]
-                                }
-                                noStyle>
-                                <AutoComplete
-                                    style={{ flex: 0.8 }}
-                                    size='large'
-                                    placeholder="Subject"
-                                    filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
-                                    options={
-                                        Object.values(this.props.courses)
-                                            .map(course => course.subject)
-                                            .unique()
-                                            .map(subject => ({ value: subject }))
-                                    }>
-                                </AutoComplete>
-                            </Form.Item>
-                            <Form.Item
-                                normalize={(v: string) => v !== "" ? v.toUpperCase().replace(" ", "").substr(0, 4) : undefined}
-                                name='code'
-                                rules={[
-                                    { pattern: /^[0-9][A-Z]([A-Z]|[0-9])[0-9]$/g, message: "Not a valid code!" }
-                                ]}
-                                noStyle>
-                                <AutoComplete
-                                    style={{ flex: 0.2 }}
-                                    size='large'
-                                    filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
-                                    options={
-                                        Object.values(this.props.courses)
-                                            .filter(course => course.subject === getFieldValue('subject'))
-                                            .map(course => course.code)
-                                            .unique()
-                                            .map(code => ({ value: code }))
-                                    }
-                                    placeholder="Code"
-                                />
-                            </Form.Item>
+                            {addFilterForm(Object.values(this.props.courses), "subject", /^[A-Z]+$/g,  50, 10, "large", getFieldValue)}
+                            {addFilterForm(Object.values(this.props.courses), "code", /^[0-9][A-Z]([A-Z]|[0-9])[0-9]$/g,  30, 10, "large", getFieldValue)}
                             <Form.Item >
                                 <Input.Group compact>
-                                    {addTermForm("32.5", "large")}
-                                    {addDateForm("67", "large")}
+                                    {addTermForm(35, "large")}
+                                    {addDateForm(65, "large")}
                                 </Input.Group>
                             </Form.Item>
                             <Form.Item>

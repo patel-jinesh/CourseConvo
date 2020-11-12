@@ -11,7 +11,7 @@ import { add as addInstance } from '../../features/courses/instance';
 import moment from "moment";
 import { History, Location } from "history";
 import { match, withRouter } from "react-router-dom";
-import { addDateForm, addForms, addTermForm } from "../../utilities/formUtils";
+import { addDateForm, addFilterForm, addForms, addTermForm } from "../../utilities/formUtils";
 
 const { Option } = AutoComplete;
 
@@ -117,47 +117,8 @@ class CreateCourseForm extends React.Component<Props, State> {
                     required>
                     {({ getFieldValue }) =>
                         <Input.Group compact>
-                            <Form.Item
-                                normalize={(v: string) => v !== "" ? v.toUpperCase().replace(" ", "") : undefined}
-                                name='subject'
-                                rules={[
-                                    { required: true, message: 'Please input the subject!' },
-                                    { pattern: /^[A-Z]+$/g, message: 'Not a valid subject!' }]
-                                }
-                                noStyle>
-                                <AutoComplete
-                                    style={{ width: '70%' }}
-                                    placeholder="Subject"
-                                    filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
-                                    options={
-                                        Object.values(this.props.courses)
-                                            .map(course => course.subject)
-                                            .unique()
-                                            .map(subject => ({ value: subject }))
-                                    }>
-                                </AutoComplete>
-                            </Form.Item>
-                            <Form.Item
-                                normalize={(v: string) => v !== "" ? v.toUpperCase().replace(" ", "").substr(0, 4) : undefined}
-                                name='code'
-                                rules={[
-                                    { required: true, message: 'Please input the code!' },
-                                    { pattern: /^[0-9][A-Z]([A-Z]|[0-9])[0-9]$/g, message: "Not a valid code!" }
-                                ]}
-                                noStyle>
-                                <AutoComplete
-                                    style={{ width: '30%' }}
-                                    filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
-                                    options={
-                                        Object.values(this.props.courses)
-                                            .filter(course => course.subject === getFieldValue('subject'))
-                                            .map(course => course.code)
-                                            .unique()
-                                            .map(code => ({ value: code }))
-                                    }
-                                    placeholder="Code"
-                                />
-                            </Form.Item>
+                            {addFilterForm(Object.values(this.props.courses), "subject", /^[A-Z]+$/g,  70, 10, "middle", getFieldValue)}
+                            {addFilterForm(Object.values(this.props.courses), "code", /^[0-9][A-Z]([A-Z]|[0-9])[0-9]$/g,  30, 10, "middle", getFieldValue)}
                         </Input.Group>
                     }
                 </Form.Item>
