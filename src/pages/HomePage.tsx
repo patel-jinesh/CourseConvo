@@ -6,11 +6,18 @@ import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
 import DashboardCard from '../components/DashboardCard';
 import { Course } from '../data/types';
+import { match } from 'react-router-dom';
+import { History, Location } from "history";
 
-type ComponentProps = {}
-type ComponentState = {
-    recordID?: string
+type ComponentProps = {
+    match: match,
+    location: Location,
+    history: History,
 }
+type ComponentState = {
+
+}
+
 
 const mapState = (state: RootState) => ({
     reviews: Object.values(state.reviews),
@@ -109,11 +116,12 @@ class HomePage extends React.Component<Props, State> {
                                                     <Button
                                                         type='link'
                                                         icon={<InfoCircleOutlined />}
+                                                        onClick={() => this.props.history.push({ pathname: '/information', search: `?courseID=${item?.courseID}` })}
                                                     ></Button>
                                                 </Tooltip>
 
 
-                                                <Tooltip title='Information'>
+                                                <Tooltip title='Breakdown'>
                                                     <Button
                                                         type='link'
                                                         icon={<PieChartOutlined />}
@@ -121,10 +129,11 @@ class HomePage extends React.Component<Props, State> {
                                                 </Tooltip>
 
 
-                                                <Tooltip title='Information'>
+                                                <Tooltip title='Reviews'>
                                                     <Button
                                                         type='link'
                                                         icon={<CommentOutlined />}
+
                                                     ></Button>
                                                 </Tooltip>
                                             </Col>
