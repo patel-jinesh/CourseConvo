@@ -69,6 +69,6 @@ export interface Review {
     isAnonymous: boolean;
     upvoterIDs: { [userID: string] : true };
     downvoterIDs: { [userID: string]: true };
-    datetime: string;
-    replies: { userID: string, datetime: string, comment: string }[]
+    datetime: number;
+    replies: { userID: string, datetime: number, comment: string }[]
 };

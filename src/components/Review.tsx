@@ -1,6 +1,7 @@
-import { Comment, Tooltip, Rate, Descriptions, Button, List, Form, Card, Tag } from 'antd';
+import { Comment, Tooltip, Rate, Descriptions, Button, List, Form, Card, Tag, Row, Col, Space, Divider, Typography } from 'antd';
+import { FrownOutlined, MehOutlined, SmileOutlined } from '@ant-design/icons';
 import Avatar from 'antd/lib/avatar/avatar';
-import { LikeFilled, LikeTwoTone, DislikeFilled, DislikeTwoTone } from '@ant-design/icons';
+import { LikeFilled, LikeTwoTone, DislikeFilled, DislikeTwoTone, UserOutlined} from '@ant-design/icons';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
@@ -9,6 +10,9 @@ import { upvote, downvote, reply, unvote } from '../features/courses/review';
 import { USERID } from '../backend/database';
 import TextArea from 'antd/lib/input/TextArea';
 import ReportForm from './forms/ReportForm';
+import SmileRate from './SmileRate';
+
+const { Paragraph } = Typography;
 
 type ComponentProps = {
     reviewID: string
@@ -55,25 +59,57 @@ class Review extends React.Component<Props, State> {
     render() {
         return (
             <Comment
-                author={<span>{this.props.user.name}</span>}
+                author={<span>{this.props.review.isAnonymous ? "Anonymous" : this.props.user.name}</span>}
                 avatar={
-                    <Avatar
-                        src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                    />
-                }
+                    this.props.review.isAnonymous
+                        ? <Avatar icon={< UserOutlined />}/>
+                        : this.props.user.avatar_url}
                 content={
-                    <>
-                        <Descriptions size='small' style={{ width: 'max-content' }} bordered column={1}>
-                            <Descriptions.Item label="Difficulty"><Rate defaultValue={this.props.review.difficulty} disabled allowHalf></Rate></Descriptions.Item>
-                            <Descriptions.Item label="Workload"><Rate defaultValue={this.props.review.workload} disabled allowHalf></Rate></Descriptions.Item>
-                            <Descriptions.Item label="Enjoyability"><Rate defaultValue={this.props.review.enjoyability} disabled allowHalf></Rate></Descriptions.Item>
-                        </Descriptions>
-                        <p>{this.props.review.comment}</p>
-                    </>
+                    <Space direction='horizontal' align='start' style={{ width: '100%' }}>
+                        <Space direction='vertical' style={{ width: 300 }}>
+                            <Row align="middle" wrap={false} gutter={5}>
+                                <Col flex={1}>Difficuly</Col>
+                                <Col>
+                                    <SmileRate
+                                        disabled
+                                        tooltips={["Challenging", "Hard", "Understandable", "Easy", "No brainer"]}
+                                        defaultValue={this.props.review.difficulty} />
+                                </Col>
+                            </Row>
+                            <Row align="middle">
+                                <Col flex={1}>Workload</Col>
+                                <Col>
+                                    <SmileRate
+                                        disabled
+                                        tooltips={["Unbearable", "Heavy", "Manageable", "Light", "Barely"]}
+                                        defaultValue={this.props.review.workload} />
+                                </Col>
+                            </Row>
+                            <Row align="middle">
+                                <Col flex={1}>Enjoyability</Col>
+                                <Col>
+                                    <SmileRate
+                                        disabled
+                                        tooltips={["Sleepy", "Boring", "Meh", "Fun", "Exciting"]}
+                                        defaultValue={this.props.review.enjoyability} />
+                                </Col>
+                            </Row>
+                            <Row align="middle">
+                                <Col flex={1}>Overall</Col>
+                                <Col>{`${((this.props.review.enjoyability + (5 - this.props.review.difficulty) + (5 - this.props.review.workload)) / 3).toPrecision(3)} / 5`}</Col>
+                            </Row>
+                        </Space>
+                        <Paragraph style={{ overflowWrap: 'anywhere', wordBreak: 'break-all', paddingLeft: 15, borderLeft: '1px solid #303030' }} ellipsis={{
+                            rows: 6,
+                            expandable: true,
+                        }}>
+                            {this.props.review.comment}
+                        </Paragraph>
+                    </Space>
                 }
                 datetime={
                     <Tooltip title={moment().format('YYYY-MM-DD hh:mm:ss')}>
-                        <span>{moment().fromNow()}</span>
+                        <span>{moment(this.props.review.datetime).fromNow()}</span>
                     </Tooltip>
                 }
                 actions={[
@@ -90,12 +126,12 @@ class Review extends React.Component<Props, State> {
                         </span>
                     </Tooltip>,
                     this.props.editable && this.props.review.userID === USERID && <span onClick={() => this.setState({ editing: true })}>Edit</span>,
-                    this.props.replyable && this.props.review.userID !== USERID && <span onClick={() => this.setState({ replying: true })}>Reply to</span>,
+                    this.props.replyable && !this.state.replying && this.props.review.userID !== USERID && <span onClick={() => this.setState({ replying: true })}>Reply to</span>,
                     this.props.showreplies && <span onClick={() => this.setState({ showing: !this.state.showing })}>{this.state.showing ? "Hide" : "Show"} replies</span>,
                     this.props.review.userID !== USERID && <span className="report" onClick={() => this.setState({ reporting: !this.state.reporting })}>{this.state.reporting ? "Cancel Report" : "Report"}</span>
                 ]}
             >
-                {this.state.reporting && <Comment style={{width: '50%', minWidth: '500px'}}
+                {this.state.reporting && <Comment style={{ width: '50%', minWidth: '500px' }}
                     content={
                         <>
                             <Card title={`You are reporting ${this.props.user.name}`}><ReportForm></ReportForm></Card>
@@ -119,14 +155,19 @@ class Review extends React.Component<Props, State> {
                                 });
                                 this.setState({ replying: false });
                             }}>
-                            <Form.Item name="comment">
-                                <TextArea rows={4} />
-                            </Form.Item>
-                            <Form.Item>
-                                <Button htmlType="submit"  type="primary">
-                                    Add Comment
-                                </Button>
-                            </Form.Item>
+                                <Form.Item name="comment">
+                                    <TextArea rows={4} />
+                                </Form.Item>
+                                <Form.Item>
+                                    <Space direction='horizontal'>
+                                        <Button htmlType="submit" type="primary">
+                                            Add Comment
+                                        </Button>
+                                        <Button onClick={() => this.setState({replying: false})} htmlType="button" type="default">
+                                                Cancel
+                                        </Button>
+                                    </Space>
+                                </Form.Item>
                             </Form>
                         </>
                     }
@@ -135,10 +176,10 @@ class Review extends React.Component<Props, State> {
                 {this.state.showing && <List
                     dataSource={
                         this.props.review.replies.map(reply => ({
-                                author: this.props.users[reply.userID].name,
-                                avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
-                                content: <p>{reply.comment}</p>,
-                                datetime: moment(reply.datetime).fromNow()
+                            author: this.props.users[reply.userID].name,
+                            avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+                            content: <p>{reply.comment}</p>,
+                            datetime: moment(reply.datetime).fromNow()
                         })).reverse()
                     }
                     header={`${Object.entries(this.props.review.replies).length} ${Object.entries(this.props.review.replies).length > 1 ? 'replies' : 'reply'}`}

@@ -27,7 +27,7 @@ const reviewsRedux = createSlice({
             state[reviewID] = {
                 reviewID: reviewID,
                 ...action.payload,
-                datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
+                datetime: moment().unix(),
             };
         },
         edit(state, action: PayloadAction<Review>) {
@@ -39,7 +39,7 @@ const reviewsRedux = createSlice({
         reply(state, action: PayloadAction<{ reviewID: string, userID: string, comment: string }>) {
             state[action.payload.reviewID].replies.push({
                 userID: action.payload.userID,
-                datetime: moment().format('YYYY-MM-DD HH:mm:ss'),
+                datetime: moment().unix(),
                 comment: action.payload.comment
             });
         },

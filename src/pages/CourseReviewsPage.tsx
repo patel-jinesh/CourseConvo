@@ -7,13 +7,14 @@ import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
 import CreateCourseForm from "../components/forms/CreateCourseForm";
 import SearchCourseForm from "../components/forms/SearchCourseForm";
-import { Term } from "../data/types";
+import { Term, CourseInstance } from "../data/types";
 import Review from '../components/Review';
 import { USERID } from '../backend/database';
 import ReviewForm from '../components/forms/ReviewForm';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import { reverse } from 'dns';
 import moment from 'moment';
+import NumericRate from '../components/NumericRate';
 
 const { Content } = Layout;
 
@@ -32,6 +33,25 @@ type ComponentState = {
     },
     sortorder: "Ascending" | "Descending",
     sortprop: "Date" | "Rating" | "Semester"
+}
+
+const instance = (instanceID: string, state: RootState) => {
+    const { courseID, ...instance } = state.instances[instanceID];
+
+    return {
+        ...instance,
+        course: state.courses[courseID]
+    }
+}
+
+const review = (reviewID: string, state: RootState) => {
+    const { instanceID, userID, ...review } = state.reviews[reviewID];
+
+    return {
+        ...review,
+        instance: instance(instanceID, state),
+        user: state.users[userID],
+    }
 }
 
 const mapState = (state: RootState, props: ComponentProps) => {
@@ -84,7 +104,7 @@ class CourseReviewsPage extends React.Component<Props, State> {
                     </>
                 } />
         }
-        
+
         let semesters = this.props.reviews
             .map(review => `${this.props.instances[review.instanceID].term} ${this.props.instances[review.instanceID].year}`)
             .unique()
@@ -104,14 +124,19 @@ class CourseReviewsPage extends React.Component<Props, State> {
                 return false;
             })
             .sort((a, b) => {
+                return b.reviewID.localeCompare(a.reviewID);
+            })
+            .sort((a, b) => {
+                console.log(a.datetime)
+                console.log(b.datetime)
                 if (this.state.sortprop === "Date")
-                    return moment(a.datetime).diff(moment(b.datetime)) ? 0 : 1
+                    return moment(a.datetime).diff(moment(b.datetime))
                 
                 if (this.state.sortprop === "Rating") {
                     let arating = (a.difficulty + a.workload + a.enjoyability) / 3;
                     let brating = (b.difficulty + b.workload + b.enjoyability) / 3;
 
-                    return arating - brating;
+                    return brating - arating;
                 }
 
                 let asem = `${this.props.instances[a.instanceID].term} ${this.props.instances[a.instanceID].year}`;
@@ -140,9 +165,9 @@ class CourseReviewsPage extends React.Component<Props, State> {
                 extra={this.state.hide && <Button onClick={() => this.setState({ visible: true })} type="primary">Write a review!</Button>}
             >
                 {content}
-                <Row gutter={24} >
+                <Row gutter={24} wrap={false}>
                     {
-                        <Col style={{width: 300}}>
+                        <Col style={{ width: 300 }} flex="none">
                             <Affix offsetTop={26}>
                                 <Layout>
                                 <Card bordered={false}>
@@ -193,7 +218,7 @@ class CourseReviewsPage extends React.Component<Props, State> {
                                                     }>
                                             </Select>
                                             <span>Minimum Overall Rating</span>
-                                            <Rate allowHalf allowClear onChange={value => this.setState({filters:{...this.state.filters, minimumrating: value}})}></Rate>
+                                            <NumericRate onChange={value => this.setState({filters:{...this.state.filters, minimumrating: value}})}></NumericRate>
                                         </Space>
                                     </List>
                                 </Card>
@@ -215,13 +240,14 @@ class CourseReviewsPage extends React.Component<Props, State> {
                             </Affix>
                         </Col>
                     }
-                    {<Col flex={1}>
+                    {<Col style={{width: 'calc(100% - 300px)'}}>
                         {userreview && <List
                             itemLayout="horizontal"
                             header={"Your review"}>
-                            <Review reviewID={userreview.reviewID} />
+                            <Review editable reviewID={userreview.reviewID} />
                         </List>}
                         <List
+                            rowKey={review => review.reviewID}
                     dataSource={datasource}
                     header={header}
                     itemLayout="horizontal"
