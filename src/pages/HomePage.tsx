@@ -4,9 +4,8 @@ import { CommentOutlined, InfoCircleOutlined, PieChartOutlined } from '@ant-desi
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
-import DashboardCard from '../components/DashboardCard';
 import { Course } from '../data/types';
-import { match } from 'react-router-dom';
+import { match, withRouter } from 'react-router-dom';
 import { History, Location } from "history";
 
 type ComponentProps = {
@@ -221,4 +220,4 @@ class HomePage extends React.Component<Props, State> {
     }
 }
 
-export default connector(HomePage);
+export default withRouter(connector(HomePage));
