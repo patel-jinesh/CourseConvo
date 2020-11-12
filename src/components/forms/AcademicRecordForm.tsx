@@ -7,11 +7,11 @@ import { connect, ConnectedProps } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
 import { RootState } from "../../app/store";
 import { USERID } from "../../backend/database";
-import { Status, Term } from "../../data/types";
+import { Status, Term, FormType } from "../../data/types";
 import { add as addCourse } from '../../features/courses/course';
 import { add as addInstance } from '../../features/courses/instance';
 import { add as addRecord, edit as editRecord } from '../../features/courses/record';
-import { addGenericForm, addTermForm } from "../../utilities/formUtils";
+import { addForms, addTermForm } from "../../utilities/formUtils";
 
 const { Option } = AutoComplete;
 
@@ -248,7 +248,7 @@ class AcademicRecordForm extends React.Component<Props, State>{
                             </>
                     }
                 </Form.Item>
-                {addGenericForm(Object.values(this.props.courses), Object.values(this.props.instances))}
+                {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.COURSE, FormType.INSTRUCTOR])}
                 <Form.Item
                     name='status'
                     label="Status"

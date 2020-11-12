@@ -6,7 +6,7 @@ import { NamePath } from "antd/lib/form/interface";
 import React, { RefObject } from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../app/store";
-import { Course, CourseInstance, Term } from "../data/types";
+import { Course, CourseInstance, FormType, Term } from "../data/types";
 
 const { Option } = AutoComplete;
 
@@ -37,7 +37,55 @@ export function addDateForm(width: string, s: SizeType) {
     );
 }
 
-export function addGenericForm(courses: Course[], instances: CourseInstance[]) {
+export function addCourseForm(course: any) {
+    return (
+        <Form.Item
+            name="name"
+            label="Course Name"
+            rules={[{ required: true, message: 'Please input the course name!' }]}
+            required>
+            <Input disabled={course !== undefined}></Input>
+        </Form.Item>
+    );
+}
+
+export function addInstructorForm(instance: any, instances: CourseInstance[]) {
+    return (
+        <Form.Item
+            name="instructor"
+            label="Instructor"
+            rules={[{ required: true, message: "Please input the instructor name!" }]}
+            required>
+            <AutoComplete
+                disabled={instance !== undefined}
+                filterOption={(i, o) => o?.value.toUpperCase().indexOf(i.toUpperCase()) === 0}
+                options={
+                    Object.values(instances)
+                        .map(instance => instance.instructor)
+                        .unique()
+                        .map(instructor => ({ value: instructor }))
+                }
+            />
+        </Form.Item>
+    );
+}
+
+function collectForms(course: any, instance: any, instances: CourseInstance[], forms: FormType[]) {
+    var formList = [];  
+    var i = 0;
+
+    for (i = 0; i < forms.length; i++)
+    {
+        if (forms[i] == "Course")
+            formList.push(addCourseForm(course))
+        else if (forms[i] == "Instructor")
+            formList.push(addInstructorForm(instance, instances))
+    }
+
+    return formList;
+}
+
+export function addForms(courses: Course[], instances: CourseInstance[], forms: FormType[]) {
     return (
         <Form.Item
             noStyle
@@ -58,33 +106,7 @@ export function addGenericForm(courses: Course[], instances: CourseInstance[]) {
                         instance.term === term &&
                         instance.year === year);
 
-                    return (
-                        <>
-                            <Form.Item
-                                name="name"
-                                label="Course Name"
-                                rules={[{ required: true, message: 'Please input the course name!' }]}
-                                required>
-                                <Input disabled={course !== undefined}></Input>
-                            </Form.Item>
-                            <Form.Item
-                                name="instructor"
-                                label="Instructor"
-                                rules={[{ required: true, message: "Please input the instructor name!" }]}
-                                required>
-                                <AutoComplete
-                                    disabled={instance !== undefined}
-                                    filterOption={(i, o) => o?.value.toUpperCase().indexOf(i.toUpperCase()) === 0}
-                                    options={
-                                        Object.values(instances)
-                                            .map(instance => instance.instructor)
-                                            .unique()
-                                            .map(instructor => ({ value: instructor }))
-                                    }
-                                />
-                            </Form.Item>
-                        </>
-                    )
+                    return collectForms(course, instance, instances, forms)
                 }
             }
         </Form.Item>

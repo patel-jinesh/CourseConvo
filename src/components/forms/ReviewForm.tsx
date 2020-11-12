@@ -10,9 +10,9 @@ import { add as addInstance } from '../../features/courses/instance';
 import { USERID } from '../../backend/database';
 import TextArea from 'antd/lib/input/TextArea';
 import CreateCourseForm from './CreateCourseForm';
-import { Term } from '../../data/types';
+import { FormType, Term } from '../../data/types';
 import { v4 as uuidv4 } from 'uuid';
-import { addDateForm, addTermForm } from "../../utilities/formUtils";
+import { addDateForm, addForms, addTermForm } from "../../utilities/formUtils";
 
 const { Option } = Select;
 
@@ -85,46 +85,7 @@ class ReviewForm extends React.Component<Props, State> {
                         {addDateForm("50", "middle")}
                     </Input.Group>
                 </Form.Item>
-                <Form.Item
-                    noStyle
-                    dependencies={[['subject'], ['code'], ['term'], ['year']]}>
-                    {
-                        ({ getFieldValue }) => {
-                            let subject = getFieldValue('subject');
-                            let code = getFieldValue('code');
-                            let term = getFieldValue('term');
-                            let year = getFieldValue('year')?.year();
-
-                            let course = Object.values(this.props.courses).find(course =>
-                                course.code === code &&
-                                course.subject === subject);
-
-                            let instance = Object.values(this.props.instances).find(instance =>
-                                instance.courseID === course?.courseID &&
-                                instance.term === term &&
-                                instance.year === year);
-
-                            return (
-                                <Form.Item
-                                    name="instructor"
-                                    label="Instructor"
-                                    rules={[{ required: true, message: "Please input the instructor name!" }]}
-                                    required>
-                                    <AutoComplete
-                                        disabled={instance !== undefined}
-                                        filterOption={(i, o) => o?.value.toUpperCase().indexOf(i.toUpperCase()) === 0}
-                                        options={
-                                            Object.values(this.props.instances)
-                                                .map(instance => instance.instructor)
-                                                .unique()
-                                                .map(instructor => ({ value: instructor }))
-                                        }
-                                    />
-                                </Form.Item>
-                            )
-                        }
-                    }
-                </Form.Item>
+                {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.INSTRUCTOR])}
                 <Form.Item required name="difficulty" label="Difficulty">
                     <Rate allowHalf allowClear></Rate>
                 </Form.Item>
