@@ -5,7 +5,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '../../app/store';
 import { USERID } from '../../backend/database';
-import { FormType } from '../../data/types';
+import { FormType, ReviewTag } from '../../data/types';
 import { add as addInstance } from '../../features/courses/instance';
 import { add as addReview, edit as editReview } from '../../features/courses/review';
 import { addDateForm, addForms, addTermForm } from "../../utilities/formUtils";
@@ -23,7 +23,8 @@ type ComponentState = {}
 
 const mapState = (state: RootState, props: ComponentProps) => ({
     courses: state.courses,
-    instances: state.instances
+    instances: state.instances,
+    reviews: state.reviews
 });
 
 const mapDispatch = {
@@ -59,6 +60,7 @@ class ReviewForm extends React.Component<Props, State> {
         
         if (this.props.reviewID)
             this.props.editReview({
+                ...this.props.reviews[this.props.reviewID],
                 reviewID: this.props.reviewID,
                 userID: USERID,
                 comment: values.comment,
@@ -83,6 +85,11 @@ class ReviewForm extends React.Component<Props, State> {
                 upvoterIDs: {},
                 downvoterIDs: {},
                 replies: [],
+                tags: {
+                    [ReviewTag.HELPFUL]: {},
+                    [ReviewTag.DETAILED]: {},
+                    [ReviewTag.ACCURATE]: {}
+                }
             });
 
         if (this.props.onFinish)

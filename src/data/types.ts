@@ -65,6 +65,12 @@ export interface Record {
     grade?: number;
 }
 
+export enum ReviewTag {
+    DETAILED = "Detailed",
+    HELPFUL = "Helpful",
+    ACCURATE = "Accurate"
+}
+
 export interface Review {
     reviewID: string,
     difficulty: number;
@@ -78,4 +84,9 @@ export interface Review {
     downvoterIDs: { [userID: string]: true };
     datetime: number;
     replies: { userID: string, datetime: number, comment: string }[]
+    tags: {
+        [ReviewTag.DETAILED]: { [userID: string] : true },
+        [ReviewTag.HELPFUL]: { [userID: string] : true },
+        [ReviewTag.ACCURATE]: { [userID: string] : true }
+    }
 };

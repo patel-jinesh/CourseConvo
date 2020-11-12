@@ -1,4 +1,4 @@
-import { Course, Term, Record, Status, User, Breakdown, Review, CourseInstance } from "../data/types";
+import { Course, Term, Record, Status, User, Breakdown, Review, CourseInstance, ReviewTag } from "../data/types";
 import { v4 as uuidv4 } from 'uuid'
 import moment from "moment";
 
@@ -212,7 +212,12 @@ export const reviews: Review[] = [
             userID: users[1].userID,
             comment: "I agree",
             datetime: moment().valueOf()
-        }]
+        }],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
     },
     {
         reviewID: uuidv4(),
@@ -233,7 +238,12 @@ Now seven world think timed while her. Spoil large oh he rooms on since an. Am u
             userID: users[1].userID,
             comment: "I agree",
             datetime: moment().valueOf()
-        }]
+        }],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
     },
     {
         reviewID: uuidv4(),
@@ -251,6 +261,11 @@ Now seven world think timed while her. Spoil large oh he rooms on since an. Am u
             userID: users[1].userID,
             comment: "I agree",
             datetime: moment().valueOf()
-        }]
+        }],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
     }
 ]

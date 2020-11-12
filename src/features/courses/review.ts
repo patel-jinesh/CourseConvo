@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import moment from "moment";
 import { v4 as uuidv4 } from 'uuid';
 import { reviews } from "../../backend/database";
-import { Review } from "../../data/types";
+import { Review, ReviewTag } from "../../data/types";
 
 /**
  * Redux Section
@@ -55,6 +55,12 @@ const reviewsRedux = createSlice({
         unvote(state, action: PayloadAction<{ reviewID: string, userID: string }>) {
             delete state[action.payload.reviewID].upvoterIDs[action.payload.userID];
             delete state[action.payload.reviewID].downvoterIDs[action.payload.userID];
+        },
+        tag(state, action: PayloadAction<{ reviewID: string, userID: string, tag: ReviewTag }>) {
+            state[action.payload.reviewID].tags[action.payload.tag][action.payload.userID] = true;
+        },
+        untag(state, action: PayloadAction<{ reviewID: string, userID: string, tag: ReviewTag }>) {
+            delete state[action.payload.reviewID].tags[action.payload.tag][action.payload.userID];
         }
     }
 });
@@ -66,7 +72,9 @@ export const {
     upvote,
     downvote,
     reply,
-    unvote
+    unvote,
+    tag,
+    untag
 } = reviewsRedux.actions;
 
 export default reviewsRedux.reducer;
