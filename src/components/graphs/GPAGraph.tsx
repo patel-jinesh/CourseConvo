@@ -120,7 +120,7 @@ class GPAGraph extends React.Component<Props, State> {
                 <Crosshair
                     values={this.state.crosshair}
                     itemsFormat={(data: any) => {
-                        return data.filter((p: any) => p !== undefined).map(({ x, y }: { x: number, y: number }) => ({ title: "Average", value: y.toPrecision(3) }))
+                        return data.filter((p: any) => p !== undefined).map(({ x, y }: { x: number, y: number }) => ({ title: "Average", value: y.toFixed(2) }))
                     }}
                     titleFormat={(data: any) => {
                         return data.filter((p: any) => p !== undefined).map(({ x, y }: { x: number, y: number }) => ({ title: `${termmaprev[(x % 1) * 4]} ${x - (x % 1)}`}))[0]

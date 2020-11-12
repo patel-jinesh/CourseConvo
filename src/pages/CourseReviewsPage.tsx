@@ -106,6 +106,7 @@ class CourseReviewsPage extends React.Component<Props, State> {
         }
 
         let semesters = this.props.reviews
+            .filter(review => review.userID !== USERID)
             .map(review => `${this.props.instances[review.instanceID].term} ${this.props.instances[review.instanceID].year}`)
             .unique()
             .sort();
@@ -127,22 +128,20 @@ class CourseReviewsPage extends React.Component<Props, State> {
                 return b.reviewID.localeCompare(a.reviewID);
             })
             .sort((a, b) => {
-                console.log(a.datetime)
-                console.log(b.datetime)
                 if (this.state.sortprop === "Date")
-                    return moment(a.datetime).diff(moment(b.datetime))
+                    return b.datetime - a.datetime;
                 
                 if (this.state.sortprop === "Rating") {
                     let arating = (a.difficulty + a.workload + a.enjoyability) / 3;
                     let brating = (b.difficulty + b.workload + b.enjoyability) / 3;
 
-                    return brating - arating;
+                    return arating - brating;
                 }
 
                 let asem = `${this.props.instances[a.instanceID].term} ${this.props.instances[a.instanceID].year}`;
                 let bsem = `${this.props.instances[b.instanceID].term} ${this.props.instances[b.instanceID].year}`;
 
-                return asem.localeCompare(bsem);
+                return bsem.localeCompare(asem);
             })
             .map(review => ({
                 reviewID: review.reviewID,
@@ -150,11 +149,12 @@ class CourseReviewsPage extends React.Component<Props, State> {
                 showreplies: true,
                 editable: true
             }))
-
-        console.log(datasource)
         
+        if (this.state.sortorder === "Ascending")
+            datasource = datasource.reverse();
+
         let header = <>
-            <span>{`${datasource.length} ${datasource.length > 1 ? 'reviews' : 'review'}`}</span>
+            <span>{`Search results - ${datasource.length} ${datasource.length !== 1 ? 'reviews' : 'review'}`}</span>
         </>
 
         return (
@@ -174,7 +174,9 @@ class CourseReviewsPage extends React.Component<Props, State> {
                                     <List header="Filters">
                                         <Space style={{ width: '100%', marginTop: 10 }} direction='vertical'>
                                             <span>Semesters</span>
-                                            <Select key={userreview?.userID} mode="tags" style={{ width: '100%' }} placeholder="Semesters"
+                                                <Select
+                                                    getPopupContainer={trigger => trigger.parentElement}
+                                                    key={userreview?.userID} mode="tags" style={{ width: '100%' }} placeholder="Semesters"
                                                     value={this.state.filters.semesters}
                                                     onDeselect={(value) => {
                                                         if (value === "All" && this.state.filters.semesters.length === 1)
@@ -262,7 +264,6 @@ class CourseReviewsPage extends React.Component<Props, State> {
                     visible={this.state.visible}>
                     <ReviewForm
                         courseID={this.props.course.courseID}
-                        initialValues={{ name: this.props.course.name, subject: this.props.course.subject, code: this.props.course.code }}
                         onFinish={() => this.setState({ visible: false })}
                         onCancel={() => this.setState({ visible: false })} />
                 </Drawer>

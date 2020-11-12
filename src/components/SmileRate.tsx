@@ -9,6 +9,8 @@ type ComponentProps = {
     tooltips?: string[]
     defaultValue?: number
     disabled?: boolean
+    value?: number,
+    onChange?: (value: number) => void
 }
 
 type ComponentState = {}
@@ -44,13 +46,16 @@ class SmileRate extends React.Component<Props> {
     render() {
         return (
             <Rate
+                value={this.props.value}
+                onChange={this.props.onChange}
                 tooltips={this.props.tooltips}
                 character={({ index, value }: { index: number, value: number }) => {
                     if (index === value - 1)
                         return customIconsColored[index];
                     return customIconsBlank[index];
                 }}
-                defaultValue={this.props.defaultValue} disabled={this.props.disabled} />
+                defaultValue={this.props.defaultValue}
+                disabled={this.props.disabled} />
         );
     }
 }

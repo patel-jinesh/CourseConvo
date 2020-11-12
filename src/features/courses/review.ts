@@ -27,11 +27,14 @@ const reviewsRedux = createSlice({
             state[reviewID] = {
                 reviewID: reviewID,
                 ...action.payload,
-                datetime: moment().unix(),
+                datetime: moment().valueOf(),
             };
         },
-        edit(state, action: PayloadAction<Review>) {
-            state[action.payload.reviewID] = action.payload;
+        edit(state, action: PayloadAction<Omit<Review, "datetime">>) {
+            state[action.payload.reviewID] = {
+                ...action.payload,
+                datetime: moment().valueOf()
+            }
         },
         remove(state, action: PayloadAction<string>) {
             delete state[action.payload];
@@ -39,7 +42,7 @@ const reviewsRedux = createSlice({
         reply(state, action: PayloadAction<{ reviewID: string, userID: string, comment: string }>) {
             state[action.payload.reviewID].replies.push({
                 userID: action.payload.userID,
-                datetime: moment().unix(),
+                datetime: moment().valueOf(),
                 comment: action.payload.comment
             });
         },

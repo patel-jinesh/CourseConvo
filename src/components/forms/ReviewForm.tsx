@@ -5,20 +5,23 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../app/store';
 import moment from 'moment';
-import { upvote, downvote, reply, unvote, add as addReview } from '../../features/courses/review';
+import { upvote, downvote, reply, unvote, add as addReview, edit as editReview } from '../../features/courses/review';
 import { add as addInstance } from '../../features/courses/instance';
 import { USERID } from '../../backend/database';
 import TextArea from 'antd/lib/input/TextArea';
 import CreateCourseForm from './CreateCourseForm';
 import { Term } from '../../data/types';
 import { v4 as uuidv4 } from 'uuid';
+import SmileRate from '../SmileRate';
+import NumericRate from '../NumericRate';
 
 const { Option } = Select;
 
 type ComponentProps = {
-    initialValues?: any
+    initialValues?: any;
     onFinish?: () => void;
     onCancel?: () => void;
+    reviewID?: string;
     courseID: string;
 }
 
@@ -31,7 +34,8 @@ const mapState = (state: RootState, props: ComponentProps) => ({
 
 const mapDispatch = {
     addReview: addReview,
-    addInstance: addInstance
+    addInstance: addInstance,
+    editReview: editReview
 }
 
 const connector = connect(mapState, mapDispatch);
@@ -45,6 +49,7 @@ class ReviewForm extends React.Component<Props, State> {
     state: State = {}
 
     onFinish = (values: any) => {
+        console.log(values);
         let instance = Object.values(this.props.instances).find(instance => instance.term === values.term && instance.year === values.year?.year())
 
         let instanceID = instance?.instanceID ?? uuidv4();
@@ -57,19 +62,34 @@ class ReviewForm extends React.Component<Props, State> {
                 year: values.year?.year(),
                 courseID: this.props.courseID
             });
-
-        this.props.addReview({
-            userID: USERID,
-            comment: values.comment,
-            difficulty: values.difficulty,
-            enjoyability: values.enjoyability,
-            workload: values.workload,
-            isAnonymous: values.anonymous,
-            instanceID: instanceID,
-            upvoterIDs: {},
-            downvoterIDs: {},
-            replies: []
-        })
+        
+        if (this.props.reviewID)
+            this.props.editReview({
+                reviewID: this.props.reviewID,
+                userID: USERID,
+                comment: values.comment,
+                difficulty: values.difficulty,
+                enjoyability: values.enjoyability,
+                workload: values.workload,
+                isAnonymous: values.anonymous,
+                instanceID: instanceID,
+                upvoterIDs: {},
+                downvoterIDs: {},
+                replies: [],
+            });
+        else
+            this.props.addReview({
+                userID: USERID,
+                comment: values.comment,
+                difficulty: values.difficulty,
+                enjoyability: values.enjoyability,
+                workload: values.workload,
+                isAnonymous: values.anonymous,
+                instanceID: instanceID,
+                upvoterIDs: {},
+                downvoterIDs: {},
+                replies: [],
+            });
 
         if (this.props.onFinish)
             this.props.onFinish();
@@ -77,7 +97,7 @@ class ReviewForm extends React.Component<Props, State> {
 
     render() {
         return (
-            <Form name="review" layout="horizontal" labelCol={{ flex: '100px' }} labelAlign={"left"} onFinish={this.onFinish}>
+            <Form initialValues={this.props.initialValues} name="review" layout="horizontal" labelCol={{ flex: '100px' }} labelAlign={"left"} onFinish={this.onFinish}>
                 <Form.Item label="Semester" required>
                     <Input.Group compact>
                         <Form.Item
@@ -101,20 +121,14 @@ class ReviewForm extends React.Component<Props, State> {
                 </Form.Item>
                 <Form.Item
                     noStyle
-                    dependencies={[['subject'], ['code'], ['term'], ['year']]}>
+                    dependencies={[['term'], ['year']]}>
                     {
                         ({ getFieldValue }) => {
-                            let subject = getFieldValue('subject');
-                            let code = getFieldValue('code');
                             let term = getFieldValue('term');
                             let year = getFieldValue('year')?.year();
 
-                            let course = Object.values(this.props.courses).find(course =>
-                                course.code === code &&
-                                course.subject === subject);
-
                             let instance = Object.values(this.props.instances).find(instance =>
-                                instance.courseID === course?.courseID &&
+                                instance.courseID === this.props.courseID &&
                                 instance.term === term &&
                                 instance.year === year);
 
@@ -140,16 +154,23 @@ class ReviewForm extends React.Component<Props, State> {
                     }
                 </Form.Item>
                 <Form.Item required name="difficulty" label="Difficulty">
-                    <Rate allowHalf></Rate>
+                    <SmileRate></SmileRate>
                 </Form.Item>
                 <Form.Item required name="enjoyability" label="Enjoyability">
-                    <Rate allowHalf></Rate>
+                    <SmileRate></SmileRate>
                 </Form.Item>
                 <Form.Item required name="workload" label="Workload">
-                    <Rate allowHalf></Rate>
+                    <SmileRate></SmileRate>
+                </Form.Item>
+                <Form.Item label="Overall" dependencies={['difficulty', 'enjoyability', 'workload']}>
+                    {({ getFieldValue }) => {
+                        return (
+                            `${((getFieldValue('difficulty') + getFieldValue('workload') + getFieldValue('enjoyability')) / 3).toFixed(2)} / 5`
+                        )
+                    }}
                 </Form.Item>
                 <Form.Item name="comment" label="Comment">
-                    <TextArea rows={4} />
+                    <TextArea rows={8} />
                 </Form.Item>
                 <Form.Item name="anonymous" label="Anonymous" valuePropName="checked">
                     <Switch></Switch>
