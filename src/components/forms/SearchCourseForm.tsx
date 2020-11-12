@@ -105,15 +105,6 @@ class CreateCourseForm extends React.Component<Props, State>{
                                     placeholder="Code"
                                 />
                             </Form.Item>
-                            <Form.Item >
-                                <Input.Group compact>
-                                    {addTermForm("32.5", "large")}
-                                    {addDateForm("67", "large")}
-                                </Input.Group>
-                            </Form.Item>
-                            <Form.Item>
-                                <Button style={{ marginLeft: '5px' }} size='large' type='primary' icon={<SearchOutlined />} />
-                            </Form.Item>
                         </Input.Group>
                     }
                 </Form.Item>
