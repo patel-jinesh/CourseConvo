@@ -9,6 +9,7 @@ import { Term } from "../../data/types";
 import { add as addCourse } from '../../features/courses/course';
 import { add as addInstance } from '../../features/courses/instance';
 import moment from "moment";
+import { addDateForm, addTermForm } from "../../utilities/formUtils";
 
 const { Option } = AutoComplete;
 
@@ -156,23 +157,8 @@ class CreateCourseForm extends React.Component<Props, State> {
                 </Form.Item>
                 <Form.Item label="Semester" required>
                     <Input.Group compact>
-                        <Form.Item
-                            name='term'
-                            rules={[{ required: true, message: 'Please input the Term!' }]}
-                            noStyle>
-                            <Select style={{ width: "50%" }} placeholder="Term">
-                                <Option value={Term.FALL}>{Term.FALL}</Option>
-                                <Option value={Term.WINTER}>{Term.WINTER}</Option>
-                                <Option value={Term.SPRING}>{Term.SPRING}</Option>
-                                <Option value={Term.SUMMER}>{Term.SUMMER}</Option>
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            name='year'
-                            rules={[{ required: true, message: 'Please input the Year!' }]}
-                            noStyle>
-                            <DatePicker style={{ width: "50%" }} picker="year" />
-                        </Form.Item>
+                        {addTermForm("50", "middle")}
+                        {addDateForm("50", "middle")}
                     </Input.Group>
                 </Form.Item>
                 <Form.Item

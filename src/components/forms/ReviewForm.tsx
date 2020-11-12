@@ -12,6 +12,7 @@ import TextArea from 'antd/lib/input/TextArea';
 import CreateCourseForm from './CreateCourseForm';
 import { Term } from '../../data/types';
 import { v4 as uuidv4 } from 'uuid';
+import { addDateForm, addTermForm } from "../../utilities/formUtils";
 
 const { Option } = Select;
 
@@ -80,23 +81,8 @@ class ReviewForm extends React.Component<Props, State> {
             <Form name="review" layout="horizontal" labelCol={{ flex: '100px' }} labelAlign={"left"} onFinish={this.onFinish}>
                 <Form.Item label="Semester" required>
                     <Input.Group compact>
-                        <Form.Item
-                            name='term'
-                            rules={[{ required: true, message: 'Please input the Term!' }]}
-                            noStyle>
-                            <Select style={{ width: "50%" }} placeholder="Term">
-                                <Option value={Term.FALL}>{Term.FALL}</Option>
-                                <Option value={Term.WINTER}>{Term.WINTER}</Option>
-                                <Option value={Term.SPRING}>{Term.SPRING}</Option>
-                                <Option value={Term.SUMMER}>{Term.SUMMER}</Option>
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            name='year'
-                            rules={[{ required: true, message: 'Please input the Year!' }]}
-                            noStyle>
-                            <DatePicker style={{ width: "50%" }} picker="year" />
-                        </Form.Item>
+                        {addTermForm("50", "middle")}
+                        {addDateForm("50", "middle")}
                     </Input.Group>
                 </Form.Item>
                 <Form.Item
