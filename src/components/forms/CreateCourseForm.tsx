@@ -1,4 +1,4 @@
-import { AutoComplete, Button, DatePicker, Form, Input, Select, Tooltip } from "antd";
+import { AutoComplete, Button, DatePicker, Form, Input, Select, Tooltip, Space } from "antd";
 import { FormInstance } from "antd/lib/form/hooks/useForm";
 import { NamePath } from "antd/lib/form/interface";
 import React, { RefObject } from "react";
@@ -9,6 +9,8 @@ import { Term } from "../../data/types";
 import { add as addCourse } from '../../features/courses/course';
 import { add as addInstance } from '../../features/courses/instance';
 import moment from "moment";
+import { History, Location } from "history";
+import { match, withRouter } from "react-router-dom";
 
 const { Option } = AutoComplete;
 
@@ -27,6 +29,10 @@ type ComponentProps = {
     onValuesChange?: (changed: FieldData[], all: FieldData[]) => void,
     initialValues?: any,
     form?: RefObject<FormInstance>,
+
+    match: match,
+    location: Location,
+    history: History,
 }
 
 type ComponentState = {}
@@ -240,17 +246,29 @@ class CreateCourseForm extends React.Component<Props, State> {
                                 type="primary"
                                 htmlType="submit"
                                 disabled={
-                                    (instance !== undefined) && getFieldsError().map(v => v.errors.length !== 0).reduce((r, c) => (r || c), false)
+                                    (instance !== undefined) || getFieldsError().map(v => v.errors.length !== 0).reduce((r, c) => (r || c), false)
                                 }>
                                 Submit
                             </Button>
                         );
 
+                        let informationbutton = (
+                            <Button
+                                onClick={() => this.props.history.push({ pathname: '/information', search: `?courseID=${course!.courseID}` })}
+                                type="primary">
+                                Go to the information page.
+                            </Button>
+                        )
+                    
+
                         if (instance !== undefined)
                             return (
-                                <Tooltip title="This course exists">
-                                    {button}
-                                </Tooltip>
+                                <Space direction='horizontal' split>
+                                    <Tooltip title="This course exists">
+                                        {button}
+                                    </Tooltip>
+                                    {informationbutton}
+                                </Space>
                             )
 
                         return button;
@@ -261,4 +279,4 @@ class CreateCourseForm extends React.Component<Props, State> {
     }
 }
 
-export default connector(CreateCourseForm);
+export default withRouter(connector(CreateCourseForm));
