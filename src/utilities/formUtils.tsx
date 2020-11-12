@@ -1,6 +1,6 @@
 import { AutoComplete, DatePicker, Form, Input, Select } from "antd";
 import { SizeType } from 'antd/lib/config-provider/SizeContext';
-import React, { RefObject } from "react";
+import React, { RefObject, CSSProperties } from "react";
 import { Course, CourseInstance, FormType, Term } from "../data/types";
 
 const { Option } = AutoComplete;
@@ -53,10 +53,10 @@ function mapForm(courses: Course[], name: string, getFieldValue: any)
     }
 }
 
-export function addFilterForm(courses: Course[], name: string, pattern: RegExp,  width: any, length: any, sz: SizeType, getFieldValue: any) {
+export function addFilterForm(courses: Course[], name: string, pattern: RegExp, style: CSSProperties, sz: SizeType, getFieldValue: any, length?: any) {
     return (
         <Form.Item
-            normalize={(v: string) => v !== "" ? v.toUpperCase().replace(" ", "").substr(0,length) : undefined}
+            normalize={(v: string) => v !== "" ? v.toUpperCase().replace(" ", "").substr(0, length) : undefined}
             name={name}
             rules={[
                 { required: true, message: 'Please input the ' + name + '!' },
@@ -64,7 +64,7 @@ export function addFilterForm(courses: Course[], name: string, pattern: RegExp, 
             }
             noStyle>
             <AutoComplete
-                style={{ width: width + '%' }}
+                style={style}
                 size={sz}
                 placeholder={name.charAt(0).toUpperCase() + name.slice(1)}
                 filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}

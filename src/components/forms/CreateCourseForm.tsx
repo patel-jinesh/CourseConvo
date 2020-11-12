@@ -117,8 +117,8 @@ class CreateCourseForm extends React.Component<Props, State> {
                     required>
                     {({ getFieldValue }) =>
                         <Input.Group compact>
-                            {addFilterForm(Object.values(this.props.courses), "subject", /^[A-Z]+$/g,  70, 10, "middle", getFieldValue)}
-                            {addFilterForm(Object.values(this.props.courses), "code", /^[0-9][A-Z]([A-Z]|[0-9])[0-9]$/g,  30, 10, "middle", getFieldValue)}
+                            {addFilterForm(Object.values(this.props.courses), "subject", /^[A-Z]+$/g, {width: '70%'}, "middle", getFieldValue)}
+                            {addFilterForm(Object.values(this.props.courses), "code", /^[0-9][A-Z]([A-Z]|[0-9])[0-9]$/g, {width: '30%'}, "middle", getFieldValue, 4)}
                         </Input.Group>
                     }
                 </Form.Item>
