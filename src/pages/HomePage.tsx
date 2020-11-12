@@ -1,4 +1,5 @@
-import { Card, Col, List, PageHeader, Row, Statistic } from 'antd';
+import { Button, Card, Col, List, PageHeader, Row, Space, Statistic, Tooltip } from 'antd';
+import { CommentOutlined, InfoCircleOutlined, PieChartOutlined } from '@ant-design/icons';
 
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
@@ -31,8 +32,6 @@ class HomePage extends React.Component<Props, State> {
     getTopRatedCourses = (numCourse: number) => {
 
         //Computing ratings for each course
-        let arr = [1, 2, 3];
-
         let courseRatings = (Object.entries(this.props.reviews
             .reduce<{ [courseID: string]: { count: number, totalRating: number } }>(
                 (result, review) => {
@@ -56,6 +55,7 @@ class HomePage extends React.Component<Props, State> {
     getElectiveRecommendations = () => {
 
     }
+    //2c0cf1513534a68aa4b5b241cf9f12f04629f854git
 
     getMostPopularCourses = (numCourse: number) => {
         let mostPopularCourses: { [courseID: string]: { count: number } } = {};
@@ -72,6 +72,23 @@ class HomePage extends React.Component<Props, State> {
         return courseReviews.sort((a, b) => b.count - a.count).slice(0, numCourse);
     }
 
+    getTopRatedInstructors = () => {
+
+        let instructorRatings: { [instanceID: string]: { totalRating: number } } = {};
+        for (let i = 0; i < this.props.reviews.length; i++) {
+            let review = this.props.reviews[i];
+            let currRating = ((review.difficulty + review.enjoyability + review.workload) / 3);
+            instructorRatings = {
+                ...instructorRatings,
+                [review.instanceID]: {
+                    totalRating: (instructorRatings[review.instanceID]?.totalRating ?? 0) + currRating
+                }
+            };
+        }
+        console.log(instructorRatings);
+        return [];
+    }
+
 
 
     render() {
@@ -79,7 +96,6 @@ class HomePage extends React.Component<Props, State> {
             <PageHeader
                 title="Home" style={{ width: "100%" }}>
                 <Row gutter={10}>
-
                     <Col span={8}>
                         <Card>
                             <List header="Top Rated Courses"
@@ -88,7 +104,31 @@ class HomePage extends React.Component<Props, State> {
                                 renderItem={item => (
                                     <List.Item>
                                         <Row style={{ width: "100%" }}>
-                                            <Col flex={1}>{`${this.props.courses[item.courseID].subject} ${this.props.courses[item.courseID].code}`}</Col>
+                                            <Col flex={1}>{`${this.props.courses[item.courseID].subject} ${this.props.courses[item.courseID].code}`}
+                                                <Tooltip title='Information'>
+                                                    <Button
+                                                        type='link'
+                                                        icon={<InfoCircleOutlined />}
+                                                    ></Button>
+                                                </Tooltip>
+
+
+                                                <Tooltip title='Information'>
+                                                    <Button
+                                                        type='link'
+                                                        icon={<PieChartOutlined />}
+                                                    ></Button>
+                                                </Tooltip>
+
+
+                                                <Tooltip title='Information'>
+                                                    <Button
+                                                        type='link'
+                                                        icon={<CommentOutlined />}
+                                                    ></Button>
+                                                </Tooltip>
+                                            </Col>
+
                                             <Col>
                                                 <Statistic
                                                     value={item.rating}
@@ -113,6 +153,11 @@ class HomePage extends React.Component<Props, State> {
                                                 />
                                             </Col>
                                         </Row>
+                                        <Row>
+                                            <Col>
+
+                                            </Col>
+                                        </Row>
 
                                     </List.Item>
                                 )}
@@ -130,6 +175,26 @@ class HomePage extends React.Component<Props, State> {
                                         <Row style={{ width: "100%" }}>
                                             <Col flex={1}>{`${this.props.courses[item.courseID].subject} ${this.props.courses[item.courseID].code}`}</Col>
                                             <Col>{`${item.count} reviews`}</Col>
+                                        </Row>
+
+                                    </List.Item>
+                                )}
+                            />
+                        </Card>
+
+                    </Col>
+                </Row>
+
+                <Row>
+                    <Col span={8} >
+                        <Card>
+                            <List header="Top Instructors"
+                                itemLayout="horizontal"
+                                dataSource={this.getTopRatedInstructors()}
+                                renderItem={item => (
+                                    <List.Item>
+                                        <Row style={{ width: "100%" }}>
+
                                         </Row>
 
                                     </List.Item>
