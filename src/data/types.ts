@@ -2,6 +2,26 @@
  * The types that our application will use.
  */
 
+export enum Term {
+    FALL = "Fall",
+    WINTER = "Winter",
+    SPRING = "Spring",
+    SUMMER = "Summer"
+};
+
+export enum Status {
+    IN_PROGRESS = "In progress",
+    TAKEN = "Taken",
+    TRANSFERRED = "Transferred"
+}
+
+export enum FormType {
+    COURSE = "Course",
+    INSTRUCTOR = "Instructor",
+    DATE = "Date",
+    TERM = "Term"
+}
+
 export interface User {
     userID: string;
     name: string;
@@ -22,13 +42,6 @@ export interface Breakdown {
     isAnonymous: boolean;
 }
 
-export enum Term {
-    FALL = "Fall",
-    WINTER = "Winter",
-    SPRING = "Spring",
-    SUMMER = "Summer"
-};
-
 export interface Course {
     courseID: string;
     name: string;
@@ -42,12 +55,6 @@ export interface CourseInstance {
     instructor: string,
     term: Term,
     year: number
-}
-
-export enum Status {
-    IN_PROGRESS = "In progress",
-    TAKEN = "Taken",
-    TRANSFERRED = "Transferred"
 }
 
 export interface Record {
