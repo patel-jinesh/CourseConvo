@@ -1,4 +1,4 @@
-import { Button, Card, Col, List, PageHeader, Row, Space, Statistic, Tooltip } from 'antd';
+import { Button, Card, Col, List, PageHeader, Row, Space, Statistic, Tooltip, Typography } from 'antd';
 import { CommentOutlined, InfoCircleOutlined, PieChartOutlined } from '@ant-design/icons';
 
 import React from 'react';
@@ -8,6 +8,7 @@ import { Course } from '../data/types';
 import { match, withRouter } from 'react-router-dom';
 import { History, Location } from "history";
 
+const { Text } = Typography;
 type ComponentProps = {
     match: match,
     location: Location,
@@ -16,6 +17,7 @@ type ComponentProps = {
 type ComponentState = {
 
 }
+
 
 
 const mapState = (state: RootState) => ({
@@ -52,47 +54,58 @@ class HomePage extends React.Component<Props, State> {
                     }
 
                 }, {}))).map(([courseID, { totalRating, count }]) => ({ rating: (totalRating / count), courseID: courseID }));
-        console.log(courseRatings);
+
 
         return courseRatings.sort((a, b) => b.rating - a.rating).slice(0, numCourse);
 
     }
 
-    getElectiveRecommendations = () => {
-
-    }
-    //2c0cf1513534a68aa4b5b241cf9f12f04629f854git
-
-    getMostPopularCourses = (numCourse: number) => {
+    getElectiveRecommendations = (numCourse: number) => {
         let mostPopularCourses: { [courseID: string]: { count: number } } = {};
         for (let i = 0; i < this.props.reviews.length; i++) {
             let review = this.props.reviews[i];
-            mostPopularCourses = {
-                ...mostPopularCourses, [this.props.instances[review.instanceID].courseID]: {
-                    count: (mostPopularCourses[this.props.instances[review.instanceID].courseID]?.count ?? 0) + 1,
-                }
-            };
+            mostPopularCourses[this.props.instances[review.instanceID].courseID] = {
+                count: (mostPopularCourses[this.props.instances[review.instanceID].courseID]?.count ?? 0) + 1,
+            }
+
         }
 
         let courseReviews = Object.entries(mostPopularCourses).map(([courseID, { count }]) => ({ count: count, courseID: courseID }));
         return courseReviews.sort((a, b) => b.count - a.count).slice(0, numCourse);
     }
 
-    getTopRatedInstructors = () => {
+    getMostPopularCourses = (numCourse: number) => {
+        let mostPopularCourses: { [courseID: string]: { count: number } } = {};
+        for (let i = 0; i < this.props.reviews.length; i++) {
+            let review = this.props.reviews[i];
+            mostPopularCourses[this.props.instances[review.instanceID].courseID] = {
+                count: (mostPopularCourses[this.props.instances[review.instanceID].courseID]?.count ?? 0) + 1,
+            }
 
-        let instructorRatings: { [instanceID: string]: { totalRating: number } } = {};
+        }
+
+        let courseReviews = Object.entries(mostPopularCourses).map(([courseID, { count }]) => ({ count: count, courseID: courseID }));
+        return courseReviews.sort((a, b) => b.count - a.count).slice(0, numCourse);
+    }
+
+    getTopRatedInstructors = (numCourse: number) => {
+
+        let instructorRatings: { [instructor: string]: { totalRating: number, count: number } } = {};
         for (let i = 0; i < this.props.reviews.length; i++) {
             let review = this.props.reviews[i];
             let currRating = ((review.difficulty + review.enjoyability + review.workload) / 3);
-            instructorRatings = {
-                ...instructorRatings,
-                [review.instanceID]: {
-                    totalRating: (instructorRatings[review.instanceID]?.totalRating ?? 0) + currRating
-                }
-            };
+
+
+            instructorRatings[this.props.instances[review.instanceID].instructor] = {
+                totalRating: (instructorRatings[this.props.instances[review.instanceID].instructor]?.totalRating ?? 0) + currRating,
+                count: (instructorRatings[this.props.instances[review.instanceID].instructor]?.count ?? 0) + 1
+            }
         }
-        console.log(instructorRatings);
-        return [];
+
+        let topRatedInstructors = Object.entries(instructorRatings)
+            .map(([instructor, { totalRating, count }]) => ({ instructor: instructor, rating: totalRating / count }));
+        return topRatedInstructors.sort((a, b) => b.rating - a.rating).slice(0, numCourse);
+
     }
 
 
@@ -125,6 +138,7 @@ class HomePage extends React.Component<Props, State> {
                                                     <Button
                                                         type='link'
                                                         icon={<PieChartOutlined />}
+                                                        onClick={() => this.props.history.push({ pathname: '/breakdowns', search: `?courseID=${item?.courseID}` })}
                                                     ></Button>
                                                 </Tooltip>
 
@@ -133,7 +147,7 @@ class HomePage extends React.Component<Props, State> {
                                                     <Button
                                                         type='link'
                                                         icon={<CommentOutlined />}
-
+                                                        onClick={() => this.props.history.push({ pathname: '/reviews', search: `?courseID=${item?.courseID}` })}
                                                     ></Button>
                                                 </Tooltip>
                                             </Col>
@@ -183,7 +197,7 @@ class HomePage extends React.Component<Props, State> {
                                     <List.Item>
                                         <Row style={{ width: "100%" }}>
                                             <Col flex={1}>{`${this.props.courses[item.courseID].subject} ${this.props.courses[item.courseID].code}`}</Col>
-                                            <Col>{`${item.count} reviews`}</Col>
+                                            <Col> <a onClick={() => this.props.history.push({ pathname: '/reviews', search: `?courseID=${item?.courseID}` })}>{`${item.count} ${item.count === 1 ? "review" : "reviews"}`} </a></Col>
                                         </Row>
 
                                     </List.Item>
@@ -199,13 +213,35 @@ class HomePage extends React.Component<Props, State> {
                         <Card>
                             <List header="Top Instructors"
                                 itemLayout="horizontal"
-                                dataSource={this.getTopRatedInstructors()}
+                                dataSource={this.getTopRatedInstructors(3)}
                                 renderItem={item => (
                                     <List.Item>
                                         <Row style={{ width: "100%" }}>
+                                            <Col flex={1}>{`${item.instructor}`}</Col>
+                                            <Col>
+                                                <Statistic
+                                                    value={item.rating}
+                                                    precision={2}
+                                                    suffix="/ 5"
 
+                                                    valueStyle={{
+                                                        color: (() => {
+                                                            if (item.rating < 1) {
+                                                                return '#f5222d'
+                                                            } else if (item.rating < 2) {
+                                                                return '#874d00'
+                                                            } else if (item.rating < 3) {
+                                                                return '#fadb14'
+                                                            } else if (item.rating < 4) {
+                                                                return '#7cb305'
+                                                            } else if (item.rating < 5) {
+                                                                return '#52c41a'
+                                                            }
+                                                        })()
+                                                    }}
+                                                />
+                                            </Col>
                                         </Row>
-
                                     </List.Item>
                                 )}
                             />
