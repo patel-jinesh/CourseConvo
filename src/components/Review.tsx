@@ -19,6 +19,7 @@ type ComponentProps = {
     reviewID: string
     replyable?: boolean
     showreplies?: boolean
+    full?: boolean
 }
 
 type ComponentState = {
@@ -110,7 +111,7 @@ class Review extends React.Component<Props, State> {
                                     <Col>{this.props.instance.instructor}</Col>
                                 </Row>
                             </Space>
-                            <Paragraph style={{ width: '100%', overflowWrap: 'anywhere', wordBreak: 'break-all', paddingLeft: 15, borderLeft: '1px solid #303030' }} ellipsis={{
+                            <Paragraph style={{ width: '100%', overflowWrap: 'anywhere', wordBreak: 'break-all', paddingLeft: 15, borderLeft: '1px solid #303030' }} ellipsis={this.props.full ? undefined : {
                                 rows: 9,
                                 expandable: true,
                             }}>

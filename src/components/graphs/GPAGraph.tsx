@@ -101,7 +101,7 @@ class GPAGraph extends React.Component<Props, State> {
         }
 
         return (
-            <FlexibleXYPlot onMouseLeave={() => this.setState({crosshair: []})} xPadding={1} margin={{ bottom: 100 }} height={400} yDomain={[-1, 13]}>
+            <FlexibleXYPlot height={400} onMouseLeave={() => this.setState({crosshair: []})} xPadding={1} margin={{ bottom: 100 }} yDomain={[-1, 13]}>
                 <GradientDefs>
                     <linearGradient id="CoolGradient" x1="0" x2="0" y1="0" y2="1">
                         <stop offset="0%" stopColor="red" stopOpacity={0.4} />

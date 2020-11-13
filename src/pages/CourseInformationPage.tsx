@@ -9,6 +9,8 @@ import Breakdown from "../components/Breakdown";
 import GPAGraph from "../components/graphs/GPAGraph";
 import Review from "../components/Review";
 import { Status, Term, ReviewTag } from "../data/types";
+import TopReviewList from '../components/TopReviewList';
+import moment from 'moment';
 
 
 const { Content } = Layout;
@@ -29,7 +31,6 @@ const mapState = (state: RootState, props: ComponentProps) => {
     return {
         breakdowns: Object.values(state.breakdowns).filter(breakdown => state.instances[breakdown.instanceID].courseID === courseID),
         records: Object.values(state.records).filter(record => state.instances[record.instanceID].courseID === courseID && record.status === Status.TAKEN),
-        reviews: Object.values(state.reviews).filter(review => state.instances[review.instanceID].courseID === courseID),
         course: state.courses[courseID],
         instances: Object.fromEntries(Object.entries(state.instances).filter(([_, instance]) => instance.courseID === courseID))
     }
@@ -108,11 +109,12 @@ class CourseInformationPage extends React.Component<Props, State> {
                 backIcon={false}
                 title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}
                 footer={
-                    <Tabs defaultActiveKey="0">
+                    <Tabs defaultActiveKey="0" onChange={(key) => {
+                        if (key === "0")
+                            window.dispatchEvent(new Event('resize'))
+                    }}>
                         <TabPane tab="Statistics" key="0">
-                            <Content style={{ paddingTop: 20 }}>
-                                <Statistic className="noselect" title="Course Average" valueRender={() => <GPAGraph records={this.props.records} />}></Statistic>
-                            </Content>
+                            <Statistic className="noselect" title="Course Average" valueRender={() => <GPAGraph records={this.props.records} />}></Statistic>
                         </TabPane>
                         <TabPane tab="Top Breakdowns" key="1">
                             <Button style={{ marginTop: 30 }} type="primary" icon={<PlusOutlined />}>Add Breakdown</Button>
@@ -124,21 +126,7 @@ class CourseInformationPage extends React.Component<Props, State> {
                         </TabPane>
                         <TabPane tab="Top Reviews" key="2">
                             <Content style={{ paddingTop: 20 }}>
-                                {
-                                    this.props.reviews
-                                        .sort((a, b) => {
-                                            let arank = Object.values(a.upvoterIDs).length - Object.values(a.downvoterIDs).length + Object.values(a.tags[ReviewTag.ACCURATE]).length + Object.values(a.tags[ReviewTag.DETAILED]).length + Object.values(a.tags[ReviewTag.HELPFUL]).length;
-                                            let brank = Object.values(b.upvoterIDs).length - Object.values(b.downvoterIDs).length + Object.values(b.tags[ReviewTag.ACCURATE]).length + Object.values(b.tags[ReviewTag.DETAILED]).length + Object.values(b.tags[ReviewTag.HELPFUL]).length;
-
-                                            console.log(arank, brank)
-
-                                            return brank - arank;
-                                        })
-                                        .slice(0, 3)
-                                        .map(review => {
-                                            return <Review reviewID={review.reviewID} key={review.reviewID} />
-                                        })
-                                }
+                                <TopReviewList></TopReviewList>                                    
                             </Content>
                         </TabPane>
                     </Tabs>

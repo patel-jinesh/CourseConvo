@@ -54,7 +54,7 @@ class Breakdown extends React.Component<Props> {
                             expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
                             className="site-collapse-custom-collapse" >
                             <Panel header={type} key="1" className="site-collapse-custom-panel">
-                                <p>{this.displayInfo(type, mark)}</p>
+                                {this.displayInfo(type, mark)}
                             </Panel>
                         </Collapse>
                     );
