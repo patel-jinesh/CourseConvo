@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Layout, PageHeader, Select, Tabs, Statistic, Descriptions, Badge, Button, Drawer } from "antd";
+import { Layout, PageHeader, Select, Tabs, Statistic, Descriptions, Badge, Button, Drawer, Card } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
@@ -38,7 +38,8 @@ const mapState = (state: RootState, props: ComponentProps) => {
         breakdowns: Object.values(state.breakdowns).filter(breakdown => state.instances[breakdown.instanceID].courseID === courseID),
         records: Object.values(state.records).filter(record => state.instances[record.instanceID].courseID === courseID && record.status === Status.TAKEN),
         course: state.courses[courseID],
-        instances: Object.fromEntries(Object.entries(state.instances).filter(([_, instance]) => instance.courseID === courseID))
+        instances: Object.fromEntries(Object.entries(state.instances).filter(([_, instance]) => instance.courseID === courseID)),
+        reviews: Object.fromEntries(Object.entries(state.reviews).filter(([_, review]) => state.instances[review.instanceID].courseID === courseID))
     }
 }
 
@@ -63,6 +64,53 @@ class CourseInformationPage extends React.Component<Props, State> {
     render() {
         let instance = Object.values(this.props.instances).find(instance => instance.courseID === this.props.course.courseID);
 
+        let instructorbucket: {
+            [instructor: string]: {
+                total: number,
+                count: number
+            }
+        } = {}
+
+        for (let review of Object.values(this.props.reviews)) {
+            let instance = this.props.instances[review.instanceID];
+            let rating = (review.difficulty + review.enjoyability + review.workload) / 3;
+
+            instructorbucket[instance.instructor] = {
+                total: (instructorbucket[instance.instructor]?.total ?? 0) + rating,
+                count: (instructorbucket[instance.instructor]?.count ?? 0) + 1
+            }
+        }
+
+        let instructorratings: {
+            instructor: string,
+            rating: number
+        }[] = []
+
+        for (let [instructor, { total, count }] of Object.entries(instructorbucket))
+            instructorratings.push({ instructor: instructor, rating: total / count });
+        
+        let termmap = {
+            [Term.WINTER]: 0,
+            [Term.SPRING]: 1,
+            [Term.SUMMER]: 2,
+            [Term.FALL]: 3,
+        }
+        
+        let instancessorted = Object.values(this.props.instances).sort((a, b) => {
+            if (a.year === b.year)
+                return termmap[a.term] - termmap[b.term]
+            return a.year - b.year;
+        });
+
+
+        let mostrecentinstance = instancessorted[0];
+        let mostrecentinstructor = mostrecentinstance.instructor;
+        let mostrecentsemester = `${mostrecentinstance.term} ${mostrecentinstance.year}`;
+
+        let bestratedinstructor = instructorratings.sort((a, b) => a.rating - b.rating)[0].instructor;
+        let lastbestinstance = instancessorted.find(instance => instance.instructor === bestratedinstructor);
+        let lastbestsemester = `${lastbestinstance!.term} ${lastbestinstance!.year}`;
+        
         return (
             <PageHeader
                 style={{ width: "100%" }}
@@ -96,7 +144,48 @@ class CourseInformationPage extends React.Component<Props, State> {
                         </TabPane>
                     </Tabs>
                 }>
-                <p>Overview Information</p>
+                <Card title={"Quick Overview"}>
+                    <Card.Grid hoverable={false} style={{ display: 'flex' }}>
+                        <Statistic
+                            style={{width: '50%'}}
+                            title="Highest ever grade"
+                            value={Math.max(...Object.values(this.props.records).filter(record => record.status === Status.TAKEN).map(record => record.grade!))}
+                            precision={2}
+                            suffix="/ 12"
+                        />
+                        <Statistic
+                            style={{ width: '50%' }}
+                            title="Lowest ever grade"
+                            value={Math.min(...Object.values(this.props.records).filter(record => record.status === Status.TAKEN).map(record => record.grade!))}
+                            precision={2}
+                            suffix="/ 12"
+                        />
+                    </Card.Grid>
+                    <Card.Grid hoverable={false} style={{ display: 'flex' }}>
+                        <Statistic
+                            style={{ width: '50%' }}
+                            title="Best instructor"
+                            value={bestratedinstructor}
+                        />
+                        <Statistic
+                            style={{ width: '50%' }}
+                            title="Last taught in"
+                            value={lastbestsemester}
+                        />
+                    </Card.Grid>
+                    <Card.Grid hoverable={false} style={{ display: 'flex' }}>
+                        <Statistic
+                            style={{ width: '50%' }}
+                            title="Most recent instructor"
+                            value={mostrecentinstructor}
+                        />
+                        <Statistic
+                            style={{ width: '50%' }}
+                            title="Last taught in"
+                            value={mostrecentsemester}
+                        />
+                    </Card.Grid>
+                </Card>
                 <Drawer
                     destroyOnClose
                     onClose={() => this.setState({ visible: false, recordID: undefined })}
