@@ -14,6 +14,7 @@ import moment from 'moment';
 
 import AcademicRecordForm from "../components/forms/AcademicRecordForm";
 import AddBreakdownForm from "../components/forms/AddBreakdownForm";
+import InstructorGraph from '../components/graphs/InstructorGraph';
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -110,7 +111,7 @@ class CourseInformationPage extends React.Component<Props, State> {
 
             if (averages[semester] !== undefined)
                 data.push({ x: semval, y: averages[semester] });
-            
+
             ticks.push(semval);
         }
 
@@ -125,7 +126,13 @@ class CourseInformationPage extends React.Component<Props, State> {
                             window.dispatchEvent(new Event('resize'))
                     }}>
                         <TabPane tab="Statistics" key="0">
-                            <Statistic className="noselect" title="Course Average" valueRender={() => <GPAGraph records={this.props.records} />}></Statistic>
+                            <Content style={{ paddingTop: 20 }}>
+                                <Statistic className="noselect" title="Course Stats by Semester" valueRender={() => <GPAGraph records={this.props.records} />}></Statistic>
+                                <Statistic className="noselect" title="Course Stats by Instructor" valueRender={() =>
+                                    <InstructorGraph records={this.props.records} />
+                                }>
+                                </Statistic>
+                            </Content>
                         </TabPane>
                         <TabPane tab="Top Breakdowns" key="1">
                             <Button onClick={this.onAdd} style={{ marginTop: 30 }} type="primary" icon={<PlusOutlined />}>Add Breakdown</Button>
@@ -137,7 +144,7 @@ class CourseInformationPage extends React.Component<Props, State> {
                         </TabPane>
                         <TabPane tab="Top Reviews" key="2">
                             <Content style={{ paddingTop: 20 }}>
-                                <TopReviewList></TopReviewList>                                    
+                                <TopReviewList></TopReviewList>
                             </Content>
                         </TabPane>
                     </Tabs>
@@ -153,7 +160,7 @@ class CourseInformationPage extends React.Component<Props, State> {
                         key={this.state.recordID ?? "add"}
                         breakdownID={"Hi"}
                         courseID={"Hi"}
-                        onFinish={() => this.setState({visible: false, recordID: undefined})}
+                        onFinish={() => this.setState({ visible: false, recordID: undefined })}
                         onCancel={() => this.setState({ visible: false, recordID: undefined })} />
                 </Drawer>
             </PageHeader>

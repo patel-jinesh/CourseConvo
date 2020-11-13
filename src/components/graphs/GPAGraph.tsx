@@ -132,7 +132,7 @@ class GPAGraph extends React.Component<Props, State> {
                 </GradientDefs>
                 <VerticalGridLines style={{ stroke: 'rgb(100, 100, 100)' }} />
                 <XAxis height={400} tickValues={ticks} tickLabelAngle={-45} tickFormat={(v: any) => formatter(v)} title="Semester" style={{ text: { fill: 'white' }, title: { fill: 'white' } }} />
-                <YAxis title="Average" tickValues={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]} style={{ text: { fill: 'white' } }} />
+                <YAxis title="Grade" tickValues={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]} style={{ text: { fill: 'white' } }} />
                 <AreaSeries onNearestX={
                     (value: any, { index }: any) => {
                         // this.setState({ crosshair: gpa.map((d, i) => i === index ? [d, { x: d.x, y: mins[i] }, { x: d.x, y: maxs[i] }] : []) });
