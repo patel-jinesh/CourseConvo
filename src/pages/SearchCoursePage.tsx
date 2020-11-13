@@ -61,8 +61,9 @@ class SearchCoursePage extends React.Component<Props, State> {
             .filter(course => {
                 let matchSubject = this.state.subject === undefined || course.subject.indexOf(this.state.subject) === 0;
                 let matchCode = this.state.code === undefined || course.code.indexOf(this.state.code) === 0;
+                let hasInstance = Object.values(this.props.instances).some(instance => instance.courseID === course.courseID);
 
-                return matchSubject && matchCode;
+                return matchSubject && matchCode && hasInstance;
             })
         
         let instancebuckets = Object
