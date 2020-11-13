@@ -124,23 +124,24 @@ class Review extends React.Component<Props, State> {
                         </Tooltip>
                     }
                     actions={[
-                        <Tooltip title="Like">
+                        this.props.review.userID !== USERID && <Tooltip title="Like">
                             <span onClick={() => (this.props.review.upvoterIDs[USERID] ? this.props.unvote : this.props.upvote)({ reviewID: this.props.reviewID, userID: USERID })}>
                                 {this.props.review.upvoterIDs[USERID] ? <LikeTwoTone /> : <LikeFilled />}
                                 <span className="comment-action">{Object.keys(this.props.review.upvoterIDs).length}</span>
                             </span>
                         </Tooltip>,
-                        <Tooltip title="Dislike">
+                        this.props.review.userID !== USERID && <Tooltip title="Dislike">
                             <span onClick={() => (this.props.review.downvoterIDs[USERID] ? this.props.unvote : this.props.downvote)({ reviewID: this.props.reviewID, userID: USERID })}>
                                 {this.props.review.downvoterIDs[USERID] ? <DislikeTwoTone /> : <DislikeFilled />}
                                 <span className="comment-action">{Object.keys(this.props.review.downvoterIDs).length}</span>
                             </span>
                         </Tooltip>,
-                        [{ tag: ReviewTag.HELPFUL, color: "#FA4" }, { tag: ReviewTag.DETAILED, color: "#F1F" }, { tag: ReviewTag.ACCURATE, color: "#AF1" }].map(({ tag, color }: { tag: ReviewTag, color: string }) => {
+                        this.props.review.userID !== USERID && [{ tag: ReviewTag.HELPFUL, color: "#FA4" }, { tag: ReviewTag.DETAILED, color: "#F1F" }, { tag: ReviewTag.ACCURATE, color: "#AF1" }].map(({ tag, color }: { tag: ReviewTag, color: string }) => {
                             let tagged = this.props.review.tags[tag][USERID] !== undefined;
 
                             return (
                                 <Tag
+                                    key={tag}
                                     icon={tagged ? <CheckOutlined /> : undefined}
                                     onClick={() => (tagged ? this.props.untag : this.props.tag)({ reviewID: this.props.reviewID, userID: USERID, tag: tag })}
                                     color={color}
@@ -149,7 +150,7 @@ class Review extends React.Component<Props, State> {
                                 </Tag>
                             );
                         }),
-                        this.props.replyable && !this.state.replying && this.props.review.userID !== USERID && <span onClick={() => this.setState({ replying: true })}>Reply to</span>,
+                        this.props.review.userID !== USERID && this.props.replyable && !this.state.replying && <span onClick={() => this.setState({ replying: true })}>Reply to</span>,
                         this.props.showreplies && <span onClick={() => this.setState({ showing: !this.state.showing })}>{this.state.showing ? "Hide" : "Show"} replies</span>,
                         this.props.review.userID !== USERID && <span className="report" onClick={() => this.setState({ reporting: true })}>Report</span>
                     ]}
