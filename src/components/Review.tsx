@@ -1,4 +1,4 @@
-import { DislikeFilled, DislikeTwoTone, LikeFilled, LikeTwoTone, UserOutlined, DeleteOutlined } from '@ant-design/icons';
+import { CheckOutlined, DislikeFilled, DislikeTwoTone, LikeFilled, LikeTwoTone, UserOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Comment, Drawer, Form, List, Row, Space, Tooltip, Typography, Tag, Badge } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import TextArea from 'antd/lib/input/TextArea';
@@ -136,20 +136,26 @@ class Review extends React.Component<Props, State> {
                                 <span className="comment-action">{Object.keys(this.props.review.downvoterIDs).length}</span>
                             </span>
                         </Tooltip>,
-                        <Tag onClick={() => (this.props.review.tags[ReviewTag.HELPFUL][USERID] ?  this.props.untag : this.props.tag)({ reviewID: this.props.reviewID, userID: USERID, tag: ReviewTag.HELPFUL})} color='#FA4' style={{ color: "black" }}>Helpful:  {Object.values(this.props.review.tags[ReviewTag.HELPFUL]).length}</Tag>,
-                        <Tag onClick={() => (this.props.review.tags[ReviewTag.DETAILED][USERID] ? this.props.untag : this.props.tag)({ reviewID: this.props.reviewID, userID: USERID, tag: ReviewTag.DETAILED})} color='#AF1' style={{ color: "black" }}>Detailed: {Object.values(this.props.review.tags[ReviewTag.DETAILED]).length}</Tag>,
-                        <Tag onClick={() => (this.props.review.tags[ReviewTag.ACCURATE][USERID] ? this.props.untag : this.props.tag)({ reviewID: this.props.reviewID, userID: USERID, tag: ReviewTag.ACCURATE})} color='#F1F' style={{ color: "black" }}>Accurate: {Object.values(this.props.review.tags[ReviewTag.ACCURATE]).length}</Tag>,
+                        [{ tag: ReviewTag.HELPFUL, color: "#FA4" }, { tag: ReviewTag.DETAILED, color: "#F1F" }, { tag: ReviewTag.ACCURATE, color: "#AF1" }].map(({ tag, color }: { tag: ReviewTag, color: string }) => {
+                            let tagged = this.props.review.tags[tag][USERID] !== undefined;
+
+                            return (
+                                <Tag
+                                    icon={tagged ? <CheckOutlined /> : undefined}
+                                    onClick={() => (tagged ? this.props.untag : this.props.tag)({ reviewID: this.props.reviewID, userID: USERID, tag: tag })}
+                                    color={color}
+                                    style={{ color: "black" }}>
+                                    {tag}:  {Object.values(this.props.review.tags[tag]).length}
+                                </Tag>
+                            );
+                        }),
                         this.props.replyable && !this.state.replying && this.props.review.userID !== USERID && <span onClick={() => this.setState({ replying: true })}>Reply to</span>,
                         this.props.showreplies && <span onClick={() => this.setState({ showing: !this.state.showing })}>{this.state.showing ? "Hide" : "Show"} replies</span>,
-                        this.props.review.userID !== USERID && <span className="report" onClick={() => this.setState({ reporting: !this.state.reporting })}>{this.state.reporting ? "Cancel Report" : "Report"}</span>
+                        this.props.review.userID !== USERID && <span className="report" onClick={() => this.setState({ reporting: true })}>Report</span>
                     ]}
                 >
                     {this.state.replying && <Comment
-                        avatar={
-                            <Avatar
-                                src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-                            />
-                        }
+                        avatar={this.props.user.avatar_url}
                         content={
                             <>
                                 <Form onFinish={(values) => {
