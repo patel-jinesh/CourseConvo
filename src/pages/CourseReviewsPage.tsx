@@ -34,7 +34,7 @@ const mapState = (state: RootState, props: ComponentProps) => {
     let queryID = (new URLSearchParams(props.location.search)).get('courseID')!;
 
     return {
-        userreview: Object.values(state.reviews).find(review => review.userID === USERID),
+        userreview: Object.values(state.reviews).find(review => review.userID === USERID && state.instances[review.instanceID].courseID === queryID),
         reviews: Object.values(state.reviews).filter(review => state.instances[review.instanceID].courseID === queryID),
         users: state.users,
         instances: Object.fromEntries(Object.entries(state.instances).filter(([instnaceID, instance]) => instance.courseID === queryID)),
@@ -252,9 +252,9 @@ class CourseReviewsPage extends React.Component<Props, State> {
                         courseID={this.props.course.courseID}
                         reviewID={this.props.userreview?.reviewID}
                         initialValues={this.props.userreview ? {
-                            term: this.props.instances[this.props.userreview.instanceID].term,
-                            year: moment(`${this.props.instances[this.props.userreview.instanceID].year}`),
-                            instructor: this.props.instances[this.props.userreview.instanceID].instructor,
+                            term: this.props.instances[this.props.userreview.instanceID]?.term,
+                            year: moment(`${this.props.instances[this.props.userreview.instanceID]?.year}`),
+                            instructor: this.props.instances[this.props.userreview.instanceID]?.instructor,
                             difficulty: this.props.userreview.difficulty,
                             enjoyability: this.props.userreview.enjoyability,
                             workload: this.props.userreview.workload,
