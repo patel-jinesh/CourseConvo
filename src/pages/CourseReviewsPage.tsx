@@ -34,7 +34,7 @@ const mapState = (state: RootState, props: ComponentProps) => {
     let queryID = (new URLSearchParams(props.location.search)).get('courseID')!;
 
     return {
-        userreview: Object.values(state.reviews).find(review => review.userID === USERID),
+        userreview: Object.values(state.reviews).find(review => review.userID === USERID && state.instances[review.instanceID].courseID === queryID),
         reviews: Object.values(state.reviews).filter(review => state.instances[review.instanceID].courseID === queryID),
         users: state.users,
         instances: Object.fromEntries(Object.entries(state.instances).filter(([instnaceID, instance]) => instance.courseID === queryID)),

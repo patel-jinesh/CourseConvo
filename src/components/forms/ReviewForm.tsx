@@ -61,8 +61,11 @@ class ReviewForm extends React.Component<Props, State> {
     }
 
     onFinish = (values: any) => {
-        console.log(values);
-        let instance = Object.values(this.props.instances).find(instance => instance.term === values.term && instance.year === values.year?.year())
+        let instance = Object.values(this.props.instances)
+            .find(instance =>
+                instance.courseID === this.props.courseID
+                && instance.term === values.term
+                && instance.year === values.year?.year())
 
         let instanceID = instance?.instanceID ?? uuidv4();
 
