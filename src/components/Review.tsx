@@ -1,4 +1,4 @@
-import { DislikeFilled, DislikeTwoTone, LikeFilled, LikeTwoTone, UserOutlined } from '@ant-design/icons';
+import { DislikeFilled, DislikeTwoTone, LikeFilled, LikeTwoTone, UserOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Button, Card, Col, Comment, Drawer, Form, List, Row, Space, Tooltip, Typography, Tag, Badge } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import TextArea from 'antd/lib/input/TextArea';
@@ -19,13 +19,11 @@ type ComponentProps = {
     reviewID: string
     replyable?: boolean
     showreplies?: boolean
-    editable?: boolean
 }
 
 type ComponentState = {
     showing: boolean,
     replying: boolean,
-    editing: boolean,
     reporting: boolean,
 }
 
@@ -43,7 +41,7 @@ const mapDispatch = {
     reply: reply,
     unvote: unvote,
     tag: tag,
-    untag: untag
+    untag: untag,
 }
 
 const connector = connect(mapState, mapDispatch);
@@ -57,7 +55,6 @@ class Review extends React.Component<Props, State> {
     state: State = {
         showing: false,
         replying: false,
-        editing: false,
         reporting: false,
     }
 
@@ -134,7 +131,6 @@ class Review extends React.Component<Props, State> {
                         <Tag onClick={() => (this.props.review.tags[ReviewTag.HELPFUL][USERID] ?  this.props.untag : this.props.tag)({ reviewID: this.props.reviewID, userID: USERID, tag: ReviewTag.HELPFUL})} color='#FA4' style={{ color: "black" }}>Helpful:  {Object.values(this.props.review.tags[ReviewTag.HELPFUL]).length}</Tag>,
                         <Tag onClick={() => (this.props.review.tags[ReviewTag.DETAILED][USERID] ? this.props.untag : this.props.tag)({ reviewID: this.props.reviewID, userID: USERID, tag: ReviewTag.DETAILED})} color='#AF1' style={{ color: "black" }}>Detailed: {Object.values(this.props.review.tags[ReviewTag.DETAILED]).length}</Tag>,
                         <Tag onClick={() => (this.props.review.tags[ReviewTag.ACCURATE][USERID] ? this.props.untag : this.props.tag)({ reviewID: this.props.reviewID, userID: USERID, tag: ReviewTag.ACCURATE})} color='#F1F' style={{ color: "black" }}>Accurate: {Object.values(this.props.review.tags[ReviewTag.ACCURATE]).length}</Tag>,
-                        this.props.editable && this.props.review.userID === USERID && <span onClick={() => this.setState({ editing: true })}>Edit</span>,
                         this.props.replyable && !this.state.replying && this.props.review.userID !== USERID && <span onClick={() => this.setState({ replying: true })}>Reply to</span>,
                         this.props.showreplies && <span onClick={() => this.setState({ showing: !this.state.showing })}>{this.state.showing ? "Hide" : "Show"} replies</span>,
                         this.props.review.userID !== USERID && <span className="report" onClick={() => this.setState({ reporting: !this.state.reporting })}>{this.state.reporting ? "Cancel Report" : "Report"}</span>
@@ -189,29 +185,6 @@ class Review extends React.Component<Props, State> {
                     />
                     }
                 </Comment>
-                <Drawer
-                    forceRender
-                    destroyOnClose
-                    onClose={() => this.setState({ editing: false })}
-                    title="Edit review"
-                    width={467}
-                    visible={this.state.editing}>
-                    <ReviewForm
-                        courseID={this.props.course.courseID}
-                        reviewID={this.props.review.reviewID}
-                        initialValues={{
-                            term: this.props.instance.term,
-                            year: moment(`${this.props.instance.year}`),
-                            instructor: this.props.instance.instructor,
-                            difficulty: this.props.review.difficulty,
-                            enjoyability: this.props.review.enjoyability,
-                            workload: this.props.review.workload,
-                            comment: this.props.review.comment,
-                            anonymous: this.props.review.isAnonymous
-                        }}
-                        onFinish={() => this.setState({ editing: false })}
-                        onCancel={() => this.setState({ editing: false })} />
-                </Drawer>
                 <Drawer
                     onClose={() => this.setState({ reporting: false })}
                     title="Report"

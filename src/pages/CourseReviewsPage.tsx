@@ -10,6 +10,8 @@ import ReviewForm from '../components/forms/ReviewForm';
 import NumericRate from '../components/NumericRate';
 import Review from '../components/Review';
 import ReportForm from '../components/forms/ReportForm';
+import moment from 'moment';
+import { remove } from '../features/courses/review';
 
 type ComponentProps = {
     match: match,
@@ -32,6 +34,7 @@ const mapState = (state: RootState, props: ComponentProps) => {
     let queryID = (new URLSearchParams(props.location.search)).get('courseID')!;
 
     return {
+        userreview: Object.values(state.reviews).find(review => review.userID === USERID),
         reviews: Object.values(state.reviews).filter(review => state.instances[review.instanceID].courseID === queryID),
         users: state.users,
         instances: Object.fromEntries(Object.entries(state.instances).filter(([instnaceID, instance]) => instance.courseID === queryID)),
@@ -39,7 +42,9 @@ const mapState = (state: RootState, props: ComponentProps) => {
     }
 };
 
-const mapDispatch = {}
+const mapDispatch = {
+    remove: remove
+}
 
 const connector = connect(mapState, mapDispatch);
 
@@ -61,11 +66,9 @@ class CourseReviewsPage extends React.Component<Props, State> {
     }
 
     render() {
-        let userreview = this.props.reviews.find(review => review.userID === USERID);
-
         let content: JSX.Element | undefined = undefined;
 
-        if (!userreview && !this.state.hide) {
+        if (!this.props.userreview && !this.state.hide) {
             content = <Result
                 status='warning'
                 icon={< FrownOutlined />}
@@ -150,7 +153,7 @@ class CourseReviewsPage extends React.Component<Props, State> {
                                             <span>Semesters</span>
                                                 <Select
                                                     getPopupContainer={trigger => trigger.parentElement}
-                                                    key={userreview?.userID} mode="tags" style={{ width: '100%' }} placeholder="Semesters"
+                                                    key={this.props.userreview?.userID} mode="tags" style={{ width: '100%' }} placeholder="Semesters"
                                                     value={this.state.filters.semesters}
                                                     onDeselect={(value) => {
                                                         if (value === "All" && this.state.filters.semesters.length === 1)
@@ -217,21 +220,52 @@ class CourseReviewsPage extends React.Component<Props, State> {
                         </Col>
                     }
                     {<Col style={{width: 'calc(100% - 300px)'}}>
-                        {userreview && <List
-                            itemLayout="horizontal"
-                            header={"Your review"}>
-                            <Review showreplies editable reviewID={userreview.reviewID} />
+                        {this.props.userreview && <List
+                            itemLayout="vertical"
+                            header={<Row align='middle'>
+                                <Col flex={1}>Your Review</Col>
+                                <Col>
+                                    <Space direction='horizontal'>
+                                        <Button onClick={() => this.setState({visible: true})} type='primary'>Edit</Button>
+                                        <Button onClick={() => this.props.remove(this.props.userreview!.reviewID)} type='primary' danger>Delete</Button>
+                                    </Space>
+                                </Col>
+                            </Row>}
+                        >
+                            <Review showreplies reviewID={this.props.userreview.reviewID} />
                         </List>}
                         <List
                             rowKey={review => review.reviewID}
                     dataSource={datasource}
                     header={header}
-                    itemLayout="horizontal"
+                    itemLayout="vertical"
                     renderItem={props => <Review {...props} />}/>
                     </Col>}
                 </Row>
-
                 <Drawer
+                    forceRender
+                    destroyOnClose
+                    onClose={() => this.setState({ visible: false })}
+                    title={this.props.userreview ? "Edit review" : "Write a review"}
+                    width={467}
+                    visible={this.state.visible}>
+                    <ReviewForm
+                        courseID={this.props.course.courseID}
+                        reviewID={this.props.userreview?.reviewID}
+                        initialValues={this.props.userreview ? {
+                            term: this.props.instances[this.props.userreview.instanceID].term,
+                            year: moment(`${this.props.instances[this.props.userreview.instanceID].year}`),
+                            instructor: this.props.instances[this.props.userreview.instanceID].instructor,
+                            difficulty: this.props.userreview.difficulty,
+                            enjoyability: this.props.userreview.enjoyability,
+                            workload: this.props.userreview.workload,
+                            comment: this.props.userreview.comment,
+                            anonymous: this.props.userreview.isAnonymous
+                        } : undefined}
+                        onFinish={() => this.setState({ visible: false })}
+                        onCancel={() => this.setState({ visible: false })} />
+                </Drawer>
+                {/* <Drawer
                     onClose={() => this.setState({ visible: false })}
                     title="Write a Review"
                     width={467}
@@ -240,7 +274,7 @@ class CourseReviewsPage extends React.Component<Props, State> {
                         courseID={this.props.course.courseID}
                         onFinish={() => this.setState({ visible: false })}
                         onCancel={() => this.setState({ visible: false })} />
-                </Drawer>
+                    </Drawer> */}
             </PageHeader>
         );
     }
