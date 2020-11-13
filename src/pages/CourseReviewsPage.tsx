@@ -252,9 +252,9 @@ class CourseReviewsPage extends React.Component<Props, State> {
                         courseID={this.props.course.courseID}
                         reviewID={this.props.userreview?.reviewID}
                         initialValues={this.props.userreview ? {
-                            term: this.props.instances[this.props.userreview.instanceID].term,
-                            year: moment(`${this.props.instances[this.props.userreview.instanceID].year}`),
-                            instructor: this.props.instances[this.props.userreview.instanceID].instructor,
+                            term: this.props.instances[this.props.userreview.instanceID]?.term,
+                            year: moment(`${this.props.instances[this.props.userreview.instanceID]?.year}`),
+                            instructor: this.props.instances[this.props.userreview.instanceID]?.instructor,
                             difficulty: this.props.userreview.difficulty,
                             enjoyability: this.props.userreview.enjoyability,
                             workload: this.props.userreview.workload,
