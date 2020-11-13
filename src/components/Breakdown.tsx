@@ -35,7 +35,7 @@ class Breakdown extends React.Component<Props> {
     displayInfo (type: string, mark: Mark) {
         return (
             <ul>
-                <li>Weight: {mark.weight}</li> 
+                <li>Weight: {mark.weight}%</li> 
                 <li>Number of {type}: {mark.count}</li>
             </ul>
         );
@@ -45,24 +45,23 @@ class Breakdown extends React.Component<Props> {
     addAssessment (type: string) {
         return (
             this.props.breakdown.marks.map((mark, index) => {
-                if ( (mark.type === type) && (mark.count > 0)) {
-                    return (    
+                if ((mark.type === type) && (mark.count > 0)) {
+                    return (
                         <Collapse
-                                defaultActiveKey={"1"}
-                                key={index}
-                                bordered={false}
-                                expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-                                className="site-collapse-custom-collapse" >
-                                <Panel header={type} key="1" className="site-collapse-custom-panel">
-                                    <p>{this.displayInfo(type, mark)}</p>
-                                </Panel>
-                            </Collapse>
+                            defaultActiveKey={"1"}
+                            key={index}
+                            bordered={false}
+                            expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+                            className="site-collapse-custom-collapse" >
+                            <Panel header={type} key="1" className="site-collapse-custom-panel">
+                                <p>{this.displayInfo(type, mark)}</p>
+                            </Panel>
+                        </Collapse>
                     );
                 }
 
                 return undefined;
-            }
-            )
+            })
         );
     }
 
