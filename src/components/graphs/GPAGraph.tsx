@@ -6,6 +6,7 @@ import {
     VerticalGridLines,
     Crosshair,
     MarkSeries,
+    LineMarkSeries,
     AreaSeries,
     GradientDefs
 } from 'react-vis';
@@ -39,7 +40,15 @@ class GPAGraph extends React.Component<Props, State> {
     }
 
     render() {
-        let counts: { [semester: string]: { total: number, count: number } } = {};
+        let counts: {
+            [semester: string]:
+            {
+                total: number,
+                minimum: number,
+                maximum: number,
+                count: number
+            }
+        } = {};
         let minsem: { term: Term, year: number } | undefined = undefined;
         let maxsem: { term: Term, year: number } | undefined = undefined;
 
@@ -64,6 +73,8 @@ class GPAGraph extends React.Component<Props, State> {
 
             counts[semester] = {
                 total: (counts[semester]?.total ?? 0) + record.grade!,
+                minimum: Math.min((counts[semester]?.minimum ?? 12), record.grade!),
+                maximum: Math.max((counts[semester]?.maximum ?? 0), record.grade!),
                 count: (counts[semester]?.count ?? 0) + 1
             }
 
@@ -80,17 +91,28 @@ class GPAGraph extends React.Component<Props, State> {
             [semester]: total / count
         }), {});
 
-        let data: any[] = [];
+        let gpa: any[] = [];
+        let mins: any[] = [];
+        let maxs: any[] = [];
+        let range: any[] = [];
         let ticks: number[] = [];
 
         for (let semval = minsem!.year + (termmap[minsem!.term] / 4); semval <= maxsem!.year + (termmap[maxsem!.term] / 4); semval += 0.25) {
             let semester = `${termmaprev[(semval % 1) * 4]} ${semval - (semval % 1)}`;
 
             if (averages[semester] !== undefined)
-                data.push({ x: semval, y: averages[semester] });
-
+                gpa.push({ x: semval, y: averages[semester] });
+            if (counts[semester]?.minimum !== undefined)
+                mins.push({ x: semval, y: counts[semester].minimum })
+            if (counts[semester]?.maximum !== undefined)
+                maxs.push({ x: semval, y: counts[semester].maximum })
+            if (counts[semester]?.minimum !== undefined && counts[semester]?.minimum !== undefined)
+                range.push({ x: semval, y: counts[semester].minimum, y0: counts[semester].maximum })
+            
             ticks.push(semval);
         }
+
+        let data = [gpa, mins, maxs];
 
         let formatter = (v: number) => {
             if (v % 1 === 0) return `${Term.WINTER} ${v}`;
@@ -105,7 +127,7 @@ class GPAGraph extends React.Component<Props, State> {
                 <GradientDefs>
                     <linearGradient id="CoolGradient" x1="0" x2="0" y1="0" y2="1">
                         <stop offset="0%" stopColor="red" stopOpacity={0.4} />
-                        <stop offset="100%" stopColor="blue" stopOpacity={0.3} />
+                        <stop offset="150%" stopColor="blue" stopOpacity={0.3} />
                     </linearGradient>
                 </GradientDefs>
                 <VerticalGridLines style={{ stroke: 'rgb(100, 100, 100)' }} />
@@ -113,17 +135,30 @@ class GPAGraph extends React.Component<Props, State> {
                 <YAxis title="Average" tickValues={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]} style={{ text: { fill: 'white' } }} />
                 <AreaSeries onNearestX={
                     (value: any, { index }: any) => {
-                        this.setState({ crosshair: data.map((d, i) => i === index ? d : undefined) });
+                        // this.setState({ crosshair: gpa.map((d, i) => i === index ? [d, { x: d.x, y: mins[i] }, { x: d.x, y: maxs[i] }] : []) });
+                        this.setState({ crosshair: data.map(d => d[index]) });
                     }
-                } curve={'curveMonotoneX'} color={'url(#CoolGradient)'} data={data} />
-                <MarkSeries color="white" style={{ fill: "none" }} data={data} />
+                } curve={'curveMonotoneX'} color={'url(#CoolGradient)'} data={gpa} />
+                <MarkSeries color="white" style={{ fill: "none" }} data={gpa} />
+                <AreaSeries curve={'curveMonotoneX'} color={'url(#CoolGradient)'} data={maxs} />
+                <AreaSeries curve={'curveMonotoneX'} color={'url(#CoolGradient)'} data={mins} />
+                <MarkSeries color="yellow" style={{ fill: "none" }} data={mins} />
+                <MarkSeries color="brown" style={{ fill: "none" }} data={maxs} />
                 <Crosshair
                     values={this.state.crosshair}
                     itemsFormat={(data: any) => {
-                        return data.filter((p: any) => p !== undefined).map(({ x, y }: { x: number, y: number }) => ({ title: "Average", value: y.toFixed(2) }))
+                        let avg = data[0];
+                        let min = data[1];
+                        let max = data[2];
+
+                        return [
+                            { title: "Average", value: avg.y.toFixed(2) },
+                            { title: "Min", value: min.y.toFixed(2) },
+                            { title: "Max", value: max.y.toFixed(2) },
+                        ]
                     }}
                     titleFormat={(data: any) => {
-                        return data.filter((p: any) => p !== undefined).map(({ x, y }: { x: number, y: number }) => ({ title: `${termmaprev[(x % 1) * 4]} ${x - (x % 1)}`}))[0]
+                        return data.map(({ x }: { x: number }) => ({ title: `${termmaprev[(x % 1) * 4]} ${x - (x % 1)}`}))[0]
                     }}
                 />
             </FlexibleXYPlot>
