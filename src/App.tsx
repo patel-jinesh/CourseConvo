@@ -7,7 +7,7 @@ import '../node_modules/react-vis/dist/style.css';
 import './App.css';
 import { RootState } from './app/store';
 import AcademicRecordPage from './pages/AcademicRecordPage';
-import CourseBreakdownPage from './pages/CourseBreakdownPage';
+import CourseBreakdownsPage from './pages/CourseBreakdownPage';
 import CourseInformationPage from './pages/CourseInformationPage';
 import CourseReviewsPage from './pages/CourseReviewsPage';
 import HomePage from './pages/HomePage';
@@ -99,7 +99,7 @@ class App extends React.Component<Props, State> {
               let query = new URLSearchParams(props.location.search);
 
               if (query.has('courseID') && this.props.courses.includes(query.get('courseID')!))
-                return <CourseBreakdownPage />
+                return <CourseBreakdownsPage />
 
               return <Redirect to="/search" />;
             }}>
