@@ -101,9 +101,17 @@ class Review extends React.Component<Props, State> {
                                     <Col flex={1}>Overall</Col>
                                     <Col>{`${((this.props.review.enjoyability + this.props.review.difficulty + this.props.review.workload) / 3).toFixed(2)} / 5`}</Col>
                                 </Row>
+                                <Row align="middle">
+                                    <Col flex={1}>Semester</Col>
+                                    <Col>{`${this.props.instance.term} ${this.props.instance.year}`}</Col>
+                                </Row>
+                                <Row align="middle">
+                                    <Col flex={1}>Instructor</Col>
+                                    <Col>{this.props.instance.instructor}</Col>
+                                </Row>
                             </Space>
                             <Paragraph style={{ overflowWrap: 'anywhere', wordBreak: 'break-all', paddingLeft: 15, borderLeft: '1px solid #303030' }} ellipsis={{
-                                rows: 6,
+                                rows: 9,
                                 expandable: true,
                             }}>
                                 {this.props.review.comment}
