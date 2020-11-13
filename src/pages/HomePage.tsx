@@ -99,6 +99,7 @@ class HomePage extends React.Component<Props, State> {
 
     render() {
         return (
+            //Page header
             <PageHeader
                 title="Home" style={{ width: "100%" }}>
                 <Row gutter={10}>

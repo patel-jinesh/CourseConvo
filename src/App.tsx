@@ -3,16 +3,15 @@ import { Layout, Menu } from 'antd';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { BrowserRouter as Router, Link, Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom';
-import './App.css';
 import '../node_modules/react-vis/dist/style.css';
+import './App.css';
 import { RootState } from './app/store';
 import AcademicRecordPage from './pages/AcademicRecordPage';
+import CourseBreakdownPage from './pages/CourseBreakdownPage';
 import CourseInformationPage from './pages/CourseInformationPage';
+import CourseReviewsPage from './pages/CourseReviewsPage';
 import HomePage from './pages/HomePage';
 import SearchCoursePage from './pages/SearchCoursePage';
-import { instances } from './backend/database';
-import CourseBreakdownPage from './pages/CourseBreakdownPage';
-import CourseReviewsPage from './pages/CourseReviewsPage';
 
 const { Sider } = Layout;
 
@@ -56,10 +55,10 @@ function Nav() {
           <Menu.Item key="/search" icon={<SearchOutlined />}>
             <Link to={{ pathname: '/search' }}>Search</Link>
           </Menu.Item>
-          <Menu.Item key="/information" disabled={!query.has('instanceID')} icon={<InfoCircleOutlined />}>
+          <Menu.Item key="/information" disabled={!query.has('courseID')} icon={<InfoCircleOutlined />}>
             <Link to={{ pathname: '/information', search: query.toString() }}>Information</Link>
           </Menu.Item>
-          <Menu.Item key="/breakdown" disabled={!query.has('courseID')} icon={<PieChartOutlined />}>
+          <Menu.Item key="/breakdowns" disabled={!query.has('courseID')} icon={<PieChartOutlined />}>
             <Link to={{ pathname: '/breakdowns', search: query.toString() }}>Breakdowns</Link>
           </Menu.Item>
           <Menu.Item key="/reviews" disabled={!query.has('courseID')} icon={<CommentOutlined />}>
@@ -90,7 +89,7 @@ class App extends React.Component<Props, State> {
             <Route path={"/information"} render={props => {
               let query = new URLSearchParams(props.location.search);
 
-              if (query.has('instanceID') && this.props.instances.includes(query.get('instanceID')!))
+              if (query.has('courseID') && this.props.courses.includes(query.get('courseID')!))
                 return <CourseInformationPage />
 
               return <Redirect to="/search" />;

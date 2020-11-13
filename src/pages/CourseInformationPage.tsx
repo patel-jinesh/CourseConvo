@@ -1,21 +1,15 @@
-import { Layout, PageHeader, Select, Tabs, Statistic } from "antd";
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Layout, PageHeader, Statistic, Tabs } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
+import Breakdown from "../components/Breakdown";
+import GPAGraph from "../components/graphs/GPAGraph";
 import Review from "../components/Review";
+import { Status, Term } from "../data/types";
 
-import {
-    FlexibleXYPlot,
-    XAxis,
-    YAxis,
-    VerticalGridLines,
-    Crosshair,
-    LineMarkSeries,
-    Voronoi
-} from 'react-vis';
-import { Term, Status } from "../data/types";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -30,16 +24,14 @@ type ComponentState = {}
 
 const mapState = (state: RootState, props: ComponentProps) => {
     let query = new URLSearchParams(props.location.search)
-    let instanceID = query.get('instanceID')!;
     let courseID = query.get('courseID')!;
 
     return {
-        breakdowns: Object.values(state.breakdowns).filter(breakdown => breakdown.instanceID === instanceID),
+        breakdowns: Object.values(state.breakdowns).filter(breakdown => state.instances[breakdown.instanceID].courseID === courseID),
         records: Object.values(state.records).filter(record => state.instances[record.instanceID].courseID === courseID && record.status === Status.TAKEN),
-        reviews: Object.values(state.reviews).filter(review => review.instanceID === instanceID),
-        course: state.courses[state.instances[instanceID].courseID],
-        instance: state.instances[instanceID],
-        instances: Object.fromEntries(Object.entries(state.instances).filter(([_, instance]) => instance.courseID === state.instances[instanceID].courseID))
+        reviews: Object.values(state.reviews).filter(review => state.instances[review.instanceID].courseID === courseID),
+        course: state.courses[courseID],
+        instances: Object.fromEntries(Object.entries(state.instances).filter(([_, instance]) => instance.courseID === courseID))
     }
 }
 
@@ -56,19 +48,6 @@ class CourseInformationPage extends React.Component<Props, State> {
     state: State = {}
 
     render() {
-        let selectSemester = <Select
-            size='large'
-            style={{ width: 150 }}
-            defaultValue={`${this.props.instance.term} ${this.props.instance.year}`}
-            onSelect={(value, option) => {
-                this.props.history.push({ pathname: '/information', search: `?instanceID=${option.instanceID}` })
-            }}
-            options={Object.values(this.props.instances).map(instance => ({
-                value: `${instance.term} ${instance.year}`,
-                instnaceID: instance.instanceID
-            }))}>
-        </Select>
-
         let counts: { [semester: string]: { total: number, count: number } } = {};
         let minsem: { term: Term, year: number } | undefined = undefined;
         let maxsem: { term: Term, year: number } | undefined = undefined;
@@ -123,44 +102,24 @@ class CourseInformationPage extends React.Component<Props, State> {
             ticks.push(semval);
         }
 
-        console.log(minsem, maxsem);
-        console.log(data);
-
-        let formatter = (v: number) => {
-            if (v % 1 === 0) return `${Term.WINTER} ${v}`;
-            if (v % 1 === 0.25) return `${Term.SPRING} ${v - 0.25}`;
-            if (v % 1 === 0.5) return `${Term.SUMMER} ${v - 0.5}`;
-            if (v % 1 === 0.75) return `${Term.FALL} ${v - 0.75}`;
-            return "?";
-        }
-
         return (
             <PageHeader
                 style={{ width: "100%" }}
                 backIcon={false}
                 title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}
-                subTitle={selectSemester}
                 footer={
                     <Tabs defaultActiveKey="0">
                         <TabPane tab="Statistics" key="0">
                             <Content style={{ paddingTop: 20 }}>
-                                <Statistic title="Course Average" valueRender={() => <FlexibleXYPlot xPadding={0.25} margin={{bottom: 100}} height={400} yDomain={[-1, 13]}>
-                                    <VerticalGridLines style={{ stroke: 'rgb(100, 100, 100)' }} />
-                                    <XAxis height={400} tickValues={ticks} tickLabelAngle={-45} tickFormat={v => formatter(v)} title="Semester" style={{ text: { fill: 'white' }, title: { fill: 'white' } }} />
-                                    <YAxis tickValues={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]} style={{ text: { fill: 'white' } }} />
-                                    <LineMarkSeries curve={'curveMonotoneX'} style={{ fill: "none" }} data={data} />
-                                    {/* <Crosshair
-                                        values={this.state.crosshairValues}
-                                        className={'test-class-name'}
-                                    /> */}
-                                </FlexibleXYPlot>}>
-
-                                </Statistic>
+                                <Statistic className="noselect" title="Course Average" valueRender={() => <GPAGraph records={this.props.records} />}></Statistic>
                             </Content>
                         </TabPane>
                         <TabPane tab="Top Breakdowns" key="1">
+                            <Button style={{ marginTop: 30 }} type="primary" icon={<PlusOutlined />}>Add Breakdown</Button>
                             <Content style={{ paddingTop: 20 }}>
-                                <p>Top Breakdown stuff</p>
+                                {this.props.breakdowns.map(breakdown => {
+                                    return <Breakdown breakdownID={breakdown.breakdownID} instanceID={breakdown.instanceID} key={breakdown.breakdownID} />
+                                })}
                             </Content>
                         </TabPane>
                         <TabPane tab="Top Reviews" key="2">

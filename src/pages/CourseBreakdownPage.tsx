@@ -1,14 +1,9 @@
-import { FrownOutlined } from '@ant-design/icons';
-import { Form, Layout, PageHeader, Result, Space } from "antd";
+import { Layout, PageHeader } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
-import InstanceCard from "../components/InstanceCard";
-import CreateCourseForm from "../components/forms/CreateCourseForm";
-import SearchCourseForm from "../components/forms/SearchCourseForm";
-import { Term } from "../data/types";
 
 const { Content } = Layout;
 

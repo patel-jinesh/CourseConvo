@@ -179,8 +179,28 @@ export const breakdowns: Breakdown[] = [
             {
                 type: "Assignments",
                 weight: 12,
+                count: 3
+            },
+            {
+                type: "Midterms",
+                weight: 30,
                 count: 1
-            }
+            },
+            {
+                type: "Exams",
+                weight: 50,
+                count: 1
+            },
+            {
+                type: "Labs",
+                weight: 0,
+                count: 0
+            },
+            {
+                type: "Quizzes",
+                weight: 8,
+                count: 4
+            },
         ],
         isAnonymous: false
     }
@@ -194,99 +214,57 @@ export const reviews: Review[] = [
         reviewID: uuidv4(),
         instanceID: instances[0].instanceID,
         userID: users[1].userID,
-        difficulty: 5.5,
-        enjoyability: 2.7,
+        difficulty: 3,
+        enjoyability: 2,
         workload: 1,
-        comment: "Best course ever",
+        comment: "ksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgk",
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
-        datetime: moment().format('LLLL'),
-        replies: {
-            [users[1].userID]: {
-                comment: "I agree",
-                datetime: moment().format('LLLL')
-            }
-        }
+        datetime: moment().clone().subtract(1, 'month').valueOf(),
+        replies: [{
+            userID: users[1].userID,
+            comment: "I agree",
+            datetime: moment().valueOf()
+        }]
     },
     {
         reviewID: uuidv4(),
         instanceID: instances[1].instanceID,
-        userID: users[1].userID,
-        difficulty: 4.5,
+        userID: users[0].userID,
+        difficulty: 3,
         enjoyability: 2,
         workload: 1,
-        comment: "Best course ever",
+        comment: `Departure so attention pronounce satisfied daughters am. But shy tedious pressed studied opinion entered windows off. Advantage dependent suspicion convinced provision him yet. Timed balls match at by rooms we. Fat not boy neat left had with past here call. Court nay merit few nor party learn. Why our year her eyes know even how. Mr immediate remaining conveying allowance do or. 
+He an thing rapid these after going drawn or. Timed she his law the spoil round defer. In surprise concerns informed betrayed he learning is ye. Ignorant formerly so ye blessing. He as spoke avoid given downs money on we. Of properly carriage shutters ye as wandered up repeated moreover. Inquietude attachment if ye an solicitude to. Remaining so continued concealed as knowledge happiness. Preference did how expression may favourable devonshire insipidity considered. An length design regret an hardly barton mr figure. 
+Now seven world think timed while her. Spoil large oh he rooms on since an. Am up unwilling eagerness perceived incommode. Are not windows set luckily musical hundred can. Collecting if sympathize middletons be of of reasonably. Horrible so kindness at thoughts exercise no weddings subjects. The mrs gay removed towards journey chapter females offered not. Led distrusts otherwise who may newspaper but. Last he dull am none he mile hold as. 
+        `,
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
-        datetime: moment().format('LLLL'),
-        replies: {
-            [users[1].userID]: {
-                comment: "I agree",
-                datetime: moment().format('LLLL')
-            }
-        }
+        datetime: moment().valueOf(),
+        replies: [{
+            userID: users[1].userID,
+            comment: "I agree",
+            datetime: moment().valueOf()
+        }]
     },
-
-
-    // {
-    //     reviewID: uuidv4(),
-    //     instanceID: instances[1].instanceID,
-    //     userID: users[1].userID,
-    //     difficulty: 4.5,
-    //     enjoyability: 2,
-    //     workload: 1,
-    //     comment: "Best course ever",
-    //     isAnonymous: false,
-    //     upvoterIDs: {},
-    //     downvoterIDs: {},
-    //     datetime: moment().format('LLLL'),
-    //     replies: {
-    //         [users[1].userID]: {
-    //             comment: "I agree",
-    //             datetime: moment().format('LLLL')
-    //         }
-    //     },
-    // },
-
-    // {
-    //     reviewID: uuidv4(),
-    //     instanceID: instances[2].instanceID,
-    //     userID: users[1].userID,
-    //     difficulty: 4.5,
-    //     enjoyability: 2,
-    //     workload: 1,
-    //     comment: "Best course ever",
-    //     isAnonymous: false,
-    //     upvoterIDs: {},
-    //     downvoterIDs: {},
-    //     datetime: moment().format('LLLL'),
-    //     replies: {
-    //         [users[1].userID]: {
-    //             comment: "I agree",
-    //             datetime: moment().format('LLLL')
-    //         }
-    //     },
-    // },
-
-    // {
-    //     reviewID: uuidv4(),
-    //     instanceID: instances[3].instanceID,
-    //     userID: users[1].userID,
-    //     difficulty: 4.5,
-    //     enjoyability: 2,
-    //     workload: 1,
-    //     comment: "Best course ever",
-    //     isAnonymous: false,
-    //     upvoterIDs: {},
-    //     downvoterIDs: {},
-    //     datetime: moment().format('LLLL'),
-    //     replies: {
-    //         [users[1].userID]: {
-    //             comment: "I agree",
-    //             datetime: moment().format('LLLL')
-    //         }
-    //     },
-    // },
+    {
+        reviewID: uuidv4(),
+        instanceID: instances[2].instanceID,
+        userID: users[2].userID,
+        difficulty: 5,
+        enjoyability: 1,
+        workload: 4,
+        comment: "ksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgk",
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [{
+            userID: users[1].userID,
+            comment: "I agree",
+            datetime: moment().valueOf()
+        }]
+    }
 ]
