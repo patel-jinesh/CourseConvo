@@ -243,7 +243,6 @@ class CourseReviewsPage extends React.Component<Props, State> {
                     </Col>}
                 </Row>
                 <Drawer
-                    forceRender
                     destroyOnClose
                     onClose={() => this.setState({ visible: false })}
                     title={this.props.userreview ? "Edit review" : "Write a review"}
@@ -265,16 +264,6 @@ class CourseReviewsPage extends React.Component<Props, State> {
                         onFinish={() => this.setState({ visible: false })}
                         onCancel={() => this.setState({ visible: false })} />
                 </Drawer>
-                {/* <Drawer
-                    onClose={() => this.setState({ visible: false })}
-                    title="Write a Review"
-                    width={467}
-                    visible={this.state.visible}>
-                    <ReviewForm
-                        courseID={this.props.course.courseID}
-                        onFinish={() => this.setState({ visible: false })}
-                        onCancel={() => this.setState({ visible: false })} />
-                    </Drawer> */}
             </PageHeader>
         );
     }
