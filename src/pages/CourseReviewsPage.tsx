@@ -112,7 +112,7 @@ class CourseReviewsPage extends React.Component<Props, State> {
                     let arating = (a.difficulty + a.workload + a.enjoyability) / 3;
                     let brating = (b.difficulty + b.workload + b.enjoyability) / 3;
 
-                    return arating - brating;
+                    return brating - arating;
                 }
 
                 let asem = `${this.props.instances[a.instanceID].term} ${this.props.instances[a.instanceID].year}`;
