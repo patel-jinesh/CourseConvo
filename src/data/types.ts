@@ -22,6 +22,21 @@ export enum FormType {
     TERM = "Term"
 }
 
+export enum Lecture {
+    IN_PERSON = "In person",
+    HYBRID = "Hybrid",
+    ONLINE = "Online"
+}
+
+export enum Assessments{
+    ASSIGNMENTS = "Assignments",
+    MIDTERMS = "Midterms",
+    EXAMS = "Exams",
+    QUIZZES = "Quizzes",
+    LABS = "Labs",
+    PROJECTS = "Projects"
+}
+
 export interface User {
     userID: string;
     name: string;

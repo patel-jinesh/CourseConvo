@@ -11,7 +11,7 @@ import { FormType, Status, Term } from "../../data/types";
 import { add as addCourse } from '../../features/courses/course';
 import { add as addInstance } from '../../features/courses/instance';
 import { add as addRecord, edit as editRecord } from '../../features/courses/record';
-import { addForms } from "../../utilities/formUtils";
+import { addForms, addRadioGroup, addTermForm } from "../../utilities/formUtils";
 
 const { Option } = AutoComplete;
 
@@ -249,16 +249,7 @@ class AcademicRecordForm extends React.Component<Props, State>{
                     }
                 </Form.Item>
                 {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.COURSE, FormType.INSTRUCTOR])}
-                <Form.Item
-                    name='status'
-                    label="Status"
-                    rules={[{ required: true, message: "Please select one of the options!" }]}>
-                    <Radio.Group>
-                        <Radio.Button value={Status.IN_PROGRESS}>{Status.IN_PROGRESS}</Radio.Button>
-                        <Radio.Button value={Status.TRANSFERRED}>{Status.TRANSFERRED}</Radio.Button>
-                        <Radio.Button value={Status.TAKEN}>{Status.TAKEN}</Radio.Button>
-                    </Radio.Group>
-                </Form.Item>
+                {addRadioGroup(Status)}
                 <Form.Item
                     noStyle
                     dependencies={['status']}>

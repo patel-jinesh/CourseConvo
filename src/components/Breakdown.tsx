@@ -3,7 +3,7 @@ import { Collapse, Descriptions } from 'antd';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
-import { Mark } from '../data/types';
+import { Assessments, Mark } from '../data/types';
 import { add } from '../features/courses/course';
 
 const { Panel } = Collapse;
@@ -66,14 +66,13 @@ class Breakdown extends React.Component<Props> {
     }
 
     //Add all panels for assessments that the course supports
-    addPanels () {
-        const assessments = ["Exams", "Midterms", "Assignments", "Quizzes", "Labs", "Projects"];
+    addPanels (list : any) {
         var panels = [];
         var i = 0;
 
-        for (i = 0; i < assessments.length; i++)
+        for (let item in list)
         {
-            panels.push(this.addAssessment(assessments[i]));
+            panels.push(this.addAssessment(list[item]));
         }
 
         return panels;
@@ -84,9 +83,8 @@ class Breakdown extends React.Component<Props> {
             <Descriptions title="Course Breakdown" bordered column={2}>
                 <Descriptions.Item label="Semester">{`${this.props.instance.term} ${this.props.instance.year}`}</Descriptions.Item>
                 <Descriptions.Item label="Instructor">{this.props.instance.instructor}</Descriptions.Item>
-                <Descriptions.Item label="Lectures" span={2}>In-Person</Descriptions.Item>
                 <Descriptions.Item label="Assessments" span={2}>
-                    {this.addPanels()}
+                    {this.addPanels(Assessments)}
                 </Descriptions.Item>
             </Descriptions>       
         );
