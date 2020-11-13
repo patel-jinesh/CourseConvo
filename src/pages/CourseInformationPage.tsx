@@ -61,60 +61,6 @@ class CourseInformationPage extends React.Component<Props, State> {
     }
 
     render() {
-        let counts: { [semester: string]: { total: number, count: number } } = {};
-        let minsem: { term: Term, year: number } | undefined = undefined;
-        let maxsem: { term: Term, year: number } | undefined = undefined;
-
-        let termmap = {
-            [Term.WINTER]: 0,
-            [Term.SPRING]: 1,
-            [Term.SUMMER]: 2,
-            [Term.FALL]: 3,
-        }
-        let termmaprev = [
-            Term.WINTER,
-            Term.SPRING,
-            Term.SUMMER,
-            Term.FALL,
-        ]
-
-
-        for (let record of this.props.records) {
-            let instance = this.props.instances[record.instanceID];
-            let term = instance.term;
-            let year = instance.year;
-            let semester = `${term} ${year}`;
-
-            counts[semester] = {
-                total: (counts[semester]?.total ?? 0) + record.grade!,
-                count: (counts[semester]?.count ?? 0) + 1
-            }
-
-            minsem = minsem === undefined || year < minsem.year || (year === minsem.year && termmap[minsem.term] < termmap[term])
-                ? { term: term, year: year }
-                : minsem;
-            maxsem = maxsem === undefined || year > maxsem.year || (year === maxsem.year && termmap[maxsem.term] > termmap[term])
-                ? { term: term, year: year }
-                : maxsem;
-        }
-
-        let averages = Object.entries(counts).reduce<{ [semester: string]: number }>((r, [semester, { total, count }]) => ({
-            ...r,
-            [semester]: total / count
-        }), {});
-
-        let data: any[] = [];
-        let ticks: number[] = [];
-
-        for (let semval = minsem!.year + (termmap[minsem!.term] / 4); semval <= maxsem!.year + (termmap[maxsem!.term] / 4); semval += 0.25) {
-            let semester = `${termmaprev[(semval % 1) * 4]} ${semval - (semval % 1)}`;
-
-            if (averages[semester] !== undefined)
-                data.push({ x: semval, y: averages[semester] });
-
-            ticks.push(semval);
-        }
-
         return (
             <PageHeader
                 style={{ width: "100%" }}
