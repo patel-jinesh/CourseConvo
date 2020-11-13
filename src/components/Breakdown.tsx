@@ -44,10 +44,12 @@ class Breakdown extends React.Component<Props> {
     //Add a specific assessment panel
     addAssessment (type: string) {
         return (
-            this.props.breakdown.marks.map(mark => {
+            this.props.breakdown.marks.map((mark, index) => {
                 if ( (mark.type === type) && (mark.count > 0)) {
                     return (    
-                            <Collapse
+                        <Collapse
+                                defaultActiveKey={"1"}
+                                key={index}
                                 bordered={false}
                                 expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
                                 className="site-collapse-custom-collapse" >
@@ -80,14 +82,13 @@ class Breakdown extends React.Component<Props> {
 
     render() {
         return (
-            <Descriptions title="Course Breakdown" bordered>
-                <Descriptions.Item label="Year">{this.props.instance.year}</Descriptions.Item>
-                <Descriptions.Item label="Term">{this.props.instance.term}</Descriptions.Item>
+            <Descriptions title="Course Breakdown" bordered column={2}>
+                <Descriptions.Item label="Semester">{`${this.props.instance.term} ${this.props.instance.year}`}</Descriptions.Item>
                 <Descriptions.Item label="Instructor">{this.props.instance.instructor}</Descriptions.Item>
-                <Descriptions.Item label="Assessments" span={3}>
+                <Descriptions.Item label="Lectures" span={2}>In-Person</Descriptions.Item>
+                <Descriptions.Item label="Assessments" span={2}>
                     {this.addPanels()}
                 </Descriptions.Item>
-                <Descriptions.Item label="Lectures">In-Person</Descriptions.Item>
             </Descriptions>       
         );
     }
