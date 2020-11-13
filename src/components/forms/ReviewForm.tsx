@@ -106,13 +106,13 @@ class ReviewForm extends React.Component<Props, State> {
                     </Input.Group>
                 </Form.Item>
                 {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.INSTRUCTOR], this.props.courseID)}
-                <Form.Item required name="difficulty" label="Difficulty">
+                <Form.Item rules={[{required: true, message: "Please enter the difficulty"}]} name="difficulty" label="Difficulty">
                     <SmileRate></SmileRate>
                 </Form.Item>
-                <Form.Item required name="enjoyability" label="Enjoyability">
+                <Form.Item rules={[{ required: true, message: "Please enter the enjoyability" }]} required name="enjoyability" label="Enjoyability">
                     <SmileRate></SmileRate>
                 </Form.Item>
-                <Form.Item required name="workload" label="Workload">
+                <Form.Item rules={[{ required: true, message: "Please enter the workload" }]}required name="workload" label="Workload">
                     <SmileRate></SmileRate>
                 </Form.Item>
                 <Form.Item label="Overall" dependencies={['difficulty', 'enjoyability', 'workload']}>
