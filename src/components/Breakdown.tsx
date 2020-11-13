@@ -10,6 +10,7 @@ const { Panel } = Collapse;
 
 type ComponentProps = {
     breakdownID: string
+    instanceID: string
 }
 
 const mapState = (state: RootState, props: ComponentProps) => ({

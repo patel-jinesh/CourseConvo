@@ -210,7 +210,7 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
                                 </Col>
                             </Row>}
                         >
-                            <Breakdown breakdownID={this.props.userbreakdown.breakdownID} />
+                            <Breakdown instanceID={this.props.userbreakdown.instanceID} breakdownID={this.props.userbreakdown.breakdownID} />
                         </List>}
                         <List
                             rowKey={breakdown => breakdown.breakdownID}
