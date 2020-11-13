@@ -102,7 +102,7 @@ class Review extends React.Component<Props, State> {
                                     <Col>{`${((this.props.review.enjoyability + this.props.review.difficulty + this.props.review.workload) / 3).toFixed(2)} / 5`}</Col>
                                 </Row>
                             </Space>
-                            <Paragraph style={{ overflowWrap: 'anywhere', wordBreak: 'break-all', paddingLeft: 15, borderLeft: '1px solid #303030' }} ellipsis={{
+                            <Paragraph style={{ width: '100%', overflowWrap: 'anywhere', wordBreak: 'break-all', paddingLeft: 15, borderLeft: '1px solid #303030' }} ellipsis={{
                                 rows: 6,
                                 expandable: true,
                             }}>
