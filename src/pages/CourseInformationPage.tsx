@@ -102,14 +102,12 @@ class CourseInformationPage extends React.Component<Props, State> {
             return a.year - b.year;
         });
 
-
         let mostrecentinstance = instancessorted[0];
         let mostrecentinstructor = mostrecentinstance.instructor;
         let mostrecentsemester = `${mostrecentinstance.term} ${mostrecentinstance.year}`;
 
-        let bestratedinstructor = instructorratings.sort((a, b) => a.rating - b.rating)[0].instructor;
+        let bestratedinstructor : string | undefined = instructorratings.sort((a, b) => a.rating - b.rating)[0]?.instructor;
         let lastbestinstance = instancessorted.find(instance => instance.instructor === bestratedinstructor);
-        let lastbestsemester = `${lastbestinstance!.term} ${lastbestinstance!.year}`;
         
         return (
             <PageHeader
@@ -165,12 +163,12 @@ class CourseInformationPage extends React.Component<Props, State> {
                         <Statistic
                             style={{ width: '50%' }}
                             title="Best instructor"
-                            value={bestratedinstructor}
+                            value={bestratedinstructor ?? "N/A"}
                         />
                         <Statistic
                             style={{ width: '50%' }}
                             title="Last taught in"
-                            value={lastbestsemester}
+                            value={lastbestinstance === undefined ? "N/A" : `${lastbestinstance.term} ${lastbestinstance.year}`}
                         />
                     </Card.Grid>
                     <Card.Grid hoverable={false} style={{ display: 'flex' }}>
