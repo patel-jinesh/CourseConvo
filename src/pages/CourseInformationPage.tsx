@@ -135,7 +135,6 @@ class CourseInformationPage extends React.Component<Props, State> {
                             </Content>
                         </TabPane>
                         <TabPane tab="Top Breakdowns" key="1">
-                            <Button onClick={this.onAdd} style={{ marginTop: 30 }} type="primary" icon={<PlusOutlined />}>Add Breakdown</Button>
                             <Content style={{ paddingTop: 20 }}>
                                 {this.props.breakdowns.map(breakdown => {
                                     return <Breakdown breakdownID={breakdown.breakdownID} instanceID={breakdown.instanceID} key={breakdown.breakdownID} />

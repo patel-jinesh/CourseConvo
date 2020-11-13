@@ -238,7 +238,7 @@ export const breakdowns: Breakdown[] = [
         userID: users[2].userID,
         marks: [
             {
-                type: "Midterm",
+                type: "Midterms",
                 weight: 20,
                 count: 1
             },
@@ -248,7 +248,7 @@ export const breakdowns: Breakdown[] = [
                 count: 1
             },
             {
-                type: "Project",
+                type: "Projects",
                 weight: 30,
                 count: 1
             }

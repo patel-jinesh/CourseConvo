@@ -9,13 +9,12 @@ import { add } from '../features/courses/course';
 const { Panel } = Collapse;
 
 type ComponentProps = {
-    breakdownID: string,
-    instanceID: string
+    breakdownID: string
 }
 
 const mapState = (state: RootState, props: ComponentProps) => ({
     breakdown: state.breakdowns[props.breakdownID],
-    instance: state.instances[props.instanceID],
+    instance: state.instances[state.breakdowns[props.breakdownID].instanceID],
     user: state.users[state.breakdowns[props.breakdownID].userID],
     users: state.users,
 });
@@ -80,7 +79,7 @@ class Breakdown extends React.Component<Props> {
 
     render() {
         return (
-            <Descriptions title="Course Breakdown" bordered column={2}>
+            <Descriptions style={{ paddingTop: 20 }} title="Course Breakdown" bordered column={2}>
                 <Descriptions.Item label="Semester">{`${this.props.instance.term} ${this.props.instance.year}`}</Descriptions.Item>
                 <Descriptions.Item label="Instructor">{this.props.instance.instructor}</Descriptions.Item>
                 <Descriptions.Item label="Assessments" span={2}>
