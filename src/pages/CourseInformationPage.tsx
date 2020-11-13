@@ -8,7 +8,7 @@ import { RootState } from "../app/store";
 import Breakdown from "../components/Breakdown";
 import GPAGraph from "../components/graphs/GPAGraph";
 import Review from "../components/Review";
-import { Status, Term } from "../data/types";
+import { Status, Term, ReviewTag } from "../data/types";
 
 
 const { Content } = Layout;
@@ -124,9 +124,21 @@ class CourseInformationPage extends React.Component<Props, State> {
                         </TabPane>
                         <TabPane tab="Top Reviews" key="2">
                             <Content style={{ paddingTop: 20 }}>
-                                {this.props.reviews.map(review => {
-                                    return <Review reviewID={review.reviewID} key={review.reviewID} />
-                                })}
+                                {
+                                    this.props.reviews
+                                        .sort((a, b) => {
+                                            let arank = Object.values(a.upvoterIDs).length - Object.values(a.downvoterIDs).length + Object.values(a.tags[ReviewTag.ACCURATE]).length + Object.values(a.tags[ReviewTag.DETAILED]).length + Object.values(a.tags[ReviewTag.HELPFUL]).length;
+                                            let brank = Object.values(b.upvoterIDs).length - Object.values(b.downvoterIDs).length + Object.values(b.tags[ReviewTag.ACCURATE]).length + Object.values(b.tags[ReviewTag.DETAILED]).length + Object.values(b.tags[ReviewTag.HELPFUL]).length;
+
+                                            console.log(arank, brank)
+
+                                            return brank - arank;
+                                        })
+                                        .slice(0, 3)
+                                        .map(review => {
+                                            return <Review reviewID={review.reviewID} key={review.reviewID} />
+                                        })
+                                }
                             </Content>
                         </TabPane>
                     </Tabs>
