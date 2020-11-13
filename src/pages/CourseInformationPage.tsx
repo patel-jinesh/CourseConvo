@@ -61,13 +61,15 @@ class CourseInformationPage extends React.Component<Props, State> {
     }
 
     render() {
+        let instance = Object.values(this.props.instances).find(instance => instance.courseID === this.props.course.courseID);
+
         return (
             <PageHeader
                 style={{ width: "100%" }}
                 backIcon={false}
                 title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}
                 footer={
-                    <Tabs defaultActiveKey="0" onChange={(key) => {
+                    instance && <Tabs defaultActiveKey="0" onChange={(key) => {
                         if (key === "0")
                             window.dispatchEvent(new Event('resize'))
                     }}>
