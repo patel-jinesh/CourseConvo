@@ -85,9 +85,21 @@ class AddBreakdownForm extends React.Component<Props, State> {
                 breakdownID: this.props.breakdownID,
                 userID: USERID,
             });
+        else
+            this.props.addBreakdown({
+                instanceID: instanceID,
+                breakdownID: this.props.breakdownID,
+                userID: USERID,
+                marks: [{
+                    type: values.assessment,
+                    weight: values.weight,
+                    count: values.count
+                }],
+                isAnonymous: false
+            });
 
 
-        if (this.props.onFinish)
+        if (this.props.onFinish) 
             this.props.onFinish();
     }
 
@@ -136,7 +148,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
                             <Form.Item
                             {...field}
                             label="Count"
-                            name={[field.name, 'count']}
+                            name="count"
                             fieldKey={[field.fieldKey, 'count']}
                             rules={[{ required: true, message: 'Missing count' }]}
                             >
