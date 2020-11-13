@@ -103,6 +103,13 @@ export const courses: Course[] = coursesdb.map(([subject, code, name]) => {
 })
 
 export const instances: CourseInstance[] = [
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[0].courseID,
+        instructor: "Spencer Smith",
+        term: Term.FALL,
+        year: 2015 + i
+    })),
     {
         instanceID: uuidv4(),
         courseID: courses[2].courseID,
@@ -124,13 +131,6 @@ export const instances: CourseInstance[] = [
         term: Term.WINTER,
         year: 2018
     },
-    ...Array(10).fill(undefined).map((_, i) => ({
-        instanceID: uuidv4(),
-        courseID: courses[0].courseID,
-        instructor: "Spencer Smith",
-        term: Term.FALL,
-        year: 2015 + i
-    })),
 ]
 
 /**
