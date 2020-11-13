@@ -37,7 +37,7 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type Props = ReduxProps & ComponentProps;
 type State = ComponentState;
 
-class CreateCourseForm extends React.Component<Props, State>{
+class SearchCourseForm extends React.Component<Props, State>{
     onValuesChange = (changed: any, all: any) => {
         this.props.onSearch({
                 subject: all.subject,
@@ -70,4 +70,4 @@ class CreateCourseForm extends React.Component<Props, State>{
     }
 }
 
-export default connector(CreateCourseForm);
+export default connector(SearchCourseForm);

@@ -3,7 +3,7 @@ import { Collapse, Descriptions } from 'antd';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
-import { Mark } from '../data/types';
+import { Assessments, Mark } from '../data/types';
 import { add } from '../features/courses/course';
 
 const { Panel } = Collapse;
@@ -45,7 +45,7 @@ class Breakdown extends React.Component<Props> {
     addAssessment (type: string) {
         return (
             this.props.breakdown.marks.map(mark => {
-                if ( (mark.type === type) && (mark.count > 0)) {
+                if ( (mark.type == type) && (mark.count > 0)) {
                     return (    
                             <Collapse
                                 bordered={false}
@@ -57,22 +57,19 @@ class Breakdown extends React.Component<Props> {
                             </Collapse>
                     );
                 }
-
-                return undefined;
             }
             )
         );
     }
 
     //Add all panels for assessments that the course supports
-    addPanels () {
-        const assessments = ["Exams", "Midterms", "Assignments", "Quizzes", "Labs", "Projects"];
+    addPanels (list : any) {
         var panels = [];
         var i = 0;
 
-        for (i = 0; i < assessments.length; i++)
+        for (let item in list)
         {
-            panels.push(this.addAssessment(assessments[i]));
+            panels.push(this.addAssessment(list[item]));
         }
 
         return panels;
@@ -85,7 +82,7 @@ class Breakdown extends React.Component<Props> {
                 <Descriptions.Item label="Term">{this.props.instance.term}</Descriptions.Item>
                 <Descriptions.Item label="Instructor">{this.props.instance.instructor}</Descriptions.Item>
                 <Descriptions.Item label="Assessments" span={3}>
-                    {this.addPanels()}
+                    {this.addPanels(Assessments)}
                 </Descriptions.Item>
                 <Descriptions.Item label="Lectures">In-Person</Descriptions.Item>
             </Descriptions>       

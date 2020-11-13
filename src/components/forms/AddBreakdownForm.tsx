@@ -5,7 +5,7 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../../app/store';
 import moment from 'moment';
-import { add as addBreakdown } from '../../features/courses/breakdown';
+import { add as addBreakdown, edit as editBreakdown } from '../../features/courses/breakdown';
 import { add as addInstance } from '../../features/courses/instance';
 import { USERID } from '../../backend/database';
 import TextArea from 'antd/lib/input/TextArea';
@@ -13,6 +13,7 @@ import CreateCourseForm from './CreateCourseForm';
 import { Assessments, FormType, Lecture, Term } from '../../data/types';
 import { v4 as uuidv4 } from 'uuid';
 import { addDateForm, addForms, addRadioGroup, addTermForm } from "../../utilities/formUtils";
+import { FormInstance } from 'antd/lib/form';
 
 const { Option } = Select;
 
@@ -21,19 +22,21 @@ type ComponentProps = {
     onFinish?: () => void;
     onCancel?: () => void;
     courseID: string;
-    recordID?: any;
+    breakdownID?: any;
 }
 
 type ComponentState = {}
 
 const mapState = (state: RootState, props: ComponentProps) => ({
     courses: state.courses,
-    instances: state.instances
+    instances: state.instances,
+    breakdowns: state.breakdowns
 });
 
 const mapDispatch = {
     addBreakdown: addBreakdown,
-    addInstance: addInstance
+    addInstance: addInstance,
+    editBreakdown: editBreakdown
 }
 
 const connector = connect(mapState, mapDispatch);
@@ -46,10 +49,21 @@ type Props = ReduxProps & ComponentProps;
 class AddBreakdownForm extends React.Component<Props, State> {
     state: State = {}
 
-    sights = {
-        Beijing: ['Tiananmen', 'Great Wall'],
-        Shanghai: ['Oriental Pearl', 'The Bund'],
-    };
+    form: React.RefObject<FormInstance> = React.createRef<FormInstance>();
+
+    onValuesChange = (_: any, values: any) => {
+        let course = Object.values(this.props.courses).find(course =>
+            course.code === values.code &&
+            course.subject === values.subject)
+
+        let instance = Object.values(this.props.instances).find(instance =>
+            instance.courseID === (this.props.courseID ?? course?.courseID) &&
+            instance.term === values.term &&
+            instance.year === values.year?.year())
+
+        if (instance !== undefined && values.instructor !== instance.instructor)
+            this.form.current?.setFieldsValue({ instructor: instance.instructor });
+    }
 
     onFinish = (values: any) => {
         let instance = Object.values(this.props.instances).find(instance => instance.term === values.term && instance.year === values.year?.year())
@@ -65,13 +79,21 @@ class AddBreakdownForm extends React.Component<Props, State> {
                 courseID: this.props.courseID
             });
 
+        if (this.props.breakdownID)
+            this.props.editBreakdown({
+                ...this.props.breakdowns[this.props.breakdownID],
+                breakdownID: this.props.breakdownID,
+                userID: USERID,
+            });
+
+
         if (this.props.onFinish)
             this.props.onFinish();
     }
 
     render() {
         return (
-            <Form name="review" layout="horizontal" labelCol={{ flex: '100px' }} labelAlign={"left"} onFinish={this.onFinish}>
+            <Form ref={this.form} name="review" layout="horizontal" labelCol={{ flex: '100px' }} labelAlign={"left"} onFinish={this.onFinish}>
                 <Form.Item label="Semester" required>
                     <Input.Group compact>
                         {addTermForm("50", "middle")}
