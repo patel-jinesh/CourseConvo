@@ -10,6 +10,7 @@ import AcademicRecordPage from './pages/AcademicRecordPage';
 import CourseBreakdownsPage from './pages/CourseBreakdownPage';
 import CourseInformationPage from './pages/CourseInformationPage';
 import CourseReviewsPage from './pages/CourseReviewsPage';
+import ElectivePage from './pages/ElectivePage';
 import HomePage from './pages/HomePage';
 import SearchCoursePage from './pages/SearchCoursePage';
 
@@ -50,6 +51,9 @@ function Nav() {
           <Menu.Item key="/academics" icon={<AuditOutlined />}>
             <Link to="/academics">Academic Records</Link>
           </Menu.Item>
+          <Menu.Item key="/electives" icon={<AuditOutlined />}>
+            <Link to="/electives">Electives</Link>
+          </Menu.Item>
         </Menu.ItemGroup>
         <Menu.ItemGroup title="Courses">
           <Menu.Item key="/search" icon={<SearchOutlined />}>
@@ -79,6 +83,9 @@ class App extends React.Component<Props, State> {
           <Switch>
             <Route exact path={"/"}>
               <HomePage />
+            </Route>
+            <Route path={"/electives"}>
+              <ElectivePage />
             </Route>
             <Route path={"/academics"}>
               <AcademicRecordPage />

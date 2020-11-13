@@ -1,14 +1,15 @@
-import { Button, Card, Col, List, PageHeader, Row, Space, Statistic, Tooltip, Typography } from 'antd';
-import { CommentOutlined, InfoCircleOutlined, PieChartOutlined } from '@ant-design/icons';
-
+import { Button, Card, Col, List, Form, PageHeader, Row, Space, Statistic, Tooltip, Typography } from 'antd';
+import { Select, } from 'antd';
+import { CommentOutlined, InfoCircleOutlined, PieChartOutlined, } from '@ant-design/icons';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
-import { Course } from '../data/types';
+
 import { match, withRouter } from 'react-router-dom';
 import { History, Location } from "history";
 
-const { Text } = Typography;
+
+
 type ComponentProps = {
     match: match,
     location: Location,
@@ -17,8 +18,6 @@ type ComponentProps = {
 type ComponentState = {
 
 }
-
-
 
 const mapState = (state: RootState) => ({
     reviews: Object.values(state.reviews),
@@ -61,17 +60,8 @@ class HomePage extends React.Component<Props, State> {
     }
 
     getElectiveRecommendations = (numCourse: number) => {
-        let mostPopularCourses: { [courseID: string]: { count: number } } = {};
-        for (let i = 0; i < this.props.reviews.length; i++) {
-            let review = this.props.reviews[i];
-            mostPopularCourses[this.props.instances[review.instanceID].courseID] = {
-                count: (mostPopularCourses[this.props.instances[review.instanceID].courseID]?.count ?? 0) + 1,
-            }
 
-        }
-
-        let courseReviews = Object.entries(mostPopularCourses).map(([courseID, { count }]) => ({ count: count, courseID: courseID }));
-        return courseReviews.sort((a, b) => b.count - a.count).slice(0, numCourse);
+        return [];
     }
 
     getMostPopularCourses = (numCourse: number) => {
@@ -89,7 +79,6 @@ class HomePage extends React.Component<Props, State> {
     }
 
     getTopRatedInstructors = (numCourse: number) => {
-
         let instructorRatings: { [instructor: string]: { totalRating: number, count: number } } = {};
         for (let i = 0; i < this.props.reviews.length; i++) {
             let review = this.props.reviews[i];
@@ -188,16 +177,17 @@ class HomePage extends React.Component<Props, State> {
                         </Card>
                     </Col>
 
-                    <Col span={8} >
+                    <Col span={8}>
                         <Card>
                             <List header="Most Popular Courses"
                                 itemLayout="horizontal"
                                 dataSource={this.getMostPopularCourses(3)}
+                                size="large"
                                 renderItem={item => (
                                     <List.Item>
                                         <Row style={{ width: "100%" }}>
                                             <Col flex={1}>{`${this.props.courses[item.courseID].subject} ${this.props.courses[item.courseID].code}`}</Col>
-                                            <Col> <a onClick={() => this.props.history.push({ pathname: '/reviews', search: `?courseID=${item?.courseID}` })}>{`${item.count} ${item.count === 1 ? "review" : "reviews"}`} </a></Col>
+                                            <Col style={{ height: "36.660px" }}> <a onClick={() => this.props.history.push({ pathname: '/reviews', search: `?courseID=${item?.courseID}` })}>{`${item.count} ${item.count === 1 ? "review" : "reviews"}`} </a></Col>
                                         </Row>
 
                                     </List.Item>
@@ -206,11 +196,9 @@ class HomePage extends React.Component<Props, State> {
                         </Card>
 
                     </Col>
-                </Row>
 
-                <Row>
                     <Col span={8} >
-                        <Card>
+                        <Card >
                             <List header="Top Instructors"
                                 itemLayout="horizontal"
                                 dataSource={this.getTopRatedInstructors(3)}
@@ -246,9 +234,9 @@ class HomePage extends React.Component<Props, State> {
                                 )}
                             />
                         </Card>
-
                     </Col>
                 </Row>
+
             </PageHeader>
 
 
