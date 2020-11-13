@@ -10,6 +10,7 @@ import { add as addInstance } from '../../features/courses/instance';
 import { add as addReview, edit as editReview } from '../../features/courses/review';
 import { addDateForm, addForms, addTermForm } from "../../utilities/formUtils";
 import SmileRate from '../SmileRate';
+import { FormInstance } from 'antd/lib/form';
 
 type ComponentProps = {
     initialValues?: any;
@@ -42,6 +43,22 @@ type Props = ReduxProps & ComponentProps;
 
 class ReviewForm extends React.Component<Props, State> {
     state: State = {}
+
+    form: React.RefObject<FormInstance> = React.createRef<FormInstance>();
+
+    onValuesChange = (_: any, values: any) => {
+        let course = Object.values(this.props.courses).find(course =>
+            course.code === values.code &&
+            course.subject === values.subject)
+
+        let instance = Object.values(this.props.instances).find(instance =>
+            instance.courseID === (this.props.courseID ?? course?.courseID) &&
+            instance.term === values.term &&
+            instance.year === values.year?.year())
+
+        if (instance !== undefined && values.instructor !== instance.instructor)
+            this.form.current?.setFieldsValue({ instructor: instance.instructor });
+    }
 
     onFinish = (values: any) => {
         console.log(values);
@@ -98,7 +115,7 @@ class ReviewForm extends React.Component<Props, State> {
 
     render() {
         return (
-            <Form initialValues={this.props.initialValues} name="review" layout="horizontal" labelCol={{ flex: '100px' }} labelAlign={"left"} onFinish={this.onFinish}>
+            <Form ref={this.form} onValuesChange={this.onValuesChange} initialValues={this.props.initialValues} name="review" layout="horizontal" labelCol={{ flex: '100px' }} labelAlign={"left"} onFinish={this.onFinish}>
                 <Form.Item label="Semester" required>
                     <Input.Group compact>
                         {addTermForm("50", "middle")}
