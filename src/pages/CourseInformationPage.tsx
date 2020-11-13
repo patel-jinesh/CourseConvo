@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Layout, PageHeader, Statistic, Tabs } from "antd";
+import { Layout, PageHeader, Select, Tabs, Statistic, Descriptions, Badge, Button, Drawer } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
@@ -10,6 +10,8 @@ import GPAGraph from "../components/graphs/GPAGraph";
 import Review from "../components/Review";
 import { Status, Term } from "../data/types";
 
+import AcademicRecordForm from "../components/forms/AcademicRecordForm";
+import AddBreakdownForm from "../components/forms/AddBreakdownForm";
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -20,7 +22,10 @@ type ComponentProps = {
     history: History,
 }
 
-type ComponentState = {}
+type ComponentState = {
+    visible: boolean,
+    recordID?: string
+}
 
 const mapState = (state: RootState, props: ComponentProps) => {
     let query = new URLSearchParams(props.location.search)
@@ -45,7 +50,13 @@ type Props = ReduxProps & ComponentProps;
 type State = ComponentState
 
 class CourseInformationPage extends React.Component<Props, State> {
-    state: State = {}
+    state: State = {
+        visible: false,
+    }
+
+    onAdd = () => {
+        this.setState({ visible: true })
+    }
 
     render() {
         let counts: { [semester: string]: { total: number, count: number } } = {};
@@ -115,7 +126,7 @@ class CourseInformationPage extends React.Component<Props, State> {
                             </Content>
                         </TabPane>
                         <TabPane tab="Top Breakdowns" key="1">
-                            <Button style={{ marginTop: 30 }} type="primary" icon={<PlusOutlined />}>Add Breakdown</Button>
+                            <Button onClick={this.onAdd} style={{ marginTop: 30 }} type="primary" icon={<PlusOutlined />}>Add Breakdown</Button>
                             <Content style={{ paddingTop: 20 }}>
                                 {this.props.breakdowns.map(breakdown => {
                                     return <Breakdown breakdownID={breakdown.breakdownID} instanceID={breakdown.instanceID} key={breakdown.breakdownID} />
@@ -132,6 +143,19 @@ class CourseInformationPage extends React.Component<Props, State> {
                     </Tabs>
                 }>
                 <p>Overview Information</p>
+                <Drawer
+                    destroyOnClose
+                    onClose={() => this.setState({ visible: false, recordID: undefined })}
+                    title="Create course breakdown"
+                    width={467}
+                    visible={this.state.visible}>
+                    <AddBreakdownForm
+                        key={this.state.recordID ?? "add"}
+                        breakdownID={"Hi"}
+                        courseID={"Hi"}
+                        onFinish={() => this.setState({visible: false, recordID: undefined})}
+                        onCancel={() => this.setState({ visible: false, recordID: undefined })} />
+                </Drawer>
             </PageHeader>
         );
     }
