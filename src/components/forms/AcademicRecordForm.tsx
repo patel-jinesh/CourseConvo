@@ -253,7 +253,7 @@ class AcademicRecordForm extends React.Component<Props, State>{
                     name='status'
                     label="Status"
                     rules={[{ required: true, message: "Please select one of the options!" }]}>
-                    <Radio.Group>
+                    <Radio.Group buttonStyle='solid'>
                         <Radio.Button value={Status.IN_PROGRESS}>{Status.IN_PROGRESS}</Radio.Button>
                         <Radio.Button value={Status.TRANSFERRED}>{Status.TRANSFERRED}</Radio.Button>
                         <Radio.Button value={Status.TAKEN}>{Status.TAKEN}</Radio.Button>

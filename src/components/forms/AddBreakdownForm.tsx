@@ -62,7 +62,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
 
         if (instance !== undefined && values.instructor !== instance.instructor)
             this.form.current?.setFieldsValue({ instructor: instance.instructor });
-        if (instance !== undefined && values.lecture !== instance.lecture)
+        if (instance?.lecture !== undefined && values.lecture !== instance.lecture)
             this.form.current?.setFieldsValue({ lecture: instance.lecture });
     }
 
@@ -115,7 +115,6 @@ class AddBreakdownForm extends React.Component<Props, State> {
                 </Form.Item>
                 {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.INSTRUCTOR], this.props.courseID)}
                 {addRadioGroup("lecture", 'Lecture Type', Lecture, ['term', 'year'], Object.values(this.props.courses), Object.values(this.props.instances), this.props.courseID)}
-
                 <Form.Item required label="Assessments">
                     <Form.List name="assessments">
                         {(fields, { add, remove }) => (
