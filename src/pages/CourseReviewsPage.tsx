@@ -1,5 +1,5 @@
 import { FrownOutlined } from '@ant-design/icons';
-import { Affix, Button, Card, Col, Divider, Drawer, Layout, List, PageHeader, Radio, Result, Row, Select, Space } from "antd";
+import { Affix, Button, Card, Col, Divider, Drawer, Layout, List, PageHeader, Radio, Result, Row, Select, Space, Tag } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
@@ -152,6 +152,7 @@ class CourseReviewsPage extends React.Component<Props, State> {
                                         <Space style={{ width: '100%', marginTop: 10 }} direction='vertical'>
                                             <span>Semesters</span>
                                                 <Select
+                                                    tagRender={props => <Tag {...{ ...props, closable: props.value !== "All" }}>{props.label}</Tag>}
                                                     getPopupContainer={trigger => trigger.parentElement}
                                                     key={this.props.userreview?.userID} mode="tags" style={{ width: '100%' }} placeholder="Semesters"
                                                     value={this.state.filters.semesters}
