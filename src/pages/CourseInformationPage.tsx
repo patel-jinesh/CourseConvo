@@ -1,20 +1,17 @@
-import { PlusOutlined, FrownOutlined } from '@ant-design/icons';
-import { Layout, PageHeader, Select, Tabs, Statistic, Descriptions, Badge, Button, Drawer, Card, Result } from "antd";
+import { FrownOutlined } from '@ant-design/icons';
+import { Card, Layout, PageHeader, Result, Statistic, Tabs } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
 import Breakdown from "../components/Breakdown";
+import AddBreakdownForm from '../components/forms/AddBreakdownForm';
 import GPAGraph from "../components/graphs/GPAGraph";
-import Review from "../components/Review";
-import { Status, Term, ReviewTag } from "../data/types";
-import TopReviewList from '../components/TopReviewList';
-import moment from 'moment';
-
-import AcademicRecordForm from "../components/forms/AcademicRecordForm";
-import AddBreakdownForm from "../components/forms/AddBreakdownForm";
 import InstructorGraph from '../components/graphs/InstructorGraph';
+import TopReviewList from '../components/TopReviewList';
+import { Status, Term } from "../data/types";
+
 
 const { Content } = Layout;
 const { TabPane } = Tabs;
@@ -134,16 +131,29 @@ class CourseInformationPage extends React.Component<Props, State> {
                                     />}
                             </Content>
                         </TabPane>
-                        <TabPane tab="Top Breakdowns" key="1">
-                            <Content style={{ paddingTop: 20 }}>
-                                {this.props.breakdowns.map(breakdown => {
-                                    return <Breakdown breakdownID={breakdown.breakdownID} instanceID={breakdown.instanceID} key={breakdown.breakdownID} />
-                                })}
-                            </Content>
+                        <TabPane tab="Recently posted breakdown" key="1">
+                            {
+                                this.props.breakdowns.length === 0
+                                    ? <>
+                                        <Result
+                                            status='warning'
+                                            icon={< FrownOutlined />}
+                                            title="Seems like there aren't any breakdowns for this course!"
+                                            subTitle="If you have taken the course, you can write one!" />
+                                        <Layout style={{ width: '70%', marginRight: 'auto', marginLeft: 'auto' }}>
+                                            <AddBreakdownForm initialValues={{assessments: [undefined]}} courseID={this.props.course.courseID} />
+                                        </Layout>
+                                    </>
+                                    : this.props.breakdowns
+                                        .sort((a, b) => a.datetime - b.datetime)
+                                        .slice(0, 1).map(breakdown => {
+                                            return <Breakdown breakdownID={breakdown.breakdownID} instanceID={breakdown.instanceID} key={breakdown.breakdownID} />
+                                        })
+                            }
                         </TabPane>
                         <TabPane tab="Top Reviews" key="2">
                             <Content style={{ paddingTop: 20 }}>
-                                <TopReviewList></TopReviewList>
+                                <TopReviewList courseID={this.props.course.courseID}></TopReviewList>
                             </Content>
                         </TabPane>
                     </Tabs>

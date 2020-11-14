@@ -19,9 +19,11 @@ const instancesRedux = createSlice({
     initialState,
     reducers: {
         add(state, action: PayloadAction<CourseInstance>) {
+            console.timeLog('Event', 'Course Instance added', action.payload);
             state[action.payload.instanceID] = action.payload;
         },
         edit(state, action: PayloadAction<CourseInstance>) {
+            console.timeLog('Event', 'Course Instance edited', action.payload);
             state[action.payload.instanceID] = action.payload;
         },
     }

@@ -1,17 +1,13 @@
-import { AutoComplete, Affix, Button, Card, Col, List, Form, PageHeader, Row, Result, Space, Statistic, Tooltip, Typography } from 'antd';
+import { FrownOutlined } from '@ant-design/icons';
+import { Affix, AutoComplete, Button, Card, Col, PageHeader, Result, Row, Space } from 'antd';
+import { FormInstance } from 'antd/lib/form';
+import { History, Location } from "history";
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '../app/store';
 import { match, withRouter } from 'react-router-dom';
-import { History, Location } from "history";
-import SearchCourseForm from '../components/forms/SearchCourseForm';
-import { FormInstance } from 'antd/lib/form';
-import { FrownOutlined } from '@ant-design/icons';
-import SmileRate from '../components/SmileRate';
+import { RootState } from '../app/store';
 import CourseList from '../components/CourseList';
-import { Course } from '../data/types';
-
-const { Option } = AutoComplete;
+import SmileRate from '../components/SmileRate';
 
 type ComponentProps = {
     match: match,

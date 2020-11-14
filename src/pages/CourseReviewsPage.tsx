@@ -1,6 +1,7 @@
 import { FrownOutlined } from '@ant-design/icons';
 import { Affix, Button, Card, Col, Divider, Drawer, Layout, List, PageHeader, Radio, Result, Row, Select, Space, Tag } from "antd";
 import { History, Location } from "history";
+import moment from 'moment';
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { match, withRouter } from "react-router-dom";
@@ -9,8 +10,6 @@ import { USERID } from '../backend/database';
 import ReviewForm from '../components/forms/ReviewForm';
 import NumericRate from '../components/NumericRate';
 import Review from '../components/Review';
-import ReportForm from '../components/forms/ReportForm';
-import moment from 'moment';
 import { remove } from '../features/courses/review';
 
 type ComponentProps = {

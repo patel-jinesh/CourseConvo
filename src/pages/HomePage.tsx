@@ -1,12 +1,11 @@
-import { Button, Card, Col, List, Form, PageHeader, Row, Space, Statistic, Tooltip, Typography } from 'antd';
-import { Select, } from 'antd';
-import { CommentOutlined, InfoCircleOutlined, PieChartOutlined, } from '@ant-design/icons';
+import { CommentOutlined, InfoCircleOutlined, PieChartOutlined } from '@ant-design/icons';
+import { Button, Card, Col, List, PageHeader, Row, Statistic, Tooltip } from 'antd';
+import { History, Location } from "history";
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
+import { match, withRouter } from 'react-router-dom';
 import { RootState } from '../app/store';
 
-import { match, withRouter } from 'react-router-dom';
-import { History, Location } from "history";
 
 
 
@@ -187,7 +186,13 @@ class HomePage extends React.Component<Props, State> {
                                     <List.Item>
                                         <Row style={{ width: "100%" }}>
                                             <Col flex={1}>{`${this.props.courses[item.courseID].subject} ${this.props.courses[item.courseID].code}`}</Col>
-                                            <Col style={{ height: "36.660px" }}> <a onClick={() => this.props.history.push({ pathname: '/reviews', search: `?courseID=${item?.courseID}` })}>{`${item.count} ${item.count === 1 ? "review" : "reviews"}`} </a></Col>
+                                            <Col style={{ height: "36.660px" }}>
+                                                <Button
+                                                    type='link'
+                                                    onClick={() => this.props.history.push({ pathname: '/reviews', search: `?courseID=${item?.courseID}` })}>
+                                                    {`${item.count} ${item.count === 1 ? "review" : "reviews"}`}
+                                                </Button>
+                                            </Col>
                                         </Row>
 
                                     </List.Item>

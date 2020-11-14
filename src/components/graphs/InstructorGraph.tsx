@@ -1,21 +1,9 @@
 
-import {
-    FlexibleXYPlot,
-    XAxis,
-    YAxis,
-    HorizontalGridLines,
-    Crosshair,
-    MarkSeries,
-    LineMarkSeries,
-    VerticalBarSeries,
-    DiscreteColorLegend,
-    AreaSeries,
-    GradientDefs
-} from 'react-vis';
 import React from 'react';
-import { Term, Record } from '../../data/types';
-import { ConnectedProps, connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
+import { DiscreteColorLegend, FlexibleXYPlot, HorizontalGridLines, VerticalBarSeries, XAxis, YAxis } from 'react-vis';
 import { RootState } from '../../app/store';
+import { Record } from '../../data/types';
 
 type ComponentProps = {
     records: Record[],
@@ -82,20 +70,29 @@ class GPAGraph extends React.Component<Props, State> {
                 <XAxis title='Instructor' style={{ text: { fill: 'white' } }}/>
                 <YAxis title="Grade" style={{ text: { fill: 'white' } }}/>
                 <DiscreteColorLegend
-                    style={{ position: 'absolute', right: '50px', top: '10px' }}
+                    style={{ position: 'absolute', right: '50px', top: '10px', background: '#222', padding: 10 }}
                     orientation="vertical"
                     items={[
                         {
-                            title: 'Apples',
+                            color: 'transparent',
+                            title: 'Legend',
                         },
                         {
-                            title: 'Oranges',
+                            title: 'Minimum',
+                        },
+                        {
+                            title: 'Average',
+                        },
+                        {
+                            title: 'Maximum',
                         }
                     ]}
-                />
+                ></DiscreteColorLegend>
+                <VerticalBarSeries />
                 <VerticalBarSeries data={mins} />
                 <VerticalBarSeries data={avgs} />
                 <VerticalBarSeries data={maxs} />
+                <VerticalBarSeries />
             </FlexibleXYPlot>
         );
     }

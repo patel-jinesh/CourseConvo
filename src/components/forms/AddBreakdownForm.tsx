@@ -1,19 +1,15 @@
-import { Slider, Comment, Tooltip, Rate, Descriptions, Button, List, Form, Select, Input, AutoComplete, Radio, Layout, Row, Col, Divider, DatePicker, Switch, Space, InputNumber } from 'antd';
-import Avatar from 'antd/lib/avatar/avatar';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Form, Input, InputNumber, Select, Space, Tooltip } from 'antd';
+import { FormInstance } from 'antd/lib/form';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '../../app/store';
-import moment from 'moment';
+import { USERID } from '../../backend/database';
+import { Assessments, FormType, Lecture } from '../../data/types';
 import { add as addBreakdown, edit as editBreakdown } from '../../features/courses/breakdown';
 import { add as addInstance } from '../../features/courses/instance';
-import { USERID } from '../../backend/database';
-import TextArea from 'antd/lib/input/TextArea';
-import CreateCourseForm from './CreateCourseForm';
-import { Assessments, FormType, Lecture, Mark, Term } from '../../data/types';
-import { v4 as uuidv4 } from 'uuid';
 import { addDateForm, addForms, addRadioGroup, addTermForm } from "../../utilities/formUtils";
-import { FormInstance } from 'antd/lib/form';
 
 const { Option } = Select;
 
@@ -22,7 +18,7 @@ type ComponentProps = {
     onCancel?: () => void;
     courseID: string;
     breakdownID?: any;
-    initialValues: any;
+    initialValues?: any;
 }
 
 type ComponentState = {}
@@ -88,7 +84,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
             this.props.editBreakdown({
                 ...this.props.instance,
                 ...values,
-                year: undefined,
+                year: values.year?.year(),
                 breakdownID: this.props.breakdownID,
                 userID: USERID,
                 marks: values.assessments,
@@ -97,7 +93,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
         else
             this.props.addBreakdown({
                 ...values,
-                year: undefined,
+                year: values.year?.year(),
                 instanceID: instanceID,
                 userID: USERID,
                 marks: values.assessments,
@@ -108,46 +104,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
             this.props.onFinish();
     }
 
-    validateAssessments = (getFieldValue: any) => {
-        let assessments = getFieldValue('assessments');
-        let seen = {
-            [Assessments.ASSIGNMENTS]: false,
-            [Assessments.EXAMS]: false,
-            [Assessments.LABS]: false,
-            [Assessments.MIDTERMS]: false,
-            [Assessments.OTHER]: false,
-            [Assessments.PROJECTS]: false,
-            [Assessments.QUIZZES]: false,
-        };
-
-        let sum: number | undefined = 0;
-        let same = false;
-
-        if (assessments)
-            for (let assessment of assessments) {
-                if (assessment?.type)
-                    if (!seen[assessment?.type as Assessments])
-                        seen[assessment?.type as Assessments] = true;
-                    else
-                        return Promise.reject(`You have more than 1 of '${assessment}'!`)
-                if (assessment?.weight)
-                    sum += assessment.weight
-                else
-                    return Promise.reject(`Your assessments don't sum to 100%!`)
-            }
-
-        return Promise.resolve();
-    }
-
     render() {
-        let initialValues = {
-            ...this.props.course,
-            ...this.props.instance,
-            ...this.props.breakdown,
-            year: this.props.instance?.year === undefined ? undefined : moment(`${this.props.instance?.year}`),
-            assessments: this.props.breakdown?.marks ?? [[undefined, undefined, undefined]]
-        }
-
         return (
             <Form ref={this.form} name="review" initialValues={this.props.initialValues} layout="horizontal" labelCol={{ flex: '130px' }} labelAlign={"left"} onFinish={this.onFinish} onValuesChange={this.onValuesChange}>
                 <Form.Item label="Semester" required>
@@ -159,7 +116,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
                 {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.INSTRUCTOR], this.props.courseID)}
                 {addRadioGroup("lecture", 'Lecture Type', Lecture, ['term', 'year'], Object.values(this.props.courses), Object.values(this.props.instances), this.props.courseID)}
 
-                <Form.Item label=" " colon={false}>
+                <Form.Item required label="Assessments">
                     <Form.List name="assessments">
                         {(fields, { add, remove }) => (
                             <>
@@ -234,28 +191,11 @@ class AddBreakdownForm extends React.Component<Props, State> {
                 <Form.Item shouldUpdate={true} label=" " colon={false}>
                     {({ getFieldsError, getFieldValue }) => {
                         let assessments = getFieldValue('assessments');
-                        let seen = {
-                            [Assessments.ASSIGNMENTS]: false,
-                            [Assessments.EXAMS]: false,
-                            [Assessments.LABS]: false,
-                            [Assessments.MIDTERMS]: false,
-                            [Assessments.OTHER]: false,
-                            [Assessments.PROJECTS]: false,
-                            [Assessments.QUIZZES]: false,
-                        };
 
                         let sum: number | undefined = 0;
-                        let same = false;
 
                         if (assessments)
                             for (let assessment of assessments) {
-                                if (assessment?.type)
-                                    if (!seen[assessment?.type as Assessments])
-                                        seen[assessment?.type as Assessments] = true;
-                                    else {
-                                        same = true;
-                                        break;
-                                    }
                                 if (assessment?.weight)
                                     sum += assessment.weight
                                 else {

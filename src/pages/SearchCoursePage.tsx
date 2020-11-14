@@ -1,16 +1,16 @@
 import { FrownOutlined } from '@ant-design/icons';
 import { Layout, PageHeader, Result } from "antd";
 import { FormInstance } from 'antd/lib/form';
+import { History, Location } from "history";
 import moment from 'moment';
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
 import CourseList from '../components/CourseList';
 import CreateCourseForm from "../components/forms/CreateCourseForm";
 import SearchCourseForm from "../components/forms/SearchCourseForm";
 
-import { History, Location } from "history";
-import { match, withRouter } from "react-router-dom";
 
 type ComponentProps = {
     match: match,

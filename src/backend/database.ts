@@ -1,6 +1,6 @@
-import { Course, Term, Record, Status, User, Breakdown, Review, CourseInstance, ReviewTag, Lecture, Assessments } from "../data/types";
-import { v4 as uuidv4 } from 'uuid'
 import moment from "moment";
+import { v4 as uuidv4 } from 'uuid';
+import { Assessments, Breakdown, Course, CourseInstance, Record, Review, ReviewTag, Status, Term, User } from "../data/types";
 
 /**
 COMPSCI 3AC3 - Algorithms and Complexity
@@ -108,6 +108,13 @@ export const courses: Course[] = coursesdb.map(([subject, code, name]) => {
 })
 
 export const instances: CourseInstance[] = [
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[0].courseID,
+        instructor: "Spencer Smith",
+        term: Term.FALL,
+        year: 2015 + i
+    })),
     {
         instanceID: uuidv4(),
         courseID: courses[2].courseID,
@@ -128,14 +135,7 @@ export const instances: CourseInstance[] = [
         instructor: "William Farmer",
         term: Term.WINTER,
         year: 2018
-    },
-    ...Array(10).fill(undefined).map((_, i) => ({
-        instanceID: uuidv4(),
-        courseID: courses[0].courseID,
-        instructor: "Spencer Smith",
-        term: Term.FALL,
-        year: 2015 + i
-    })),
+    }
 ]
 
 /**
@@ -168,7 +168,7 @@ export const records: Record[] = [
             status: Status.TAKEN,
             instanceID: instance.instanceID,
             userID: users[2].userID,
-            grade: Math.floor(Math.random() * (12 + 1))
+            grade: Math.floor(1 + Math.random() * (12))
         }))
     )).flat())
 ]

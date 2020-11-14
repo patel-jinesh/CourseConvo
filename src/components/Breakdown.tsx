@@ -1,11 +1,11 @@
-import { CaretRightOutlined, AntDesignOutlined } from '@ant-design/icons';
-import { Collapse, Descriptions, Space, Tooltip, Avatar } from 'antd';
+import { CaretRightOutlined } from '@ant-design/icons';
+import { Avatar, Collapse, Descriptions, Space, Tooltip } from 'antd';
+import moment from 'moment';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
 import { Assessments, Mark } from '../data/types';
 import { add } from '../features/courses/course';
-import moment from 'moment';
 
 const { Panel } = Collapse;
 
@@ -68,8 +68,7 @@ class Breakdown extends React.Component<Props> {
 
     //Add all panels for assessments that the course supports
     addPanels (list : any) {
-        var panels = [];
-        var i = 0;
+        let panels = [];
 
         for (let item in list) {
             panels.push(this.addAssessment(list[item]));
