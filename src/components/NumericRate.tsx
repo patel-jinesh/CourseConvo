@@ -28,7 +28,7 @@ class NumericRate extends React.Component<Props> {
         return (
             <Radio.Group
                 buttonStyle='solid'
-                defaultValue={this.props.defaultValue}
+                defaultValue={this.props.defaultValue ?? 1}
                 disabled={this.props.disabled}
                 onChange={e => this.props.onChange && this.props.onChange(e.target.value)}>
                 <Radio.Button value={1}>1</Radio.Button>
