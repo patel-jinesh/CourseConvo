@@ -44,6 +44,37 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type Props = ReduxProps & ComponentProps;
 type State = ComponentState
 
+// TODO: Can optimize and reuse code from homepage to get course ratings, can create a general class
+export function getCourseRatings(reviews: any, instances: any,) {
+    let courseAttrRatings: {
+        [courseID: string]:
+        { overallRating: number, count: number, difficulty: number, workload: number, enjoyability: number }
+    } = {};
+
+    for (let i = 0; i < reviews.length; i++) {
+        let review = reviews[i];
+        let currRating = ((review.difficulty + review.enjoyability + review.workload) / 3);
+        let courseID = instances[review.instanceID].courseID;
+        courseAttrRatings[courseID] = {
+            overallRating: (courseAttrRatings[courseID]?.overallRating ?? 0) + currRating,
+            count: (courseAttrRatings[courseID]?.count ?? 0) + 1,
+            difficulty: (courseAttrRatings[courseID]?.difficulty ?? 0) + review.difficulty,
+            enjoyability: (courseAttrRatings[courseID]?.enjoyability ?? 0) + review.enjoyability,
+            workload: (courseAttrRatings[courseID]?.workload ?? 0) + review.workload,
+        }
+    }
+
+    Object.keys(courseAttrRatings).forEach(key => {
+        let count = courseAttrRatings[key].count;
+        courseAttrRatings[key].difficulty = courseAttrRatings[key].difficulty / count;
+        courseAttrRatings[key].enjoyability = courseAttrRatings[key].enjoyability / count;
+        courseAttrRatings[key].workload = courseAttrRatings[key].workload / count;
+        courseAttrRatings[key].overallRating = courseAttrRatings[key].overallRating / count;
+    })
+
+    return courseAttrRatings
+}
+
 class ElectivePage extends React.Component<Props, State> {
     formSearchCourse = React.createRef<FormInstance>();
     content: JSX.Element = <Result
@@ -64,46 +95,9 @@ class ElectivePage extends React.Component<Props, State> {
         })
     }
 
-    getDifficulty = () => {
-
-
-
-    }
-
-    // TODO: Can optimize and reuse code from homepage to get course ratings, can create a general class
-    getCourseRatings = () => {
-        let courseAttrRatings: {
-            [courseID: string]:
-            { overallRating: number, count: number, difficulty: number, workload: number, enjoyability: number }
-        } = {};
-
-        for (let i = 0; i < this.props.reviews.length; i++) {
-            let review = this.props.reviews[i];
-            let currRating = ((review.difficulty + review.enjoyability + review.workload) / 3);
-            let courseID = this.props.instances[review.instanceID].courseID;
-            courseAttrRatings[courseID] = {
-                overallRating: (courseAttrRatings[courseID]?.overallRating ?? 0) + currRating,
-                count: (courseAttrRatings[courseID]?.count ?? 0) + 1,
-                difficulty: (courseAttrRatings[courseID]?.difficulty ?? 0) + review.difficulty,
-                enjoyability: (courseAttrRatings[courseID]?.enjoyability ?? 0) + review.enjoyability,
-                workload: (courseAttrRatings[courseID]?.workload ?? 0) + review.workload,
-            }
-        }
-
-        Object.keys(courseAttrRatings).forEach(key => {
-            let count = courseAttrRatings[key].count;
-            courseAttrRatings[key].difficulty = courseAttrRatings[key].difficulty / count;
-            courseAttrRatings[key].enjoyability = courseAttrRatings[key].enjoyability / count;
-            courseAttrRatings[key].workload = courseAttrRatings[key].workload / count;
-            courseAttrRatings[key].overallRating = courseAttrRatings[key].overallRating / count;
-        })
-
-        return courseAttrRatings
-    }
-
     getCourseSuggestions = (numCourse: number) => {
         let noneDefined = this.state.subject === undefined;
-        let courseRatings = this.getCourseRatings();
+        let courseRatings = getCourseRatings(this.props.reviews, this.props.instances);
         console.log(courseRatings);
 
         //filtering results to match filter options
@@ -141,7 +135,7 @@ class ElectivePage extends React.Component<Props, State> {
                 subTitle="Please enter course suggestion parameters"
             />
         } else {
-            this.content = <CourseList courses={results} />
+            this.content = <CourseList courses={results} showOtherRatings={true} />
         }
 
         this.setState({ content: this.content });
@@ -150,8 +144,6 @@ class ElectivePage extends React.Component<Props, State> {
 
 
     render() {
-
-
         return (
             //Page header
             <PageHeader
@@ -174,7 +166,15 @@ class ElectivePage extends React.Component<Props, State> {
                                     <SmileRate className="overallRating" value={this.state.overallRating ?? 0}
                                         onChange={(value) => this.setState({ overallRating: value })}></SmileRate> */}
 
-                                    <span> Enjoyability (optional)</span>
+                                    <span> Minimum Difficulty (optional)</span>
+                                    <SmileRate className="difficulty" value={this.state.difficulty ?? 0}
+                                        onChange={(value) => this.setState({
+                                            difficulty: value,
+                                            overallRating:
+                                                ((this.state.enjoyability ?? 0) + (this.state.difficulty ?? 0) + (this.state.workload ?? 0)) / 3
+                                        })}></SmileRate>
+
+                                    <span> Minimum Enjoyability (optional)</span>
                                     <SmileRate className="enjoyability" value={this.state.enjoyability ?? 0}
                                         onChange={(value) =>
                                             this.setState({
@@ -183,7 +183,7 @@ class ElectivePage extends React.Component<Props, State> {
                                                     ((this.state.enjoyability ?? 0) + (this.state.difficulty ?? 0) + (this.state.workload ?? 0)) / 3
                                             })}></SmileRate>
 
-                                    <span> Workload (optional)</span>
+                                    <span> Minimum Workload (optional)</span>
                                     <SmileRate className="workload" value={this.state.workload ?? 0}
                                         onChange={(value) => this.setState({
                                             workload: value,
@@ -191,13 +191,7 @@ class ElectivePage extends React.Component<Props, State> {
                                                 ((this.state.enjoyability ?? 0) + (this.state.difficulty ?? 0) + (this.state.workload ?? 0)) / 3
                                         })}></SmileRate>
 
-                                    <span> Difficulty (optional)</span>
-                                    <SmileRate className="difficulty" value={this.state.difficulty ?? 0}
-                                        onChange={(value) => this.setState({
-                                            difficulty: value,
-                                            overallRating:
-                                                ((this.state.enjoyability ?? 0) + (this.state.difficulty ?? 0) + (this.state.workload ?? 0)) / 3
-                                        })}></SmileRate>
+
 
                                     <Button type="primary" style={{ width: "100%" }} onClick={() => { this.getCourseSuggestions(3) }}> Get Suggestions</Button>
                                 </Space>

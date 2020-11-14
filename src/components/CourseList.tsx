@@ -12,8 +12,8 @@ type ComponentProps = {
     match: match,
     location: Location,
     history: History,
-
-    courses: Course[]
+    courses: Course[],
+    showOtherRatings?: boolean
 }
 
 type ComponentState = {}
@@ -32,7 +32,7 @@ type Props = ReduxProps & ComponentProps;
 class CourseList extends React.Component<Props, State> {
     state: State = {}
 
-    renderCourse = (course: Course) => <CourseListItem course={course} />
+    renderCourse = (course: Course) => <CourseListItem course={course} showOtherRatings={this.props.showOtherRatings} />
 
     render() {
         return (
