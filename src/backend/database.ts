@@ -168,7 +168,7 @@ export const records: Record[] = [
             status: Status.TAKEN,
             instanceID: instance.instanceID,
             userID: users[2].userID,
-            grade: Math.floor(Math.random() * (12 + 1))
+            grade: Math.floor(1 + Math.random() * (12))
         }))
     )).flat())
 ]

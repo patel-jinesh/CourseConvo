@@ -70,20 +70,29 @@ class GPAGraph extends React.Component<Props, State> {
                 <XAxis title='Instructor' style={{ text: { fill: 'white' } }}/>
                 <YAxis title="Grade" style={{ text: { fill: 'white' } }}/>
                 <DiscreteColorLegend
-                    style={{ position: 'absolute', right: '50px', top: '10px' }}
+                    style={{ position: 'absolute', right: '50px', top: '10px', background: '#222', padding: 10 }}
                     orientation="vertical"
                     items={[
                         {
-                            title: 'Apples',
+                            color: 'transparent',
+                            title: 'Legend',
                         },
                         {
-                            title: 'Oranges',
+                            title: 'Minimum',
+                        },
+                        {
+                            title: 'Average',
+                        },
+                        {
+                            title: 'Maximum',
                         }
                     ]}
-                />
+                ></DiscreteColorLegend>
+                <VerticalBarSeries />
                 <VerticalBarSeries data={mins} />
                 <VerticalBarSeries data={avgs} />
                 <VerticalBarSeries data={maxs} />
+                <VerticalBarSeries />
             </FlexibleXYPlot>
         );
     }
