@@ -139,7 +139,7 @@ class CourseInformationPage extends React.Component<Props, State> {
                         </TabPane>
                         <TabPane tab="Top Reviews" key="2">
                             <Content style={{ paddingTop: 20 }}>
-                                <TopReviewList></TopReviewList>
+                                <TopReviewList courseID={this.props.course.courseID}></TopReviewList>
                             </Content>
                         </TabPane>
                     </Tabs>
