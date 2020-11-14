@@ -108,7 +108,7 @@ export const instances: CourseInstance[] = [
         courseID: courses[0].courseID,
         instructor: "Spencer Smith",
         term: Term.FALL,
-        year: 2015 + i
+        year: 2020 - i
     })),
     {
         instanceID: uuidv4(),
