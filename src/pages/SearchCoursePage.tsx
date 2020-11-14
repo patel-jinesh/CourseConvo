@@ -9,7 +9,14 @@ import CourseList from '../components/CourseList';
 import CreateCourseForm from "../components/forms/CreateCourseForm";
 import SearchCourseForm from "../components/forms/SearchCourseForm";
 
-type ComponentProps = {}
+import { History, Location } from "history";
+import { match, withRouter } from "react-router-dom";
+
+type ComponentProps = {
+    match: match,
+    location: Location,
+    history: History,
+}
 
 type ComponentState = {
     subject?: string,
@@ -36,7 +43,13 @@ class SearchCoursePage extends React.Component<Props, State> {
     formSearchCourse = React.createRef<FormInstance>();
 
     onSearch = (values: any) => {
+        this.props.history.push('/search', {...values})
         this.setState({ ...values });
+    }
+
+    componentDidMount() {
+        this.setState(this.props.history.location.state as { subject?: string, code?: string } ?? {})
+        this.formSearchCourse.current?.setFieldsValue(this.props.history.location.state as { subject?: string, code?: string } ?? {})
     }
 
     onCreateCourseFormFinish = (values: any) => {
@@ -97,4 +110,4 @@ class SearchCoursePage extends React.Component<Props, State> {
     }
 }
 
-export default connector(SearchCoursePage);
+export default withRouter(connector(SearchCoursePage));

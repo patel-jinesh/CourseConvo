@@ -59,7 +59,8 @@ class CourseListItem extends React.Component<Props, State> {
 
         this.props.history.push({
             pathname: path,
-            search: params.toString()
+            search: params.toString(),
+            state: this.props.history.location.state
         });
     }
 

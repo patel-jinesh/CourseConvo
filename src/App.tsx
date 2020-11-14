@@ -57,16 +57,16 @@ function Nav() {
         </Menu.ItemGroup>
         <Menu.ItemGroup title="Courses">
           <Menu.Item key="/search" icon={<SearchOutlined />}>
-            <Link to={{ pathname: '/search' }}>Search</Link>
+            <Link to={{ pathname: '/search', state: history.location.state }}>Search</Link>
           </Menu.Item>
           <Menu.Item key="/information" disabled={!query.has('courseID')} icon={<InfoCircleOutlined />}>
-            <Link to={{ pathname: '/information', search: query.toString() }}>Information</Link>
+            <Link to={{ pathname: '/information', search: query.toString(), state: history.location.state }}>Information</Link>
           </Menu.Item>
           <Menu.Item key="/breakdowns" disabled={!query.has('courseID')} icon={<PieChartOutlined />}>
-            <Link to={{ pathname: '/breakdowns', search: query.toString() }}>Breakdowns</Link>
+            <Link to={{ pathname: '/breakdowns', search: query.toString(), state: history.location.state }}>Breakdowns</Link>
           </Menu.Item>
           <Menu.Item key="/reviews" disabled={!query.has('courseID')} icon={<CommentOutlined />}>
-            <Link to={{ pathname: '/reviews', search: query.toString() }}>Reviews</Link>
+            <Link to={{ pathname: '/reviews', search: query.toString(), state: history.location.state }}>Reviews</Link>
           </Menu.Item>
         </Menu.ItemGroup>
       </Menu>
