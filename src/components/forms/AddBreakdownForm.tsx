@@ -202,9 +202,12 @@ class AddBreakdownForm extends React.Component<Props, State> {
                                                 style={{ width: '27.5%' }}
                                                 name={[field.name, 'count']}
                                                 fieldKey={[field.fieldKey, 'count']}
-                                                rules={[{ required: true, message: 'Missing count' }]}
+                                                rules={[
+                                                    { required: true, message: 'Missing count' },
+                                                    { pattern: /^\d+$/g, message: 'Invalid count' },
+                                                ]}
                                             >
-                                                <InputNumber style={{ width: '100%' }} />
+                                                <InputNumber min={1} style={{ width: '100%' }} />
                                             </Form.Item>
                                             {
                                                 fields.length !== 1 &&
