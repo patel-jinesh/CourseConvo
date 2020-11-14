@@ -1,5 +1,5 @@
-import { CheckOutlined, DislikeFilled, DislikeTwoTone, LikeFilled, LikeTwoTone, UserOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Card, Col, Comment, Drawer, Form, List, Row, Space, Tooltip, Typography, Tag, Badge } from 'antd';
+import { CheckOutlined, DislikeFilled, DislikeTwoTone, LikeFilled, LikeTwoTone, UserOutlined } from '@ant-design/icons';
+import { Button, Col, Comment, Drawer, Form, List, Row, Space, Tag, Tooltip, Typography } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import TextArea from 'antd/lib/input/TextArea';
 import moment from 'moment';
@@ -7,11 +7,10 @@ import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
 import { USERID } from '../backend/database';
-import { downvote, reply, unvote, upvote, tag, untag } from '../features/courses/review';
-import ReportForm from './forms/ReportForm';
-import ReviewForm from './forms/ReviewForm';
-import SmileRate from './SmileRate';
 import { ReviewTag } from '../data/types';
+import { downvote, reply, tag, untag, unvote, upvote } from '../features/courses/review';
+import ReportForm from './forms/ReportForm';
+import SmileRate from './SmileRate';
 
 const { Paragraph } = Typography;
 

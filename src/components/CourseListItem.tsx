@@ -1,10 +1,10 @@
+import { CommentOutlined, InfoCircleOutlined, PieChartOutlined } from '@ant-design/icons';
+import { Button, Col, List, Row } from 'antd';
+import { History, Location } from 'history';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
-import { RootState } from '../app/store';
-import { List, Button, Row, Col } from 'antd';
 import { match, withRouter } from 'react-router-dom';
-import { Location, History } from 'history';
-import { CommentOutlined, InfoCircleOutlined, PieChartOutlined } from '@ant-design/icons';
+import { RootState } from '../app/store';
 import { Course } from '../data/types';
 
 type ComponentProps = {

@@ -1,16 +1,15 @@
 import { FrownOutlined } from '@ant-design/icons';
 import { Affix, Button, Card, Col, Divider, Drawer, Layout, List, PageHeader, Radio, Result, Row, Select, Space, Tag } from "antd";
 import { History, Location } from "history";
-import { match, withRouter } from "react-router-dom";
+import moment from 'moment';
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
+import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
 import { USERID } from '../backend/database';
-import { remove } from '../features/courses/breakdown';
 import Breakdown from '../components/Breakdown';
 import AddBreakdownForm from '../components/forms/AddBreakdownForm';
-import moment from 'moment';
-import { Assessments } from '../data/types';
+import { remove } from '../features/courses/breakdown';
 
 type ComponentProps = {
     match: match,

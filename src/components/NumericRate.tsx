@@ -1,4 +1,4 @@
-import { Rate, Radio } from "antd";
+import { Radio } from "antd";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../app/store";

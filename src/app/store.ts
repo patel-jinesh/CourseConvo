@@ -6,11 +6,11 @@
  */
 
 import { configureStore } from '@reduxjs/toolkit';
+import breakdownsReducer from '../features/courses/breakdown';
 import coursesReducer from '../features/courses/course';
 import instancesReducer from '../features/courses/instance';
-import reviewsReducer from '../features/courses/review';
 import recordsReducer from '../features/courses/record';
-import breakdownsReducer from '../features/courses/breakdown';
+import reviewsReducer from '../features/courses/review';
 import usersReducer from '../features/user/user';
 
 /**

@@ -1,5 +1,5 @@
-import { PlusOutlined, FrownOutlined } from '@ant-design/icons';
-import { Layout, PageHeader, Select, Tabs, Statistic, Descriptions, Badge, Button, Drawer, Card, Result } from "antd";
+import { FrownOutlined } from '@ant-design/icons';
+import { Card, Layout, PageHeader, Result, Statistic, Tabs } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
@@ -7,14 +7,10 @@ import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
 import Breakdown from "../components/Breakdown";
 import GPAGraph from "../components/graphs/GPAGraph";
-import Review from "../components/Review";
-import { Status, Term, ReviewTag } from "../data/types";
-import TopReviewList from '../components/TopReviewList';
-import moment from 'moment';
-
-import AcademicRecordForm from "../components/forms/AcademicRecordForm";
-import AddBreakdownForm from "../components/forms/AddBreakdownForm";
 import InstructorGraph from '../components/graphs/InstructorGraph';
+import TopReviewList from '../components/TopReviewList';
+import { Status, Term } from "../data/types";
+
 
 const { Content } = Layout;
 const { TabPane } = Tabs;

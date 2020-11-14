@@ -1,6 +1,6 @@
-import { Course, Term, Record, Status, User, Breakdown, Review, CourseInstance, ReviewTag, Lecture, Assessments } from "../data/types";
-import { v4 as uuidv4 } from 'uuid'
 import moment from "moment";
+import { v4 as uuidv4 } from 'uuid';
+import { Assessments, Breakdown, Course, CourseInstance, Record, Review, ReviewTag, Status, Term, User } from "../data/types";
 
 /**
 COMPSCI 3AC3 - Algorithms and Complexity

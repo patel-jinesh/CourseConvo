@@ -1,19 +1,9 @@
 
-import {
-    FlexibleXYPlot,
-    XAxis,
-    YAxis,
-    VerticalGridLines,
-    Crosshair,
-    MarkSeries,
-    LineMarkSeries,
-    AreaSeries,
-    GradientDefs
-} from 'react-vis';
 import React from 'react';
-import { Term, Record } from '../../data/types';
-import { ConnectedProps, connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
+import { AreaSeries, Crosshair, FlexibleXYPlot, GradientDefs, MarkSeries, VerticalGridLines, XAxis, YAxis } from 'react-vis';
 import { RootState } from '../../app/store';
+import { Record, Term } from '../../data/types';
 
 type ComponentProps = {
     records: Record[],

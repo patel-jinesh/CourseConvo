@@ -11,7 +11,7 @@ import { FormType, Status, Term } from "../../data/types";
 import { add as addCourse } from '../../features/courses/course';
 import { add as addInstance } from '../../features/courses/instance';
 import { add as addRecord, edit as editRecord } from '../../features/courses/record';
-import { addForms, addRadioGroup, addTermForm } from "../../utilities/formUtils";
+import { addForms } from "../../utilities/formUtils";
 
 const { Option } = AutoComplete;
 

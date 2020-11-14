@@ -1,4 +1,5 @@
 import { Button, Form, Input, Space, Switch } from 'antd';
+import { FormInstance } from 'antd/lib/form';
 import TextArea from 'antd/lib/input/TextArea';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
@@ -10,7 +11,6 @@ import { add as addInstance } from '../../features/courses/instance';
 import { add as addReview, edit as editReview } from '../../features/courses/review';
 import { addDateForm, addForms, addTermForm } from "../../utilities/formUtils";
 import SmileRate from '../SmileRate';
-import { FormInstance } from 'antd/lib/form';
 
 type ComponentProps = {
     initialValues?: any;
