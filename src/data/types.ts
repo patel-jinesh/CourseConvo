@@ -45,7 +45,7 @@ export interface User {
 }
 
 export interface Mark {
-    type: Assessments;
+    type: string;
     weight: number;
     count: number;
 }

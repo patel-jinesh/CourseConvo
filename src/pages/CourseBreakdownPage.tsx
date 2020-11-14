@@ -9,6 +9,7 @@ import { RootState } from "../app/store";
 import { USERID } from '../backend/database';
 import Breakdown from '../components/Breakdown';
 import AddBreakdownForm from '../components/forms/AddBreakdownForm';
+import { Assessments } from '../data/types';
 import { remove } from '../features/courses/breakdown';
 
 type ComponentProps = {
@@ -22,6 +23,7 @@ type ComponentState = {
     hide: boolean,
     filters: {
         semesters: string[]
+        assessments: string[]
     },
     sortorder: "Ascending" | "Descending",
     sortprop: "Assessments" | "Semester"
@@ -55,7 +57,8 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
         visible: false,
         hide: false,
         filters: {
-            semesters: ["All"]
+            semesters: ["All"],
+            assessments: ["All"]
         },
         sortorder: "Descending",
         sortprop: "Semester"
@@ -84,14 +87,23 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
             .unique()
             .sort();
 
+        let assessments = Object.values(Assessments)
+            .map(assessment => `${assessment}`)
+            .unique()
+            .sort();
+
         let datasource = this.props.breakdowns.reverse()
             .filter(breakdown => breakdown.userID !== USERID)
             .filter(breakdown => {
-                if (this.state.filters.semesters.length === 1 && this.state.filters.semesters[0] === "All")
-                    return true;
+                if (this.state.filters.semesters.length === 1 && this.state.filters.semesters[0] === "All") {
+                    if (this.state.filters.assessments.length === 1 && this.state.filters.assessments[0] === "All")
+                        return true;
+                    else
+                    return this.state.filters.assessments.some(item => breakdown.marks.map(mark => mark.type).includes(item));
+                }
 
                 if (this.state.filters.semesters.includes(`${this.props.instances[breakdown.instanceID].term} ${this.props.instances[breakdown.instanceID].year}`))
-                    return true;
+                    return this.state.filters.assessments.some(item => breakdown.marks.map(mark => mark.type).includes(item));
 
                 return false;
             })
@@ -210,6 +222,53 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
                                                         [{value: 'All'}, 
                                                         ...semesters.map(semester => ({
                                                             value: semester
+                                                        }))]
+                                                    }>
+                                            </Select>
+                                            <span>Assessments</span>
+                                                <Select
+                                                    tagRender={props => <Tag {...{ ...props, closable: props.value !== "All" }}>{props.label}</Tag>}
+                                                    getPopupContainer={trigger => trigger.parentElement}
+                                                    key={this.props.userbreakdown?.userID} mode="tags" style={{ width: '100%' }} placeholder="Assessments"
+                                                    value={this.state.filters.assessments}
+                                                    onDeselect={(value) => {
+                                                        if (value === "All" && this.state.filters.assessments.length === 1)
+                                                            return
+                                                        if (this.state.filters.assessments.length === 1)
+                                                            this.setState({
+                                                                filters: {
+                                                                    ...this.state.filters,
+                                                                    assessments: ["All"]
+                                                                }
+                                                            })
+                                                        else  
+                                                            this.setState({
+                                                                filters: {
+                                                                    ...this.state.filters,
+                                                                    assessments: this.state.filters.assessments.filter(assessment => assessment !== value)
+                                                                }
+                                                            })
+                                                    }}
+                                                    onSelect={(value) => {
+                                                        if (value === "All")
+                                                            this.setState({
+                                                                filters: {
+                                                                    ...this.state.filters,
+                                                                    assessments: ["All"]
+                                                                }
+                                                            });
+                                                        else
+                                                            this.setState({
+                                                                filters: {
+                                                                    ...this.state.filters,
+                                                                    assessments: [...this.state.filters.assessments.filter(assessment => assessment !== "All"), value]
+                                                                }
+                                                            })
+                                                    }}
+                                                    options={
+                                                        [{value: 'All'}, 
+                                                        ...assessments.map(assessment => ({
+                                                            value: assessment
                                                         }))]
                                                     }>
                                             </Select>
