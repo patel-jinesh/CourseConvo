@@ -116,7 +116,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
                 {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.INSTRUCTOR], this.props.courseID)}
                 {addRadioGroup("lecture", 'Lecture Type', Lecture, ['term', 'year'], Object.values(this.props.courses), Object.values(this.props.instances), this.props.courseID)}
 
-                <Form.Item label=" " colon={false}>
+                <Form.Item required label="Assessments">
                     <Form.List name="assessments">
                         {(fields, { add, remove }) => (
                             <>
