@@ -1,20 +1,15 @@
-import { CommentOutlined, FrownOutlined, InfoCircleOutlined, PieChartOutlined } from '@ant-design/icons';
-import { Button, Layout, List, PageHeader, Result } from "antd";
+import { FrownOutlined } from '@ant-design/icons';
+import { Layout, PageHeader, Result } from "antd";
 import { FormInstance } from 'antd/lib/form';
-import { History, Location } from "history";
 import moment from 'moment';
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
-import { match, withRouter } from "react-router-dom";
 import { RootState } from "../app/store";
+import CourseList from '../components/CourseList';
 import CreateCourseForm from "../components/forms/CreateCourseForm";
 import SearchCourseForm from "../components/forms/SearchCourseForm";
 
-type ComponentProps = {
-    match: match,
-    location: Location,
-    history: History,
-}
+type ComponentProps = {}
 
 type ComponentState = {
     subject?: string,
@@ -37,8 +32,8 @@ type State = ComponentState
 
 class SearchCoursePage extends React.Component<Props, State> {
     state: State = {}
+
     formSearchCourse = React.createRef<FormInstance>();
-    formCreateCourse = React.createRef<FormInstance>();
 
     onSearch = (values: any) => {
         this.setState({ ...values });
@@ -65,36 +60,18 @@ class SearchCoursePage extends React.Component<Props, State> {
 
                 return matchSubject && matchCode && hasInstance;
             })
-        
-        let instancebuckets = Object
-            .values(this.props.instances)
-            .reduce<{ [courseID: string]: string[] }>((result, instance) => ({
-            ...result,
-            [instance.courseID]: [...(result[instance.courseID] ?? []), instance.instanceID]
-            }), {});
-        
-        console.log(instancebuckets);
-        
-        let content : JSX.Element;
+
+        let content: JSX.Element;
 
         if (!noneDefined && results.length === 0) {
-            let initialValues : ComponentState & {name?: string, instructor?: string} = this.state;
-            
-            let course = Object.values(this.props.courses).find(course =>
-                course.code === this.state.code &&
-                course.subject === this.state.subject)
-
-            if (course !== undefined)
-                initialValues.name = course.name;
-
             content = <>
                 <Result
                     status='warning'
                     icon={< FrownOutlined />}
                     title="No search results!"
-                    subTitle="Try other search parameters! or create the course below"/>
-                <Layout style={{width: '70%', marginRight: 'auto', marginLeft: 'auto'}}>
-                    <CreateCourseForm form={this.formCreateCourse} initialValues={initialValues} onFinish={this.onCreateCourseFormFinish}/>
+                    subTitle="Try other search parameters! or create the course below" />
+                <Layout style={{ width: '70%', marginRight: 'auto', marginLeft: 'auto' }}>
+                    <CreateCourseForm onFinish={this.onCreateCourseFormFinish} />
                 </Layout>
             </>
         } else if (noneDefined) {
@@ -105,42 +82,7 @@ class SearchCoursePage extends React.Component<Props, State> {
                 subTitle="Please enter search parameters!"
             />
         } else {
-            content = <List
-                rowKey={course => course.courseID}
-                header={`${results.length} ${results.length > 1 ? 'results' : 'result'}`}
-                itemLayout="vertical"
-                dataSource={results}
-                renderItem={course => (
-                    <List.Item
-                        key={course.courseID}
-                        actions={[
-                            <Button
-                                type='link'
-                                icon={<InfoCircleOutlined />}
-                                onClick={() => this.props.history.push({ pathname: '/information', search: `?courseID=${course.courseID}` })}>Information</Button>,
-                            <Button
-                                type='link'
-                                icon={<PieChartOutlined />}
-                                onClick={() => this.props.history.push({ pathname: '/breakdowns', search: `?courseID=${course.courseID}` })}>Breakdowns</Button>,
-                            <Button
-                                type='link'
-                                icon={<CommentOutlined />}
-                                onClick={() => this.props.history.push({ pathname: '/reviews', search: `?courseID=${course.courseID}` })}>Reviews</Button>
-                        ]}
-                    >
-                        <List.Item.Meta
-                            title={`${course.subject} ${course.code} - ${course.name}`}
-                            description={
-                                <>
-                                    {instancebuckets[course.courseID]
-                                        ?.map(instanceID =>
-                                            <p key={instanceID}>{`${this.props.instances[instanceID].term} ${this.props.instances[instanceID].year}`}</p>)}
-                                </>
-                            }
-                        />
-                    </List.Item>
-                )}
-            />
+            content = <CourseList courses={results} />
         }
 
         return (
@@ -155,4 +97,4 @@ class SearchCoursePage extends React.Component<Props, State> {
     }
 }
 
-export default withRouter(connector(SearchCoursePage));
+export default connector(SearchCoursePage);
