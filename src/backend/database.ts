@@ -83,6 +83,11 @@ export const users: User[] = [
         name: "Allan Poe",
         avatar_url: "https://thispersondoesnotexist.com/image"
     },
+    {
+        userID: uuidv4(),
+        name: "Edgar Smith",
+        avatar_url: "https://thispersondoesnotexist.com/image"
+    },
 ]
 
 /**
@@ -272,7 +277,7 @@ export const breakdowns: Breakdown[] = [
     {
         breakdownID: uuidv4(),
         instanceID: instances[2].instanceID,
-        userID: users[2].userID,
+        userID: users[3].userID,
         datetime: moment().valueOf(),
         marks: [
             {
