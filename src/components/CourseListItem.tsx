@@ -6,13 +6,16 @@ import { connect, ConnectedProps } from 'react-redux';
 import { match, withRouter } from 'react-router-dom';
 import { RootState } from '../app/store';
 import { Course } from '../data/types';
+import { getCourseRatings } from '../pages/ElectivePage'
+import SmileRate from './SmileRate';
+
 
 type ComponentProps = {
     match: match,
     location: Location,
     history: History,
-
-    course: Course
+    course: Course,
+    showOtherRatings?: boolean
 }
 
 type ComponentState = {}
@@ -28,16 +31,33 @@ const mapState = (state: RootState, props: ComponentProps) => {
         }
     }
 
-    let reviews = Object.values(state.reviews).filter(review => state.instances[review.instanceID].courseID === props.course.courseID);
 
-    let rating = reviews.length > 0
-        ? reviews.reduce((res, review) => res + (review.difficulty + review.workload + review.enjoyability) / 3 / reviews.length, 0)
-        : undefined;
+    let reviews = Object.values(state.reviews).filter(review => state.instances[review.instanceID].courseID === props.course.courseID);
+    let courseRatings = getCourseRatings(reviews, state.instances);
+
+    // let rating = reviews.length > 0
+    //     ? reviews.reduce((res, review) => res + (review.difficulty + review.workload + review.enjoyability) / 3 / reviews.length, 0)
+    //     : undefined;
+
+    // let enjoyability = reviews.length > 0
+    //     ? reviews.reduce((res, review) => res + (review.enjoyability)/ reviews.length, 0)
+    //     : undefined;
+
+    // let difficulty= reviews.length > 0
+    //     ? reviews.reduce((res, review) => res + (review.difficulty) / reviews.length, 0)
+    //     : undefined;
+
+    // let workload = reviews.length > 0
+    //     ? reviews.reduce((res, review) => res + (review.workload) / reviews.length, 0)
+    //     : undefined;
 
     return {
         instructors: ([...instructors] as string[]),
         semesters: ([...semesters] as string[]).sort().reverse(),
-        rating: rating
+        rating: courseRatings[props.course.courseID]?.overallRating,
+        enjoyability: courseRatings[props.course.courseID]?.enjoyability,
+        workload: courseRatings[props.course.courseID]?.workload,
+        difficulty: courseRatings[props.course.courseID]?.difficulty,
     }
 };
 
@@ -109,12 +129,34 @@ class CourseListItem extends React.Component<Props, State> {
                                 <Col>{this.props.course.name}</Col>
                             </Row>
                             {
-                                this.props.rating !== undefined && <Row>
+                                this.props.rating !== undefined && <Row align="middle">
                                     <Col span={4}>Overall Rating:</Col>
                                     <Col>
                                         {this.props.rating.toFixed(2)}
                                     </Col>
                                 </Row>
+                            }
+
+                            { this.props.showOtherRatings && this.props.difficulty !== undefined && <Row align="middle">
+                                <Col span={4}> Overall Difficulty</Col>
+                                <Col>
+                                    <SmileRate value={Math.round(this.props.difficulty)} disabled={true} />
+                                </Col>
+                            </Row>
+                            }
+                            { this.props.showOtherRatings && this.props.enjoyability !== undefined && <Row align="middle">
+                                <Col span={4}> Overall Enjoyability</Col>
+                                <Col>
+                                    <SmileRate value={Math.round(this.props.enjoyability)} disabled={true} />
+                                </Col>
+                            </Row>
+                            }
+                            { this.props.showOtherRatings && this.props.workload !== undefined && <Row align="middle">
+                                <Col span={4}> Overall Workload</Col>
+                                <Col>
+                                    <SmileRate value={Math.round(this.props.workload)} disabled={true} />
+                                </Col>
+                            </Row>
                             }
                             <Row>
                                 <Col span={4}>Previous Instructors:</Col>
