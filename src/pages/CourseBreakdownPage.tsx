@@ -228,6 +228,7 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
                     width={567}
                     visible={this.state.visible}>
                     <AddBreakdownForm
+                        key={this.props.userbreakdown?.breakdownID}
                         courseID={this.props.course.courseID}
                         breakdownID={this.props.userbreakdown?.breakdownID}
                         initialValues={this.props.userbreakdown ? {

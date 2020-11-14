@@ -123,17 +123,11 @@ export function addRadioGroup(name: string, label: string, list: any, dependenci
             dependencies={dependencies}
             rules={[{ required: true, message: "Please select one of the options!" }]}>
             {({ getFieldValue }) => {
-                let subject = getFieldValue('subject');
-                let code = getFieldValue('code');
                 let term = getFieldValue('term');
                 let year = getFieldValue('year')?.year();
 
-                let course = courses?.find(course =>
-                    course.code === code &&
-                    course.subject === subject);
-
                 let instance = instances?.find(instance =>
-                    instance.courseID === (courseID ?? course?.courseID) &&
+                    instance.courseID === courseID &&
                     instance.term === term &&
                     instance.year === year);
 

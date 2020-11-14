@@ -190,19 +190,6 @@ class CourseInformationPage extends React.Component<Props, State> {
                         />
                     </Card.Grid>
                 </Card>
-                <Drawer
-                    destroyOnClose
-                    onClose={() => this.setState({ visible: false, recordID: undefined })}
-                    title="Create course breakdown"
-                    width={467}
-                    visible={this.state.visible}>
-                    <AddBreakdownForm
-                        key={this.state.recordID ?? "add"}
-                        breakdownID={"Hi"}
-                        courseID={"Hi"}
-                        onFinish={() => this.setState({ visible: false, recordID: undefined })}
-                        onCancel={() => this.setState({ visible: false, recordID: undefined })} />
-                </Drawer>
             </PageHeader>
         );
     }

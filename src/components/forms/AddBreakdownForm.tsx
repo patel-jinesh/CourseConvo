@@ -32,7 +32,7 @@ const mapState = (state: RootState, props: ComponentProps) => ({
     instances: state.instances,
     breakdowns: state.breakdowns,
     breakdown: props.breakdownID !== undefined ? state.breakdowns[props.breakdownID] : undefined,
-    course: props.breakdownID !== undefined ? state.courses[state.instances[state.breakdowns[props.breakdownID].instanceID].courseID] : undefined,
+    course: props.breakdownID !== undefined ? state.courses[props.courseID] : undefined,
     instance: props.breakdownID !== undefined ? state.instances[state.breakdowns[props.breakdownID].instanceID] : undefined
 });
 
@@ -54,17 +54,6 @@ class AddBreakdownForm extends React.Component<Props, State> {
 
     form: React.RefObject<FormInstance> = React.createRef<FormInstance>();
 
-    getAssessmentInfo(list: any) {
-        var marks: Mark[];
-        marks = [];
-
-        list.map((mark: any) => {
-            marks.push({type: mark.type, weight: mark.weight, count: mark.count})
-        });
-        console.log("Object", marks);
-        return marks;
-    }
-
     onValuesChange = (_: any, values: any) => {
         let course = Object.values(this.props.courses).find(course =>
             course.code === values.code &&
@@ -77,12 +66,12 @@ class AddBreakdownForm extends React.Component<Props, State> {
 
         if (instance !== undefined && values.instructor !== instance.instructor)
             this.form.current?.setFieldsValue({ instructor: instance.instructor });
+        if (instance !== undefined && values.lecture !== instance.lecture)
+            this.form.current?.setFieldsValue({ lecture: instance.lecture });
     }
 
     onFinish = (values: any) => {
-        let instance = Object.values(this.props.instances).find(instance => instance.term === values.term && instance.year === values.year?.year())
-        console.log(values.assessment);
-        console.log('Received values of form:', values);
+        let instance = Object.values(this.props.instances).find(instance => instance.courseID === this.props.courseID && instance.term === values.term && instance.year === values.year?.year())
         let instanceID = instance?.instanceID ?? uuidv4();
 
         if (instance === undefined)
@@ -95,21 +84,23 @@ class AddBreakdownForm extends React.Component<Props, State> {
                 courseID: this.props.courseID
             });
         
-        console.log(values);
-
         if (this.props.breakdownID)
             this.props.editBreakdown({
-                ...this.props.breakdowns[this.props.breakdownID],
+                ...this.props.instance,
+                ...values,
+                year: undefined,
                 breakdownID: this.props.breakdownID,
                 userID: USERID,
-                marks: this.getAssessmentInfo(values.assessments),
+                marks: values.assessments,
                 isAnonymous: false
             });
         else
             this.props.addBreakdown({
+                ...values,
+                year: undefined,
                 instanceID: instanceID,
                 userID: USERID,
-                marks: this.getAssessmentInfo(values.assessments),
+                marks: values.assessments,
                 isAnonymous: false
             });
 
