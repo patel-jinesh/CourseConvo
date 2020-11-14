@@ -1,4 +1,4 @@
-import { Course, Term, Record, Status, User, Breakdown, Review, CourseInstance, ReviewTag } from "../data/types";
+import { Course, Term, Record, Status, User, Breakdown, Review, CourseInstance, ReviewTag, Lecture, Assessments } from "../data/types";
 import { v4 as uuidv4 } from 'uuid'
 import moment from "moment";
 
@@ -108,6 +108,7 @@ export const instances: CourseInstance[] = [
         courseID: courses[0].courseID,
         instructor: "Spencer Smith",
         term: Term.FALL,
+        lecture: Lecture.IN_PERSON,
         year: 2020 - i
     })),
     {
@@ -178,27 +179,27 @@ export const breakdowns: Breakdown[] = [
         datetime: moment().valueOf(),
         marks: [
             {
-                type: "Assignments",
+                type: Assessments.ASSIGNMENTS,
                 weight: 12,
                 count: 3
             },
             {
-                type: "Midterms",
+                type: Assessments.MIDTERMS,
                 weight: 30,
                 count: 1
             },
             {
-                type: "Exams",
+                type: Assessments.EXAMS,
                 weight: 50,
                 count: 1
             },
             {
-                type: "Labs",
+                type: Assessments.LABS,
                 weight: 0,
                 count: 0
             },
             {
-                type: "Quizzes",
+                type: Assessments.QUIZZES,
                 weight: 8,
                 count: 4
             },
@@ -212,22 +213,22 @@ export const breakdowns: Breakdown[] = [
         datetime: moment().valueOf(),
         marks: [
             {
-                type: "Assignments",
+                type: Assessments.ASSIGNMENTS,
                 weight: 10,
                 count: 5
             },
             {
-                type: "Exams",
+                type: Assessments.EXAMS,
                 weight: 50,
                 count: 1
             },
             {
-                type: "Labs",
+                type: Assessments.LABS,
                 weight: 30,
                 count: 5
             },
             {
-                type: "Quizzes",
+                type: Assessments.QUIZZES,
                 weight: 10,
                 count: 4
             },
@@ -241,17 +242,17 @@ export const breakdowns: Breakdown[] = [
         datetime: moment().valueOf(),
         marks: [
             {
-                type: "Midterms",
+                type: Assessments.MIDTERMS,
                 weight: 20,
                 count: 1
             },
             {
-                type: "Exams",
+                type: Assessments.EXAMS,
                 weight: 50,
                 count: 1
             },
             {
-                type: "Projects",
+                type: Assessments.PROJECTS,
                 weight: 30,
                 count: 1
             }

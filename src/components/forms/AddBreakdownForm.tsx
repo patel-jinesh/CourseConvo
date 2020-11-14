@@ -30,7 +30,10 @@ type ComponentState = {}
 const mapState = (state: RootState, props: ComponentProps) => ({
     courses: state.courses,
     instances: state.instances,
-    breakdowns: state.breakdowns
+    breakdowns: state.breakdowns,
+    breakdown: props.breakdownID !== undefined ? state.breakdowns[props.breakdownID] : undefined,
+    course: props.breakdownID !== undefined ? state.courses[state.instances[state.breakdowns[props.breakdownID].instanceID].courseID] : undefined,
+    instance: props.breakdownID !== undefined ? state.instances[state.breakdowns[props.breakdownID].instanceID] : undefined
 });
 
 const mapDispatch = {
@@ -72,6 +75,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
 
         if (instance === undefined)
             this.props.addInstance({
+                lecture: values.lecture,
                 instanceID: instanceID,
                 instructor: values.instructor,
                 term: values.term,
@@ -105,8 +109,16 @@ class AddBreakdownForm extends React.Component<Props, State> {
     }
 
     render() {
+        let initialValues = {
+            ...this.props.course,
+            ...this.props.instance,
+            ...this.props.breakdown,
+            year: this.props.instance?.year === undefined ? undefined : moment(`${this.props.instance?.year}`),
+            assessments: this.props.breakdown?.marks
+        }
+
         return (
-            <Form ref={this.form} name="review" layout="horizontal" labelCol={{ flex: '130px' }} labelAlign={"left"} onFinish={this.onFinish} onValuesChange={this.onValuesChange}>
+            <Form ref={this.form} name="review" initialValues={initialValues} layout="horizontal" labelCol={{ flex: '130px' }} labelAlign={"left"} onFinish={this.onFinish} onValuesChange={this.onValuesChange}>
                 <Form.Item label="Semester" required>
                     <Input.Group compact>
                         {addTermForm("50", "middle")}
@@ -114,7 +126,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
                     </Input.Group>
                 </Form.Item>
                 {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.INSTRUCTOR], this.props.courseID)}
-                {addRadioGroup("lecture", 'Lecture Type', Lecture)}
+                {addRadioGroup("lecture", 'Lecture Type', Lecture, this.props.breakdownID !== undefined)}
                 <Form.List name="assessments">
                     {(fields, { add, remove }) => (
                         <>

@@ -45,14 +45,14 @@ export interface User {
 }
 
 export interface Mark {
-    type: string;
+    type: Assessments;
     weight: number;
     count: number;
 }
 
 export interface Breakdown {
-    datetime: number,
-    breakdownID: string,
+    datetime: number;
+    breakdownID: string;
     instanceID: string;
     userID: string;
     marks: Mark[];
@@ -62,16 +62,17 @@ export interface Breakdown {
 export interface Course {
     courseID: string;
     name: string;
-    code: string,
-    subject: string
+    code: string;
+    subject: string;
 };
 
 export interface CourseInstance {
-    instanceID: string,
-    courseID: string,
-    instructor: string,
-    term: Term,
-    year: number
+    instanceID: string;
+    courseID: string;
+    instructor: string;
+    term: Term;
+    lecture?: Lecture;
+    year: number;
 }
 
 export interface Record {

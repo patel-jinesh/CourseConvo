@@ -117,13 +117,13 @@ function collectButtons(list: any) {
     return buttons
 }
 
-export function addRadioGroup(name:string, label:string, list: any) {
+export function addRadioGroup(name:string, label:string, list: any, disabled?: boolean) {
     return (
         <Form.Item
             name={name}
             label={label}
             rules={[{ required: true, message: "Please select one of the options!" }]}>
-            <Radio.Group>
+            <Radio.Group disabled={disabled}>
                 {collectButtons(list)}
             </Radio.Group>
         </Form.Item>
