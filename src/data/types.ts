@@ -28,13 +28,14 @@ export enum Lecture {
     ONLINE = "Online"
 }
 
-export enum Assessments{
+export enum Assessments {
     ASSIGNMENTS = "Assignments",
     MIDTERMS = "Midterms",
     EXAMS = "Exams",
     QUIZZES = "Quizzes",
     LABS = "Labs",
-    PROJECTS = "Projects"
+    PROJECTS = "Projects",
+    OTHER = "Other"
 }
 
 export interface User {
@@ -50,6 +51,7 @@ export interface Mark {
 }
 
 export interface Breakdown {
+    datetime: number,
     breakdownID: string,
     instanceID: string;
     userID: string;

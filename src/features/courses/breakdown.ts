@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Breakdown } from "../../data/types";
 import { breakdowns } from "../../backend/database";
+import { v4 as uuidv4 } from 'uuid';
+import moment from "moment";
 
 /**
  * Redux Section
@@ -18,11 +20,19 @@ const breakdownsRedux = createSlice({
     name: "BREAKDOWNS",
     initialState,
     reducers: {
-        add(state, action: PayloadAction<Breakdown>) {
-            state[action.payload.breakdownID] = action.payload;
+        add(state, action: PayloadAction<Omit<Breakdown, "datetime" | "breakdownID">>) {
+            let breakdownID = uuidv4();
+            state[breakdownID] = {
+                breakdownID: breakdownID,
+                ...action.payload,
+                datetime: moment().valueOf(),
+            };
         },
-        edit(state, action: PayloadAction<Breakdown>) {
-            state[action.payload.breakdownID] = action.payload;
+        edit(state, action: PayloadAction<Omit<Breakdown, "datetime">>) {
+            state[action.payload.breakdownID] = {
+                ...action.payload,
+                datetime: moment().valueOf()
+            }
         },
         remove(state, action: PayloadAction<string>) {
             delete state[action.payload];

@@ -224,7 +224,7 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
                     destroyOnClose
                     onClose={() => this.setState({ visible: false })}
                     title={this.props.userbreakdown ? "Edit breakdown" : "Write a breakdown"}
-                    width={467}
+                    width={567}
                     visible={this.state.visible}>
                     <AddBreakdownForm
                         courseID={this.props.course.courseID}

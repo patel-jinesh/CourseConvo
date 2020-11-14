@@ -78,6 +78,8 @@ class AddBreakdownForm extends React.Component<Props, State> {
                 year: values.year?.year(),
                 courseID: this.props.courseID
             });
+        
+        console.log(values);
 
         if (this.props.breakdownID)
             this.props.editBreakdown({
@@ -88,7 +90,6 @@ class AddBreakdownForm extends React.Component<Props, State> {
         else
             this.props.addBreakdown({
                 instanceID: instanceID,
-                breakdownID: this.props.breakdownID,
                 userID: USERID,
                 marks: [{
                     type: values.assessment,
@@ -105,7 +106,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
 
     render() {
         return (
-            <Form ref={this.form} name="review" layout="horizontal" labelCol={{ flex: '100px' }} labelAlign={"left"} onFinish={this.onFinish}>
+            <Form ref={this.form} name="review" layout="horizontal" labelCol={{ flex: '130px' }} labelAlign={"left"} onFinish={this.onFinish}>
                 <Form.Item label="Semester" required>
                     <Input.Group compact>
                         {addTermForm("50", "middle")}
@@ -117,21 +118,33 @@ class AddBreakdownForm extends React.Component<Props, State> {
                 <Form.List name="assessments">
                     {(fields, { add, remove }) => (
                         <>
+                            <Form.Item label=" " colon={false}>
                             {fields.map(field => (
                                 <Input.Group compact key={field.key}>
                                     <Form.Item
                                         {...field}
                                         label="Type"
-                                        key="Assessment"
-                                        style={{ width: '50%' }}
-                                        name={[field.name, 'assessment']}
-                                        fieldKey={[field.fieldKey, 'assessment']}
+                                        key="Type"
+                                        style={{ width: '40%' }}
+                                        name={[field.name, 'type']}
+                                        fieldKey={[field.fieldKey, 'type']}
                                         rules={[{ required: true, message: 'Missing assessment' }]}
                                     >
                                         <Select placeholder="Assessment" style={{ width: '100%' }}
-                                            options={Object.keys(Assessments)
+                                            options={Object.values(Assessments)
                                                 .map(assessment => ({ value: assessment }))}>
                                         </Select>
+                                    </Form.Item>
+                                    <Form.Item
+                                        {...field}
+                                        key="Weight"
+                                        label="Weight"
+                                        style={{ width: '30%' }}
+                                        name={[field.name, 'weight']}
+                                        fieldKey={[field.fieldKey, 'weight']}
+                                        tooltip="The total weight for this type of assessment."
+                                        rules={[{ required: true, message: 'Missing weight' }]}>
+                                        <InputNumber style={{ width: '100%' }} />
                                     </Form.Item>
                                     <Form.Item
                                         {...field}
@@ -144,24 +157,14 @@ class AddBreakdownForm extends React.Component<Props, State> {
                                     >
                                         <InputNumber style={{ width: '100%' }} />
                                     </Form.Item>
-                                    <Form.Item
-                                        key="Weight"
-                                        {...field}
-                                        label="Weight"
-                                        style={{ width: '20%' }}
-                                        name={[field.name, 'weight']}
-                                        fieldKey={[field.fieldKey, 'weight']}
-                                        rules={[{ required: true, message: 'Missing weight' }]}
-                                    >
-                                        <InputNumber style={{ width: '100%' }} />
-                                    </Form.Item>
                                     <Form.Item label=" " colon={false} style={{ marginLeft: 15 }}>
                                         <MinusCircleOutlined onClick={() => remove(field.name)} />
                                     </Form.Item>
                                 </Input.Group>
                             ))}
+                            </Form.Item>
 
-                            <Form.Item>
+                            <Form.Item label=" " colon={false}>
                                 <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
                                     Add Assessment
                                 </Button>
@@ -170,17 +173,33 @@ class AddBreakdownForm extends React.Component<Props, State> {
                     )}
                 </Form.List>
                 <Form.Item shouldUpdate={true} label=" " colon={false}>
-                    {({ getFieldsError }) => {
+                    {({ getFieldsError, getFieldValue }) => {
+                        let assessments = getFieldValue('assessments');
+
+                        let sum : number | undefined = 0;
+
+                        if (assessments)
+                            for (let assessment of assessments) {
+                                if (assessment?.weight)
+                                    sum += assessment.weight
+                                else {
+                                    sum = undefined;
+                                    break;
+                                }
+                            }
+                        
+                        let valid = sum === undefined || sum !== 100;
+                        
+                        let button = <Button
+                            type="primary"
+                            htmlType="submit"
+                            disabled={valid || getFieldsError().map(v => v.errors.length !== 0).reduce((r, c) => (r || c), false)}>
+                            Submit
+                        </Button>
+
                         return (
                             <Space>
-                                <Button
-                                    type="primary"
-                                    htmlType="submit"
-                                    disabled={
-                                        getFieldsError().map(v => v.errors.length !== 0).reduce((r, c) => (r || c), false)
-                                    }>
-                                    Submit
-                                </Button>
+                                {valid ? <Tooltip title="Your weight's dont add to 100%">{button}</Tooltip> : button}
                                 <Button
                                     htmlType="button"
                                     onClick={() => {

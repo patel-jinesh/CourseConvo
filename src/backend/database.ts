@@ -175,6 +175,7 @@ export const breakdowns: Breakdown[] = [
         breakdownID: uuidv4(),
         instanceID: instances[0].instanceID,
         userID: users[1].userID,
+        datetime: moment().valueOf(),
         marks: [
             {
                 type: "Assignments",
@@ -207,7 +208,8 @@ export const breakdowns: Breakdown[] = [
     {
         breakdownID: uuidv4(),
         instanceID: instances[1].instanceID,
-        userID: users[0].userID,
+        userID: USERID,
+        datetime: moment().valueOf(),
         marks: [
             {
                 type: "Assignments",
@@ -236,6 +238,7 @@ export const breakdowns: Breakdown[] = [
         breakdownID: uuidv4(),
         instanceID: instances[2].instanceID,
         userID: users[2].userID,
+        datetime: moment().valueOf(),
         marks: [
             {
                 type: "Midterms",
