@@ -7,6 +7,7 @@ import { RootState } from '../../app/store';
 type ComponentProps = {
     onFinish?: () => void,
     onCancel?: () => void,
+    user: string
 }
 
 type ComponentState = {}
@@ -28,6 +29,9 @@ class ReportForm extends React.Component<Props, State> {
     render() {
         return (
             <Form layout="horizontal" labelCol={{ flex: '100px' }} labelAlign={"left"} onFinish={this.props.onFinish}>
+                <Form.Item label="Reporting">
+                    {this.props.user}
+                </Form.Item>
                 <Form.Item rules={[{ required: true, message: "Please specify type" }]} name="type" label="Report Type">
                     <Select mode="tags" options={[{ value: "Bot account" }, { value: "Foul language" }]}></Select>
                 </Form.Item>

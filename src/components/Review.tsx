@@ -207,6 +207,8 @@ class Review extends React.Component<Props, State> {
                     width={467}
                     visible={this.state.reporting}>
                     <ReportForm
+                        key={this.props.user.userID}
+                        user={this.props.user.name}
                         onFinish={() => this.setState({ reporting: false })}
                         onCancel={() => this.setState({ reporting: false })} />
                 </Drawer>
