@@ -84,7 +84,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
             this.props.editBreakdown({
                 ...this.props.instance,
                 ...values,
-                year: undefined,
+                year: values.year?.year(),
                 breakdownID: this.props.breakdownID,
                 userID: USERID,
                 marks: values.assessments,
@@ -93,7 +93,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
         else
             this.props.addBreakdown({
                 ...values,
-                year: undefined,
+                year: values.year?.year(),
                 instanceID: instanceID,
                 userID: USERID,
                 marks: values.assessments,
