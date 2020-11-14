@@ -112,16 +112,16 @@ export function addInstructorForm(instance: any, instances: CourseInstance[]) {
 function collectButtons(list: any) {
     var buttons = []
     for (let item in list) {
-        buttons.push(<Radio.Button value={list[item]}>{list[item]}</Radio.Button>)
+        buttons.push(<Radio.Button key={item} value={list[item]}>{list[item]}</Radio.Button>)
     }
     return buttons
 }
 
-export function addRadioGroup(list: any) {
+export function addRadioGroup(name:string, label:string, list: any) {
     return (
         <Form.Item
-            name='status'
-            label="Status"
+            name={name}
+            label={label}
             rules={[{ required: true, message: "Please select one of the options!" }]}>
             <Radio.Group>
                 {collectButtons(list)}

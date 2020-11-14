@@ -249,7 +249,7 @@ class AcademicRecordForm extends React.Component<Props, State>{
                     }
                 </Form.Item>
                 {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.COURSE, FormType.INSTRUCTOR])}
-                {addRadioGroup(Status)}
+                {addRadioGroup("status", "Status", Status)}
                 <Form.Item
                     noStyle
                     dependencies={['status']}>

@@ -113,7 +113,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
                     </Input.Group>
                 </Form.Item>
                 {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.INSTRUCTOR])}
-                {addRadioGroup(Lecture)}
+                {addRadioGroup("lecture", 'Lecture Type', Lecture)}
                 <Form.List name="assessments">
                     {(fields, { add, remove }) => (
                         <>
@@ -122,42 +122,40 @@ class AddBreakdownForm extends React.Component<Props, State> {
                                     <Form.Item
                                         {...field}
                                         label="Type"
-                                        style={{ width: '50%' }} 
+                                        key="Assessment"
+                                        style={{ width: '50%' }}
                                         name={[field.name, 'assessment']}
                                         fieldKey={[field.fieldKey, 'assessment']}
                                         rules={[{ required: true, message: 'Missing assessment' }]}
                                     >
-                                        <Select placeholder="Assessment" style={{width: '100%'}}>
-                                            {Object.keys(Assessments)
-                                                .map(item => (
-                                                    <Option key={item} value={item}>
-                                                        {/* {Assessments[item]} */}
-                                                        {item}
-                                                    </Option>
-                                                ))}
+                                        <Select placeholder="Assessment" style={{ width: '100%' }}
+                                            options={Object.keys(Assessments)
+                                                .map(assessment => ({ value: assessment }))}>
                                         </Select>
                                     </Form.Item>
                                     <Form.Item
                                         {...field}
+                                        key="Count"
                                         label="Count"
-                                        style={{ width: '20%' }} 
-                                        name="count"
+                                        style={{ width: '20%' }}
+                                        name={[field.name, 'count']}
                                         fieldKey={[field.fieldKey, 'count']}
                                         rules={[{ required: true, message: 'Missing count' }]}
                                     >
-                                        <InputNumber style={{ width: '100%' }}/>
+                                        <InputNumber style={{ width: '100%' }} />
                                     </Form.Item>
                                     <Form.Item
+                                        key="Weight"
                                         {...field}
                                         label="Weight"
-                                        style={{ width: '20%' }} 
+                                        style={{ width: '20%' }}
                                         name={[field.name, 'weight']}
                                         fieldKey={[field.fieldKey, 'weight']}
                                         rules={[{ required: true, message: 'Missing weight' }]}
                                     >
-                                        <InputNumber style={{ width: '100%' }}/>
+                                        <InputNumber style={{ width: '100%' }} />
                                     </Form.Item>
-                                    <Form.Item label=" " colon={false} style={{ marginLeft: 15}}>
+                                    <Form.Item label=" " colon={false} style={{ marginLeft: 15 }}>
                                         <MinusCircleOutlined onClick={() => remove(field.name)} />
                                     </Form.Item>
                                 </Input.Group>
@@ -166,7 +164,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
                             <Form.Item>
                                 <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
                                     Add Assessment
-                        </Button>
+                                </Button>
                             </Form.Item>
                         </>
                     )}
