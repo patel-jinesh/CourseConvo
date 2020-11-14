@@ -18,7 +18,7 @@ type ComponentProps = {
     onCancel?: () => void;
     courseID: string;
     breakdownID?: any;
-    initialValues: any;
+    initialValues?: any;
 }
 
 type ComponentState = {}
