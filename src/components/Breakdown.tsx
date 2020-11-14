@@ -1,10 +1,12 @@
 import { CaretRightOutlined } from '@ant-design/icons';
-import { Collapse, Descriptions } from 'antd';
+import { Collapse, Descriptions, Space, Tooltip } from 'antd';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
 import { Assessments, Mark } from '../data/types';
 import { add } from '../features/courses/course';
+import Avatar from 'antd/lib/avatar/avatar';
+import moment from 'moment';
 
 const { Panel } = Collapse;
 
@@ -70,8 +72,7 @@ class Breakdown extends React.Component<Props> {
         var panels = [];
         var i = 0;
 
-        for (let item in list)
-        {
+        for (let item in list) {
             panels.push(this.addAssessment(list[item]));
         }
 
@@ -80,7 +81,16 @@ class Breakdown extends React.Component<Props> {
 
     render() {
         return (
-            <Descriptions style={{ marginTop: "3%", marginBottom: "2%" }} title="Course Breakdown" bordered column={2}>
+            <Descriptions size='small' style={{ marginTop: "3%", marginBottom: "2%" }} bordered column={2}>
+                <Descriptions.Item label="Poster" span={2}>
+                    <Space direction='horizontal'>
+                        <Avatar src={this.props.user.avatar_url}></Avatar>
+                        <p style={{ margin: 0, paddingLeft: 5 }}>{this.props.user.name}</p>
+                        <Tooltip title={moment(this.props.breakdown.datetime).format('YYYY-MM-DD hh:mm:ss')}>
+                            <p style={{ margin: 0, paddingLeft: 5 }}>{moment(this.props.breakdown.datetime).fromNow()}</p>
+                        </Tooltip>
+                    </Space>
+                </Descriptions.Item>
                 <Descriptions.Item label="Semester">{`${this.props.instance.term} ${this.props.instance.year}`}</Descriptions.Item>
                 <Descriptions.Item label="Instructor">{this.props.instance.instructor}</Descriptions.Item>
                 <Descriptions.Item label="Assessments" span={2}>
