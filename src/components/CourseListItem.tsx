@@ -30,8 +30,8 @@ const mapState = (state: RootState, props: ComponentProps) => {
 
     let reviews = Object.values(state.reviews).filter(review => state.instances[review.instanceID].courseID === props.course.courseID);
 
-    let rating = reviews
-        ? reviews.reduce<number>((res, review) => res + (review.difficulty + review.workload + review.enjoyability) / 3 / reviews.length, 0)
+    let rating = reviews.length > 0
+        ? reviews.reduce((res, review) => res + (review.difficulty + review.workload + review.enjoyability) / 3 / reviews.length, 0)
         : undefined;
 
     return {
