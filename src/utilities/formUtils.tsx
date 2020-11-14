@@ -32,8 +32,7 @@ export function addDateForm(width: any, s: SizeType) {
     );
 }
 
-export function mapForm(courses: Course[], name: string, getFieldValue: any)
-{
+export function mapForm(courses: Course[], name: string, getFieldValue: any) {
     if (name === "subject") {
         return (
             courses
@@ -117,25 +116,45 @@ function collectButtons(list: any) {
     return buttons
 }
 
-export function addRadioGroup(name:string, label:string, list: any, disabled?: boolean) {
+export function addRadioGroup(name: string, label: string, list: any, dependencies?: string[], courses?: Course[], instances?: CourseInstance[], courseID?: string) {
     return (
         <Form.Item
-            name={name}
-            label={label}
+            noStyle
+            dependencies={dependencies}
             rules={[{ required: true, message: "Please select one of the options!" }]}>
-            <Radio.Group disabled={disabled}>
-                {collectButtons(list)}
-            </Radio.Group>
+            {({ getFieldValue }) => {
+                let subject = getFieldValue('subject');
+                let code = getFieldValue('code');
+                let term = getFieldValue('term');
+                let year = getFieldValue('year')?.year();
+
+                let course = courses?.find(course =>
+                    course.code === code &&
+                    course.subject === subject);
+
+                let instance = instances?.find(instance =>
+                    instance.courseID === (courseID ?? course?.courseID) &&
+                    instance.term === term &&
+                    instance.year === year);
+
+                return (
+                    <Form.Item name={name} label={label}>
+                        <Radio.Group disabled={dependencies !== undefined && instance !== undefined}>
+                            {collectButtons(list)}
+                        </Radio.Group>
+                    </Form.Item>
+                )
+            }}
+
         </Form.Item>
     );
 }
 
 function collectForms(course: any, instance: any, instances: CourseInstance[], forms: FormType[]) {
-    var formList = [];  
+    var formList = [];
     var i = 0;
 
-    for (i = 0; i < forms.length; i++)
-    {
+    for (i = 0; i < forms.length; i++) {
         if (forms[i] === "Course")
             formList.push(addCourseForm(course))
         else if (forms[i] === "Instructor")
@@ -160,7 +179,7 @@ export function addForms(courses: Course[], instances: CourseInstance[], forms: 
                     let course = courses.find(course =>
                         course.code === code &&
                         course.subject === subject);
-                    
+
                     let instance = instances.find(instance =>
                         instance.courseID === (courseID ?? course?.courseID) &&
                         instance.term === term &&
