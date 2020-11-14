@@ -1,5 +1,5 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { Layout, PageHeader, Select, Tabs, Statistic, Descriptions, Badge, Button, Drawer, Card } from "antd";
+import { PlusOutlined, FrownOutlined } from '@ant-design/icons';
+import { Layout, PageHeader, Select, Tabs, Statistic, Descriptions, Badge, Button, Drawer, Card, Result } from "antd";
 import { History, Location } from "history";
 import React from "react";
 import { connect, ConnectedProps } from "react-redux";
@@ -88,14 +88,14 @@ class CourseInformationPage extends React.Component<Props, State> {
 
         for (let [instructor, { total, count }] of Object.entries(instructorbucket))
             instructorratings.push({ instructor: instructor, rating: total / count });
-        
+
         let termmap = {
             [Term.WINTER]: 0,
             [Term.SPRING]: 1,
             [Term.SUMMER]: 2,
             [Term.FALL]: 3,
         }
-        
+
         let instancessorted = Object.values(this.props.instances).sort((a, b) => {
             if (a.year === b.year)
                 return termmap[a.term] - termmap[b.term]
@@ -106,9 +106,11 @@ class CourseInformationPage extends React.Component<Props, State> {
         let mostrecentinstructor = mostrecentinstance.instructor;
         let mostrecentsemester = `${mostrecentinstance.term} ${mostrecentinstance.year}`;
 
-        let bestratedinstructor : string | undefined = instructorratings.sort((a, b) => a.rating - b.rating)[0]?.instructor;
+        let bestratedinstructor: string | undefined = instructorratings.sort((a, b) => a.rating - b.rating)[0]?.instructor;
         let lastbestinstance = instancessorted.find(instance => instance.instructor === bestratedinstructor);
-        
+
+        let semestercount = this.props.records?.map(record => `${this.props.instances[record.instanceID].term} ${this.props.instances[record.instanceID].year}`).unique().length ?? 0;
+
         return (
             <PageHeader
                 style={{ width: "100%" }}
@@ -121,11 +123,15 @@ class CourseInformationPage extends React.Component<Props, State> {
                     }}>
                         <TabPane tab="Statistics" key="0">
                             <Content style={{ paddingTop: 20 }}>
-                                <Statistic className="noselect" title="Course Stats by Semester" valueRender={() => <GPAGraph records={this.props.records} />}></Statistic>
-                                <Statistic className="noselect" title="Course Stats by Instructor" valueRender={() =>
-                                    <InstructorGraph records={this.props.records} />
-                                }>
-                                </Statistic>
+                                {semestercount > 1 ? <>
+                                    <Statistic className="noselect" title="Course Stats by Semester" valueRender={() => <GPAGraph records={this.props.records} />}></Statistic>
+                                    <Statistic className="noselect" title="Course Stats by Instructor" valueRender={() => <InstructorGraph records={this.props.records} />}></Statistic>
+                                </> : <Result
+                                        status='warning'
+                                        icon={< FrownOutlined />}
+                                        title="Sorry, we don't have enough data yet to show statistics!"
+                                        subTitle="You can enter your academic records and tell your friends as well to help use out!"
+                                    />}
                             </Content>
                         </TabPane>
                         <TabPane tab="Top Breakdowns" key="1">
@@ -145,7 +151,7 @@ class CourseInformationPage extends React.Component<Props, State> {
                 <Card title={"Quick Overview"}>
                     <Card.Grid hoverable={false} style={{ display: 'flex' }}>
                         <Statistic
-                            style={{width: '50%'}}
+                            style={{ width: '50%' }}
                             title="Highest ever grade"
                             value={Math.max(...Object.values(this.props.records).filter(record => record.status === Status.TAKEN).map(record => record.grade!))}
                             precision={2}
