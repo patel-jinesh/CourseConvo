@@ -208,6 +208,40 @@ export const breakdowns: Breakdown[] = [
     },
     {
         breakdownID: uuidv4(),
+        instanceID: instances[0].instanceID,
+        userID: users[2].userID,
+        datetime: moment().valueOf(),
+        marks: [
+            {
+                type: Assessments.ASSIGNMENTS,
+                weight: 12,
+                count: 3
+            },
+            {
+                type: Assessments.MIDTERMS,
+                weight: 30,
+                count: 1
+            },
+            {
+                type: Assessments.EXAMS,
+                weight: 50,
+                count: 1
+            },
+            {
+                type: Assessments.LABS,
+                weight: 0,
+                count: 0
+            },
+            {
+                type: Assessments.QUIZZES,
+                weight: 8,
+                count: 4
+            },
+        ],
+        isAnonymous: false
+    },
+    {
+        breakdownID: uuidv4(),
         instanceID: instances[1].instanceID,
         userID: USERID,
         datetime: moment().valueOf(),

@@ -1,11 +1,10 @@
-import { CaretRightOutlined } from '@ant-design/icons';
-import { Collapse, Descriptions, Space, Tooltip } from 'antd';
+import { CaretRightOutlined, AntDesignOutlined } from '@ant-design/icons';
+import { Collapse, Descriptions, Space, Tooltip, Avatar } from 'antd';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
 import { Assessments, Mark } from '../data/types';
 import { add } from '../features/courses/course';
-import Avatar from 'antd/lib/avatar/avatar';
 import moment from 'moment';
 
 const { Panel } = Collapse;
@@ -13,13 +12,13 @@ const { Panel } = Collapse;
 type ComponentProps = {
     breakdownID: string
     instanceID: string
+    extra?: number
 }
 
 const mapState = (state: RootState, props: ComponentProps) => ({
     breakdown: state.breakdowns[props.breakdownID],
     instance: state.instances[state.breakdowns[props.breakdownID].instanceID],
     user: state.users[state.breakdowns[props.breakdownID].userID],
-    users: state.users,
 });
 
 const mapDispatch = {
@@ -82,9 +81,16 @@ class Breakdown extends React.Component<Props> {
     render() {
         return (
             <Descriptions size='small' style={{ marginTop: "3%", marginBottom: "2%" }} bordered column={2}>
-                <Descriptions.Item label="Poster" span={2}>
+                <Descriptions.Item label="Posters" span={2}>
                     <Space direction='horizontal'>
-                        <Avatar src={this.props.user.avatar_url}></Avatar>
+                        <Avatar.Group
+                            maxCount={1}
+                            size="large"
+                            maxStyle={{ pointerEvents: 'none', color: '#f56a00', backgroundColor: '#fde3cf' }}
+                        >
+                            <Avatar src={this.props.user.avatar_url}></Avatar>
+                            {Array(this.props.extra ?? 0)?.map(_ => <Avatar/>)}
+                        </Avatar.Group>
                         <p style={{ margin: 0, paddingLeft: 5 }}>{this.props.user.name}</p>
                         <Tooltip title={moment(this.props.breakdown.datetime).format('YYYY-MM-DD hh:mm:ss')}>
                             <p style={{ margin: 0, paddingLeft: 5 }}>{moment(this.props.breakdown.datetime).fromNow()}</p>
