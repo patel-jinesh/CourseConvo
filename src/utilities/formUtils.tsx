@@ -139,7 +139,7 @@ export function addRadioGroup(name: string, label: string, list: any, dependenci
 
                 return (
                     <Form.Item name={name} label={label}>
-                        <Radio.Group disabled={dependencies !== undefined && instance !== undefined}>
+                        <Radio.Group disabled={dependencies !== undefined && instance !== undefined && instance.lecture !== undefined}>
                             {collectButtons(list)}
                         </Radio.Group>
                     </Form.Item>
