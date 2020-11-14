@@ -222,6 +222,13 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
                     width={567}
                     visible={this.state.visible}>
                     <AddBreakdownForm
+                        initialValues={this.props.userbreakdown ? {
+                            assessments: this.props.userbreakdown.marks,
+                            lecture: this.props.instances[this.props.userbreakdown.instanceID].lecture,
+                            term: this.props.instances[this.props.userbreakdown.instanceID]?.term,
+                            year: moment(`${this.props.instances[this.props.userbreakdown.instanceID]?.year}`),
+                            instructor: this.props.instances[this.props.userbreakdown.instanceID]?.instructor,
+                        } : undefined}
                         key={this.props.userbreakdown?.breakdownID}
                         courseID={this.props.course.courseID}
                         breakdownID={this.props.userbreakdown?.breakdownID}

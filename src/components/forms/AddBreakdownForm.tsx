@@ -22,6 +22,7 @@ type ComponentProps = {
     onCancel?: () => void;
     courseID: string;
     breakdownID?: any;
+    initialValues: any;
 }
 
 type ComponentState = {}
@@ -148,7 +149,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
         }
 
         return (
-            <Form ref={this.form} name="review" initialValues={initialValues} layout="horizontal" labelCol={{ flex: '130px' }} labelAlign={"left"} onFinish={this.onFinish} onValuesChange={this.onValuesChange}>
+            <Form ref={this.form} name="review" initialValues={this.props.initialValues} layout="horizontal" labelCol={{ flex: '130px' }} labelAlign={"left"} onFinish={this.onFinish} onValuesChange={this.onValuesChange}>
                 <Form.Item label="Semester" required>
                     <Input.Group compact>
                         {addTermForm("50", "middle")}
