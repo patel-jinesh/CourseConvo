@@ -269,13 +269,13 @@ class AddBreakdownForm extends React.Component<Props, State> {
                         let button = <Button
                             type="primary"
                             htmlType="submit"
-                            disabled={getFieldsError().map(v => v.errors.length !== 0).reduce((r, c) => (r || c), false)}>
+                            disabled={invalid || getFieldsError().map(v => v.errors.length !== 0).reduce((r, c) => (r || c), false)}>
                             Submit
                         </Button>
 
                         return (
                             <Space>
-                                {button}
+                                {invalid ? <Tooltip title="You assessments don't add to 100%">{button}</Tooltip> : button}
                                 <Button
                                     htmlType="button"
                                     onClick={() => {

@@ -229,7 +229,7 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
                             term: this.props.instances[this.props.userbreakdown.instanceID]?.term,
                             year: moment(`${this.props.instances[this.props.userbreakdown.instanceID]?.year}`),
                             instructor: this.props.instances[this.props.userbreakdown.instanceID]?.instructor,
-                        } : undefined}
+                        } : {assessments: [undefined]}}
                         key={this.props.userbreakdown?.breakdownID}
                         courseID={this.props.course.courseID}
                         breakdownID={this.props.userbreakdown?.breakdownID}
