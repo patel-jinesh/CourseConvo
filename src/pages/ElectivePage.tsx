@@ -1,5 +1,4 @@
-import { AutoComplete, Affix, Button, Card, Col, List, Form, PageHeader, Row, Space, Statistic, Tooltip, Typography } from 'antd';
-import { Input, Select, InputNumber, Layout } from 'antd';
+import { AutoComplete, Affix, Button, Card, Col, List, Form, PageHeader, Row, Result, Space, Statistic, Tooltip, Typography } from 'antd';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RootState } from '../app/store';
@@ -7,9 +6,10 @@ import { match, withRouter } from 'react-router-dom';
 import { History, Location } from "history";
 import SearchCourseForm from '../components/forms/SearchCourseForm';
 import { FormInstance } from 'antd/lib/form';
-import NumericRate from '../components/NumericRate';
-import { mapForm } from '../utilities/formUtils'
+import { FrownOutlined } from '@ant-design/icons';
 import SmileRate from '../components/SmileRate';
+import CourseList from '../components/CourseList';
+import { Course } from '../data/types';
 
 const { Option } = AutoComplete;
 
@@ -23,14 +23,16 @@ type ComponentState = {
     enjoyability?: number,
     difficulty?: number,
     workload?: number,
-    overallRating?: number
+    overallRating?: number,
+    content?: JSX.Element
 }
 
 
 
 const mapState = (state: RootState) => ({
     instances: state.instances,
-    courses: state.courses
+    courses: state.courses,
+    reviews: Object.values(state.reviews),
 });
 
 const mapDispatch = {}
@@ -44,13 +46,17 @@ type State = ComponentState
 
 class ElectivePage extends React.Component<Props, State> {
     formSearchCourse = React.createRef<FormInstance>();
-    state: State = {};
-    content = {};
-    onSearch = (values: any) => {
-        this.setState({ ...values });
-    }
+    content: JSX.Element = <Result
+        status='warning'
+        icon={< FrownOutlined />}
+        title="No Course Suggestions"
+        subTitle="Please enter course suggestion parameters"
+    />;
+    state: State = { content: this.content };
+
 
     autocomplete = (subject: any) => {
+
         return Object.values(this.props.courses).map((course) => {
             return course.subject
         }).unique().map((subject) => {
@@ -58,50 +64,148 @@ class ElectivePage extends React.Component<Props, State> {
         })
     }
 
-    filterElectives = () => {
+    getDifficulty = () => {
 
 
 
     }
 
+    // TODO: Can optimize and reuse code from homepage to get course ratings, can create a general class
+    getCourseRatings = () => {
+        let courseAttrRatings: {
+            [courseID: string]:
+            { overallRating: number, count: number, difficulty: number, workload: number, enjoyability: number }
+        } = {};
+
+        for (let i = 0; i < this.props.reviews.length; i++) {
+            let review = this.props.reviews[i];
+            let currRating = ((review.difficulty + review.enjoyability + review.workload) / 3);
+            let courseID = this.props.instances[review.instanceID].courseID;
+            courseAttrRatings[courseID] = {
+                overallRating: (courseAttrRatings[courseID]?.overallRating ?? 0) + currRating,
+                count: (courseAttrRatings[courseID]?.count ?? 0) + 1,
+                difficulty: (courseAttrRatings[courseID]?.difficulty ?? 0) + review.difficulty,
+                enjoyability: (courseAttrRatings[courseID]?.enjoyability ?? 0) + review.enjoyability,
+                workload: (courseAttrRatings[courseID]?.workload ?? 0) + review.workload,
+            }
+        }
+
+        Object.keys(courseAttrRatings).forEach(key => {
+            let count = courseAttrRatings[key].count;
+            courseAttrRatings[key].difficulty = courseAttrRatings[key].difficulty / count;
+            courseAttrRatings[key].enjoyability = courseAttrRatings[key].enjoyability / count;
+            courseAttrRatings[key].workload = courseAttrRatings[key].workload / count;
+            courseAttrRatings[key].overallRating = courseAttrRatings[key].overallRating / count;
+        })
+
+        return courseAttrRatings
+    }
+
+    getCourseSuggestions = (numCourse: number) => {
+        let noneDefined = this.state.subject === undefined;
+        let courseRatings = this.getCourseRatings();
+        console.log(courseRatings);
+
+        //filtering results to match filter options
+        let results = Object.values(this.props.courses)
+            .filter(course => {
+                let matchSubject = this.state.subject === undefined || course.subject.indexOf(this.state.subject) === 0;
+                let hasInstance = Object.values(this.props.instances).some(instance => instance.courseID === course.courseID);
+                // let overallRatingMatch = courseRatings[course.courseID]?.totalRating >= (this?.state?.overallRating ?? 0);
+                let difficultyMatch = courseRatings[course.courseID]?.difficulty >= (this?.state?.difficulty ?? 0);
+                let enjoyabilityMatch = courseRatings[course.courseID]?.enjoyability >= (this?.state?.enjoyability ?? 0);
+                let workloadMatch = courseRatings[course.courseID]?.workload >= (this?.state?.workload ?? 0);
+                // return matchSubject && hasInstance && difficultyMatch && enjoyabilityMatch && workloadMatch && overallRatingMatch;
+                return matchSubject && hasInstance && difficultyMatch && enjoyabilityMatch && workloadMatch;
+            });
+
+        //Getting top numCourse results of the filter
+        results.sort((a, b) => { return courseRatings[b.courseID].overallRating - courseRatings[a.courseID].overallRating });
+        if (results.length > numCourse) {
+            results.slice(0, numCourse);
+        }
+
+        if (!noneDefined && results.length === 0) {
+            this.content = <>
+                <Result
+                    status='warning'
+                    icon={< FrownOutlined />}
+                    title="No Course Suggestions"
+                    subTitle="Try other  course suggestion parameters!" />
+            </>
+        } else if (noneDefined) {
+            this.content = <Result
+                status='warning'
+                icon={< FrownOutlined />}
+                title="No Course Suggestions"
+                subTitle="Please enter course suggestion parameters"
+            />
+        } else {
+            this.content = <CourseList courses={results} />
+        }
+
+        this.setState({ content: this.content });
+
+    }
+
 
     render() {
+
+
         return (
             //Page header
             <PageHeader
-                title="Elective Suggestions Page" style={{ width: "100%" }}>
+                title="Elective Suggestions" style={{ width: "100%" }}>
 
-                <Row style={{ height: "100%" }}>
-                    <Col style={{ width: "275px" }}>
+                <Row style={{ width: "100%" }}>
+                    <Col span={5}>
                         <Affix offsetTop={50}>
                             <Card bordered={false} title="Elective Filter Options">
                                 <Space direction='vertical'>
-                                    <span> Course:</span>
+                                    <span> Course: (required)</span>
                                     <AutoComplete placeholder="Course" style={{ width: "200px" }}
-                                        onChange={this.onSearch}
+                                        value={this.state.subject}
+                                        onChange={(value) => { this.setState({ subject: value }) }}
                                         filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
                                         options={this.autocomplete(this.state.subject)}
                                     > </AutoComplete>
 
-                                    <span> Overall Rating</span>
+                                    {/* <span> Overall Rating</span>
                                     <SmileRate className="overallRating" value={this.state.overallRating ?? 0}
-                                        onChange={(value) => this.setState({ overallRating: value })}></SmileRate>
+                                        onChange={(value) => this.setState({ overallRating: value })}></SmileRate> */}
 
-                                    <span> Enjoyability</span>
+                                    <span> Enjoyability (optional)</span>
                                     <SmileRate className="enjoyability" value={this.state.enjoyability ?? 0}
-                                        onChange={(value) => this.setState({ enjoyability: value })}></SmileRate>
+                                        onChange={(value) =>
+                                            this.setState({
+                                                enjoyability: value,
+                                                overallRating:
+                                                    ((this.state.enjoyability ?? 0) + (this.state.difficulty ?? 0) + (this.state.workload ?? 0)) / 3
+                                            })}></SmileRate>
 
-                                    <span> Workload </span>
+                                    <span> Workload (optional)</span>
                                     <SmileRate className="workload" value={this.state.workload ?? 0}
-                                        onChange={(value) => this.setState({ workload: value })}></SmileRate>
+                                        onChange={(value) => this.setState({
+                                            workload: value,
+                                            overallRating:
+                                                ((this.state.enjoyability ?? 0) + (this.state.difficulty ?? 0) + (this.state.workload ?? 0)) / 3
+                                        })}></SmileRate>
 
-                                    <span> Difficulty</span>
+                                    <span> Difficulty (optional)</span>
                                     <SmileRate className="difficulty" value={this.state.difficulty ?? 0}
-                                        onChange={(value) => this.setState({ difficulty: value })}></SmileRate>
+                                        onChange={(value) => this.setState({
+                                            difficulty: value,
+                                            overallRating:
+                                                ((this.state.enjoyability ?? 0) + (this.state.difficulty ?? 0) + (this.state.workload ?? 0)) / 3
+                                        })}></SmileRate>
 
+                                    <Button type="primary" style={{ width: "100%" }} onClick={() => { this.getCourseSuggestions(3) }}> Get Suggestions</Button>
                                 </Space>
                             </Card>
                         </Affix>
+                    </Col>
+                    <Col flex={1} style={{ padding: "20px" }}>
+                        {this.state.content}
                     </Col>
                 </Row>
             </PageHeader >
