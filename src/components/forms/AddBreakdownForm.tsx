@@ -106,14 +106,14 @@ class AddBreakdownForm extends React.Component<Props, State> {
 
     render() {
         return (
-            <Form ref={this.form} name="review" layout="horizontal" labelCol={{ flex: '130px' }} labelAlign={"left"} onFinish={this.onFinish}>
+            <Form ref={this.form} name="review" layout="horizontal" labelCol={{ flex: '130px' }} labelAlign={"left"} onFinish={this.onFinish} onValuesChange={this.onValuesChange}>
                 <Form.Item label="Semester" required>
                     <Input.Group compact>
                         {addTermForm("50", "middle")}
                         {addDateForm("50", "middle")}
                     </Input.Group>
                 </Form.Item>
-                {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.INSTRUCTOR])}
+                {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.INSTRUCTOR], this.props.courseID)}
                 {addRadioGroup("lecture", 'Lecture Type', Lecture)}
                 <Form.List name="assessments">
                     {(fields, { add, remove }) => (
