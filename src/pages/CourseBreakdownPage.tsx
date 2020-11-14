@@ -10,6 +10,7 @@ import { remove } from '../features/courses/breakdown';
 import Breakdown from '../components/Breakdown';
 import AddBreakdownForm from '../components/forms/AddBreakdownForm';
 import moment from 'moment';
+import { Assessments } from '../data/types';
 
 type ComponentProps = {
     match: match,
@@ -102,12 +103,45 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
                 breakdownID: breakdown.breakdownID,
                 instanceID: breakdown.instanceID
             }))
-        
+
         if (this.state.sortorder === "Ascending")
             datasource = datasource.reverse();
+        
+        let data: {
+            [instanceID: string]: {
+                [assessmentID: string]: string[]
+            }
+        } = {};
+
+        for (let { breakdownID, instanceID } of datasource) {
+            let marks = [...this.props.breakdowns.find(breakdown => breakdown.breakdownID === breakdownID)!.marks].sort((a, b) => a.type.localeCompare(b.type));
+            let assessmentID = marks.reduce((res, mark) => `${res} ${mark.type}@${mark.count}@${mark.weight}`, "");
+
+            if (data[instanceID]) {
+                if (data[instanceID][assessmentID]) {
+                    data[instanceID][assessmentID].push(breakdownID);
+                } else {
+                    data[instanceID][assessmentID] = [breakdownID]
+                }
+            } else {
+                data[instanceID] = {
+                    [assessmentID]: [breakdownID]
+                }
+            }
+        }
+
+        let dsource = Object.entries(data).map(([instanceID, bucket]) => {
+            return Object.values(bucket).map((breakdownIDs) => ({
+                breakdownID: breakdownIDs[0],
+                instanceID: instanceID,
+                extra: breakdownIDs.length - 1
+            })).flat()
+        }).flat();
+
+        console.log(dsource)
 
         let header = <>
-            <span>{`Search results - ${datasource.length} ${datasource.length !== 1 ? 'breakdowns' : 'breakdown'}`}</span>
+            <span>{`Search results - ${dsource.length} ${dsource.length !== 1 ? 'unique breakdowns' : 'unique breakdown'}`}</span>
         </>
 
         return (
@@ -210,7 +244,7 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
                         </List>}
                         <List
                             rowKey={breakdown => breakdown.breakdownID}
-                    dataSource={datasource}
+                    dataSource={dsource}
                     header={header}
                     itemLayout="vertical"
                     renderItem={props => <Breakdown {...props} />}/>

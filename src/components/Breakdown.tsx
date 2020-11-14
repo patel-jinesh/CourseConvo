@@ -81,9 +81,16 @@ class Breakdown extends React.Component<Props> {
     render() {
         return (
             <Descriptions size='small' style={{ marginTop: "3%", marginBottom: "2%" }} bordered column={2}>
-                <Descriptions.Item label="Poster" span={2}>
+                <Descriptions.Item label="Posters" span={2}>
                     <Space direction='horizontal'>
-                        <Avatar src={this.props.user.avatar_url}></Avatar>
+                        <Avatar.Group
+                            maxCount={1}
+                            size="large"
+                            maxStyle={{ pointerEvents: 'none', color: '#f56a00', backgroundColor: '#fde3cf' }}
+                        >
+                            <Avatar src={this.props.user.avatar_url}></Avatar>
+                            {Array(this.props.extra ?? 0).fill(undefined).map((_, index) => <Avatar key={index}/>)}
+                        </Avatar.Group>
                         <p style={{ margin: 0, paddingLeft: 5 }}>{this.props.user.name}</p>
                         <Tooltip title={moment(this.props.breakdown.datetime).format('YYYY-MM-DD hh:mm:ss')}>
                             <p style={{ margin: 0, paddingLeft: 5 }}>{moment(this.props.breakdown.datetime).fromNow()}</p>
