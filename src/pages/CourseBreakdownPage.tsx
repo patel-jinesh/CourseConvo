@@ -24,7 +24,7 @@ type ComponentState = {
         semesters: string[]
     },
     sortorder: "Ascending" | "Descending",
-    sortprop: "Date" | "Semester"
+    sortprop: "Assessments" | "Semester"
 }
 
 const mapState = (state: RootState, props: ComponentProps) => {
@@ -58,7 +58,7 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
             semesters: ["All"]
         },
         sortorder: "Descending",
-        sortprop: "Date"
+        sortprop: "Semester"
     }
 
     render() {
@@ -86,19 +86,13 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
 
         let datasource = this.props.breakdowns.reverse()
             .filter(breakdown => breakdown.userID !== USERID)
-            .filter(breakdown => {
-                if (this.state.filters.semesters.length === 1 && this.state.filters.semesters[0] === "All")
-                    return true;
-                
-                if (this.state.filters.semesters.includes(`${this.props.instances[breakdown.instanceID].term} ${this.props.instances[breakdown.instanceID].year}`))
-                    return true;
-
-                return false;
-            })
             .sort((a, b) => {
                 return b.breakdownID.localeCompare(a.breakdownID);
             })
             .sort((a, b) => {
+                if (this.state.sortprop === "Assessments")
+                    return b.marks.length - a.marks.length;
+
                 let asem = `${this.props.instances[a.instanceID].term} ${this.props.instances[a.instanceID].year}`;
                 let bsem = `${this.props.instances[b.instanceID].term} ${this.props.instances[b.instanceID].year}`;
 
@@ -188,9 +182,9 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
                                             <Radio style={{ display: 'block' }} value={"Descending"}>Descending</Radio>
                                         </Radio.Group>
                                         <Divider style={{margin: '10px 0'}}></Divider>
-                                        <Radio.Group onChange={e => this.setState({ sortprop: e.target.value })} defaultValue="Date">
+                                        <Radio.Group onChange={e => this.setState({ sortprop: e.target.value })} defaultValue="Semester">
                                             <Radio style={{ display: 'block' }} value={"Semester"}>Semester</Radio>
-                                            <Radio style={{ display: 'block' }} value={"Date"}>Date</Radio>
+                                            <Radio style={{ display: 'block' }} value={"Assessments"}>Number of Assessments</Radio>
                                         </Radio.Group>
                                     </List>
                                     </Card>
@@ -235,6 +229,7 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
                             term: this.props.instances[this.props.userbreakdown.instanceID]?.term,
                             year: moment(`${this.props.instances[this.props.userbreakdown.instanceID]?.year}`),
                             instructor: this.props.instances[this.props.userbreakdown.instanceID]?.instructor,
+                            assessments: this.props.userbreakdown?.marks
                         } : undefined}
                         onFinish={() => this.setState({ visible: false })}
                         onCancel={() => this.setState({ visible: false })} />
