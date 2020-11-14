@@ -113,7 +113,7 @@ class CourseInformationPage extends React.Component<Props, State> {
 
         return (
             <PageHeader
-                style={{ width: "100%" }}
+                style={{ width: "100%", minWidth: 900 }}
                 backIcon={false}
                 title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}
                 footer={
@@ -149,42 +149,41 @@ class CourseInformationPage extends React.Component<Props, State> {
                     </Tabs>
                 }>
                 <Card title={"Quick Overview"}>
-                    <Card.Grid hoverable={false} style={{ display: 'flex' }}>
+                    <Card.Grid hoverable={false}>
                         <Statistic
-                            style={{ width: '50%' }}
                             title="Highest ever grade"
                             value={Math.max(...Object.values(this.props.records).filter(record => record.status === Status.TAKEN).map(record => record.grade!))}
                             precision={2}
                             suffix="/ 12"
                         />
+                    </Card.Grid>
+                    <Card.Grid hoverable={false}>
                         <Statistic
-                            style={{ width: '50%' }}
+                            title="Best instructor"
+                            value={bestratedinstructor ?? "N/A"}
+                        />
+                    </Card.Grid>
+                    <Card.Grid hoverable={false}>
+                        <Statistic
+                            title="Most recent instructor"
+                            value={mostrecentinstructor}
+                        />
+                    </Card.Grid><Card.Grid hoverable={false}>
+                        <Statistic
                             title="Lowest ever grade"
                             value={Math.min(...Object.values(this.props.records).filter(record => record.status === Status.TAKEN).map(record => record.grade!))}
                             precision={2}
                             suffix="/ 12"
                         />
                     </Card.Grid>
-                    <Card.Grid hoverable={false} style={{ display: 'flex' }}>
+                    <Card.Grid hoverable={false}>
                         <Statistic
-                            style={{ width: '50%' }}
-                            title="Best instructor"
-                            value={bestratedinstructor ?? "N/A"}
-                        />
-                        <Statistic
-                            style={{ width: '50%' }}
                             title="Last taught in"
                             value={lastbestinstance === undefined ? "N/A" : `${lastbestinstance.term} ${lastbestinstance.year}`}
                         />
                     </Card.Grid>
-                    <Card.Grid hoverable={false} style={{ display: 'flex' }}>
+                    <Card.Grid hoverable={false}>
                         <Statistic
-                            style={{ width: '50%' }}
-                            title="Most recent instructor"
-                            value={mostrecentinstructor}
-                        />
-                        <Statistic
-                            style={{ width: '50%' }}
                             title="Last taught in"
                             value={mostrecentsemester}
                         />

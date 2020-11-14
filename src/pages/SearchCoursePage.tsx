@@ -100,7 +100,7 @@ class SearchCoursePage extends React.Component<Props, State> {
 
         return (
             <PageHeader
-                style={{ width: "100%" }}
+                style={{ width: "100%", minWidth: 1100 }}
                 backIcon={false}
                 title="Search for a course">
                 <SearchCourseForm form={this.formSearchCourse} onSearch={this.onSearch} />
