@@ -18,7 +18,6 @@ import { FormInstance } from 'antd/lib/form';
 const { Option } = Select;
 
 type ComponentProps = {
-    initialValues?: any
     onFinish?: () => void;
     onCancel?: () => void;
     courseID: string;
@@ -145,7 +144,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
             ...this.props.instance,
             ...this.props.breakdown,
             year: this.props.instance?.year === undefined ? undefined : moment(`${this.props.instance?.year}`),
-            assessments: this.props.breakdown?.marks
+            assessments: this.props.breakdown?.marks ?? [[undefined, undefined, undefined]]
         }
 
         return (
@@ -207,9 +206,12 @@ class AddBreakdownForm extends React.Component<Props, State> {
                                             >
                                                 <InputNumber style={{ width: '100%' }} />
                                             </Form.Item>
-                                            <Form.Item label=" " colon={false} style={{ marginLeft: 15 }}>
-                                                <MinusCircleOutlined onClick={() => remove(field.name)} />
-                                            </Form.Item>
+                                            {
+                                                fields.length !== 1 &&
+                                                <Form.Item label=" " colon={false} style={{ marginLeft: 15 }}>
+                                                    <MinusCircleOutlined onClick={() => remove(field.name)} />
+                                                </Form.Item>
+                                            }
                                         </Input.Group>
                                     )
                                 })}

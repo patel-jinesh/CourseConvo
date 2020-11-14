@@ -225,12 +225,6 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
                         key={this.props.userbreakdown?.breakdownID}
                         courseID={this.props.course.courseID}
                         breakdownID={this.props.userbreakdown?.breakdownID}
-                        initialValues={this.props.userbreakdown ? {
-                            term: this.props.instances[this.props.userbreakdown.instanceID]?.term,
-                            year: moment(`${this.props.instances[this.props.userbreakdown.instanceID]?.year}`),
-                            instructor: this.props.instances[this.props.userbreakdown.instanceID]?.instructor,
-                            assessments: this.props.userbreakdown?.marks
-                        } : undefined}
                         onFinish={() => this.setState({ visible: false })}
                         onCancel={() => this.setState({ visible: false })} />
                 </Drawer>
