@@ -10,7 +10,7 @@ import { add as addInstance } from '../../features/courses/instance';
 import { USERID } from '../../backend/database';
 import TextArea from 'antd/lib/input/TextArea';
 import CreateCourseForm from './CreateCourseForm';
-import { Assessments, FormType, Lecture, Term } from '../../data/types';
+import { Assessments, FormType, Lecture, Mark, Term } from '../../data/types';
 import { v4 as uuidv4 } from 'uuid';
 import { addDateForm, addForms, addRadioGroup, addTermForm } from "../../utilities/formUtils";
 import { FormInstance } from 'antd/lib/form';
@@ -54,6 +54,17 @@ class AddBreakdownForm extends React.Component<Props, State> {
 
     form: React.RefObject<FormInstance> = React.createRef<FormInstance>();
 
+    getAssessmentInfo(list: any) {
+        var marks: Mark[];
+        marks = [];
+
+        list.map((mark: any) => {
+            marks.push({type: mark.type, weight: mark.weight, count: mark.count})
+        });
+        console.log("Object", marks);
+        return marks;
+    }
+
     onValuesChange = (_: any, values: any) => {
         let course = Object.values(this.props.courses).find(course =>
             course.code === values.code &&
@@ -70,7 +81,8 @@ class AddBreakdownForm extends React.Component<Props, State> {
 
     onFinish = (values: any) => {
         let instance = Object.values(this.props.instances).find(instance => instance.term === values.term && instance.year === values.year?.year())
-
+        console.log(values.assessment);
+        console.log('Received values of form:', values);
         let instanceID = instance?.instanceID ?? uuidv4();
 
         if (instance === undefined)
@@ -90,19 +102,16 @@ class AddBreakdownForm extends React.Component<Props, State> {
                 ...this.props.breakdowns[this.props.breakdownID],
                 breakdownID: this.props.breakdownID,
                 userID: USERID,
+                marks: this.getAssessmentInfo(values.assessments),
+                isAnonymous: false
             });
         else
             this.props.addBreakdown({
                 instanceID: instanceID,
                 userID: USERID,
-                marks: [{
-                    type: values.assessment,
-                    weight: values.weight,
-                    count: values.count
-                }],
+                marks: this.getAssessmentInfo(values.assessments),
                 isAnonymous: false
             });
-
 
         if (this.props.onFinish)
             this.props.onFinish();

@@ -80,7 +80,7 @@ class Breakdown extends React.Component<Props> {
 
     render() {
         return (
-            <Descriptions style={{ paddingTop: 20 }} title="Course Breakdown" bordered column={2}>
+            <Descriptions style={{ marginTop: "3%", marginBottom: "2%" }} title="Course Breakdown" bordered column={2}>
                 <Descriptions.Item label="Semester">{`${this.props.instance.term} ${this.props.instance.year}`}</Descriptions.Item>
                 <Descriptions.Item label="Instructor">{this.props.instance.instructor}</Descriptions.Item>
                 <Descriptions.Item label="Assessments" span={2}>

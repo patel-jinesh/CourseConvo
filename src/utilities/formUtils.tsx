@@ -32,7 +32,7 @@ export function addDateForm(width: any, s: SizeType) {
     );
 }
 
-function mapForm(courses: Course[], name: string, getFieldValue: any)
+export function mapForm(courses: Course[], name: string, getFieldValue: any)
 {
     if (name === "subject") {
         return (

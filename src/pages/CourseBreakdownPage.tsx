@@ -9,6 +9,7 @@ import { USERID } from '../backend/database';
 import { remove } from '../features/courses/breakdown';
 import Breakdown from '../components/Breakdown';
 import AddBreakdownForm from '../components/forms/AddBreakdownForm';
+import moment from 'moment';
 
 type ComponentProps = {
     match: match,
@@ -229,6 +230,11 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
                     <AddBreakdownForm
                         courseID={this.props.course.courseID}
                         breakdownID={this.props.userbreakdown?.breakdownID}
+                        initialValues={this.props.userbreakdown ? {
+                            term: this.props.instances[this.props.userbreakdown.instanceID]?.term,
+                            year: moment(`${this.props.instances[this.props.userbreakdown.instanceID]?.year}`),
+                            instructor: this.props.instances[this.props.userbreakdown.instanceID]?.instructor,
+                        } : undefined}
                         onFinish={() => this.setState({ visible: false })}
                         onCancel={() => this.setState({ visible: false })} />
                 </Drawer>
