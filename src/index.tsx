@@ -6,6 +6,8 @@ import { store } from './app/store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
+console.time('Event');
+
 ReactDOM.render(
     <Provider store={store}>
       <App />

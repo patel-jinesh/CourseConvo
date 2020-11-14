@@ -19,9 +19,11 @@ const coursesRedux = createSlice({
     initialState,
     reducers: {
         add(state, action: PayloadAction<Course>) {
+            console.timeLog('Event', 'Course added', action.payload);
             state[action.payload.courseID] = action.payload;
         },
         edit(state, action: PayloadAction<Course>) {
+            console.timeLog('Event', 'Course edited', action.payload);
             state[action.payload.courseID] = action.payload;
         }
     }

@@ -19,12 +19,15 @@ const recordsRedux = createSlice({
     initialState,
     reducers: {
         add(state, action: PayloadAction<Record>) {
+            console.timeLog('Event', 'Record added', action.payload);
             state[action.payload.recordID] = action.payload
         },
         edit(state, action: PayloadAction<Record>) {
+            console.timeLog('Event', 'Record edited', action.payload);
             state[action.payload.recordID] = action.payload;
         },
         remove(state, action: PayloadAction<string>) {
+            console.timeLog('Event', 'Record deleted', action.payload);
             delete state[action.payload];
         }
     }

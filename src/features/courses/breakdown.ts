@@ -21,6 +21,8 @@ const breakdownsRedux = createSlice({
     initialState,
     reducers: {
         add(state, action: PayloadAction<Omit<Breakdown, "datetime" | "breakdownID">>) {
+            console.timeLog('Event', 'Breakdown added', action.payload);
+
             let breakdownID = uuidv4();
             state[breakdownID] = {
                 breakdownID: breakdownID,
@@ -29,12 +31,16 @@ const breakdownsRedux = createSlice({
             };
         },
         edit(state, action: PayloadAction<Omit<Breakdown, "datetime">>) {
+            console.timeLog('Event', 'Breakdown edited', action.payload);
+
             state[action.payload.breakdownID] = {
                 ...action.payload,
                 datetime: moment().valueOf()
             }
         },
         remove(state, action: PayloadAction<string>) {
+            console.timeLog('Event', 'Breakdown deleted', action.payload);
+
             delete state[action.payload];
         }
     }
