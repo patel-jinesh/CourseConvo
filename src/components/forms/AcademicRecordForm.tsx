@@ -249,7 +249,16 @@ class AcademicRecordForm extends React.Component<Props, State>{
                     }
                 </Form.Item>
                 {addForms(Object.values(this.props.courses), Object.values(this.props.instances), [FormType.COURSE, FormType.INSTRUCTOR])}
-                {addRadioGroup("status", "Status", Status)}
+                <Form.Item
+                    name='status'
+                    label="Status"
+                    rules={[{ required: true, message: "Please select one of the options!" }]}>
+                    <Radio.Group>
+                        <Radio.Button value={Status.IN_PROGRESS}>{Status.IN_PROGRESS}</Radio.Button>
+                        <Radio.Button value={Status.TRANSFERRED}>{Status.TRANSFERRED}</Radio.Button>
+                        <Radio.Button value={Status.TAKEN}>{Status.TAKEN}</Radio.Button>
+                    </Radio.Group>
+                </Form.Item>
                 <Form.Item
                     noStyle
                     dependencies={['status']}>
