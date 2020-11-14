@@ -124,19 +124,23 @@ class Review extends React.Component<Props, State> {
                         </Tooltip>
                     }
                     actions={[
-                        this.props.review.userID !== USERID && <Tooltip title="Like">
-                            <span onClick={() => (this.props.review.upvoterIDs[USERID] ? this.props.unvote : this.props.upvote)({ reviewID: this.props.reviewID, userID: USERID })}>
+                        <Tooltip title="Like">
+                            <span
+                                onClick={() => (this.props.review.upvoterIDs[USERID] ? this.props.unvote : this.props.upvote)({ reviewID: this.props.reviewID, userID: USERID })}
+                                style={{ pointerEvents: (this.props.review.userID !== USERID ? 'all' : 'none') }}>
                                 {this.props.review.upvoterIDs[USERID] ? <LikeTwoTone /> : <LikeFilled />}
-                                <span className="comment-action">{Object.keys(this.props.review.upvoterIDs).length}</span>
+                                <span style={{ pointerEvents: (this.props.review.userID !== USERID ? 'all' : 'none') }}>{Object.keys(this.props.review.upvoterIDs).length}</span>
                             </span>
                         </Tooltip>,
-                        this.props.review.userID !== USERID && <Tooltip title="Dislike">
-                            <span onClick={() => (this.props.review.downvoterIDs[USERID] ? this.props.unvote : this.props.downvote)({ reviewID: this.props.reviewID, userID: USERID })}>
+                        <Tooltip title="Dislike">
+                            <span
+                                onClick={() => (this.props.review.downvoterIDs[USERID] ? this.props.unvote : this.props.downvote)({ reviewID: this.props.reviewID, userID: USERID })}
+                                style={{ pointerEvents: (this.props.review.userID !== USERID ? 'all' : 'none') }}>
                                 {this.props.review.downvoterIDs[USERID] ? <DislikeTwoTone /> : <DislikeFilled />}
-                                <span className="comment-action">{Object.keys(this.props.review.downvoterIDs).length}</span>
+                                <span>{Object.keys(this.props.review.downvoterIDs).length}</span>
                             </span>
                         </Tooltip>,
-                        this.props.review.userID !== USERID && [{ tag: ReviewTag.HELPFUL, color: "#FA4" }, { tag: ReviewTag.DETAILED, color: "#F1F" }, { tag: ReviewTag.ACCURATE, color: "#AF1" }].map(({ tag, color }: { tag: ReviewTag, color: string }) => {
+                        [{ tag: ReviewTag.HELPFUL, color: "#FA4" }, { tag: ReviewTag.DETAILED, color: "#F1F" }, { tag: ReviewTag.ACCURATE, color: "#AF1" }].map(({ tag, color }: { tag: ReviewTag, color: string }) => {
                             let tagged = this.props.review.tags[tag][USERID] !== undefined;
 
                             return (
@@ -145,7 +149,7 @@ class Review extends React.Component<Props, State> {
                                     icon={tagged ? <CheckOutlined /> : undefined}
                                     onClick={() => (tagged ? this.props.untag : this.props.tag)({ reviewID: this.props.reviewID, userID: USERID, tag: tag })}
                                     color={color}
-                                    style={{ color: "black" }}>
+                                    style={{ color: "black", pointerEvents: (this.props.review.userID !== USERID ? 'all' : 'none') }}>
                                     {tag}:  {Object.values(this.props.review.tags[tag]).length}
                                 </Tag>
                             );
