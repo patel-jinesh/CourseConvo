@@ -36,7 +36,7 @@ type State = ComponentState
 
 class HomePage extends React.Component<Props, State> {
 
-    getTopRatedCourses = (numCourse: number) => {
+    getTopRatedCourses = (numCourse?: number) => {
 
         //Computing ratings for each course
         let courseRatings = (Object.entries(this.props.reviews
@@ -55,7 +55,7 @@ class HomePage extends React.Component<Props, State> {
                 }, {}))).map(([courseID, { totalRating, count }]) => ({ rating: (totalRating / count), courseID: courseID }));
 
 
-        return courseRatings.sort((a, b) => b.rating - a.rating).slice(0, numCourse);
+        return courseRatings.sort((a, b) => b.rating - a.rating).slice(0, numCourse ?? (courseRatings.length - 1));
 
     }
 

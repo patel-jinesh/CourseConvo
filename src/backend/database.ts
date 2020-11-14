@@ -108,18 +108,10 @@ export const courses: Course[] = coursesdb.map(([subject, code, name]) => {
 })
 
 export const instances: CourseInstance[] = [
-    ...Array(10).fill(undefined).map((_, i) => ({
-        instanceID: uuidv4(),
-        courseID: courses[0].courseID,
-        instructor: "Spencer Smith",
-        term: Term.FALL,
-        lecture: Lecture.IN_PERSON,
-        year: 2020 - i
-    })),
     {
         instanceID: uuidv4(),
         courseID: courses[2].courseID,
-        instructor: "Ryan Leduc",
+        instructor: "William Farmer",
         term: Term.FALL,
         year: 2017
     },
@@ -133,10 +125,17 @@ export const instances: CourseInstance[] = [
     {
         instanceID: uuidv4(),
         courseID: courses[4].courseID,
-        instructor: "Willam Farmer",
+        instructor: "William Farmer",
         term: Term.WINTER,
         year: 2018
     },
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[0].courseID,
+        instructor: "Spencer Smith",
+        term: Term.FALL,
+        year: 2015 + i
+    })),
 ]
 
 /**
@@ -338,6 +337,29 @@ export const reviews: Review[] = [
 He an thing rapid these after going drawn or. Timed she his law the spoil round defer. In surprise concerns informed betrayed he learning is ye. Ignorant formerly so ye blessing. He as spoke avoid given downs money on we. Of properly carriage shutters ye as wandered up repeated moreover. Inquietude attachment if ye an solicitude to. Remaining so continued concealed as knowledge happiness. Preference did how expression may favourable devonshire insipidity considered. An length design regret an hardly barton mr figure. 
 Now seven world think timed while her. Spoil large oh he rooms on since an. Am up unwilling eagerness perceived incommode. Are not windows set luckily musical hundred can. Collecting if sympathize middletons be of of reasonably. Horrible so kindness at thoughts exercise no weddings subjects. The mrs gay removed towards journey chapter females offered not. Led distrusts otherwise who may newspaper but. Last he dull am none he mile hold as. 
         `,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [{
+            userID: users[1].userID,
+            comment: "I agree",
+            datetime: moment().valueOf()
+        }],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    },
+    {
+        reviewID: uuidv4(),
+        instanceID: instances[2].instanceID,
+        userID: users[2].userID,
+        difficulty: 5,
+        enjoyability: 5,
+        workload: 4,
+        comment: "ksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgk",
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
