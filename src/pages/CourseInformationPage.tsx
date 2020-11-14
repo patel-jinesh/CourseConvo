@@ -130,12 +130,12 @@ class CourseInformationPage extends React.Component<Props, State> {
                                     />}
                             </Content>
                         </TabPane>
-                        <TabPane tab="Top Breakdowns" key="1">
-                            <Content style={{ paddingTop: 20 }}>
-                                {this.props.breakdowns.map(breakdown => {
-                                    return <Breakdown breakdownID={breakdown.breakdownID} instanceID={breakdown.instanceID} key={breakdown.breakdownID} />
-                                })}
-                            </Content>
+                        <TabPane tab="Recently posted breakdown" key="1">
+                            {this.props.breakdowns
+                                .sort((a, b) => a.datetime - b.datetime)
+                                .slice(0, 1).map(breakdown => {
+                                return <Breakdown breakdownID={breakdown.breakdownID} instanceID={breakdown.instanceID} key={breakdown.breakdownID} />
+                            })}
                         </TabPane>
                         <TabPane tab="Top Reviews" key="2">
                             <Content style={{ paddingTop: 20 }}>
