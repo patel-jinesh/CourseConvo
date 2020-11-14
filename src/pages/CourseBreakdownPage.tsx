@@ -87,6 +87,15 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
 
         let datasource = this.props.breakdowns.reverse()
             .filter(breakdown => breakdown.userID !== USERID)
+            .filter(breakdown => {
+                if (this.state.filters.semesters.length === 1 && this.state.filters.semesters[0] === "All")
+                    return true;
+
+                if (this.state.filters.semesters.includes(`${this.props.instances[breakdown.instanceID].term} ${this.props.instances[breakdown.instanceID].year}`))
+                    return true;
+
+                return false;
+            })
             .sort((a, b) => {
                 return b.breakdownID.localeCompare(a.breakdownID);
             })
