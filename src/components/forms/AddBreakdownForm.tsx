@@ -208,7 +208,7 @@ class AddBreakdownForm extends React.Component<Props, State> {
 
                         return (
                             <Space>
-                                {invalid ? <Tooltip title="You assessments don't add to 100%">{button}</Tooltip> : button}
+                                {invalid ? <Tooltip title="Your assessments don't add to 100%">{button}</Tooltip> : button}
                                 <Button
                                     htmlType="button"
                                     onClick={() => {
