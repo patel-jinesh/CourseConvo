@@ -519,7 +519,6 @@ export const breakdowns: Breakdown[] = [
                 count: 4
             },
         ],
-        isAnonymous: false
     },
     {
         breakdownID: uuidv4(),
@@ -553,7 +552,6 @@ export const breakdowns: Breakdown[] = [
                 count: 4
             },
         ],
-        isAnonymous: false
     },
     {
         breakdownID: uuidv4(),
@@ -582,7 +580,6 @@ export const breakdowns: Breakdown[] = [
                 count: 4
             },
         ],
-        isAnonymous: false
     },
     {
         breakdownID: uuidv4(),
@@ -606,7 +603,6 @@ export const breakdowns: Breakdown[] = [
                 count: 1
             }
         ],
-        isAnonymous: false
     },
     {
         breakdownID: uuidv4(),
@@ -630,7 +626,6 @@ export const breakdowns: Breakdown[] = [
                 count: 5
             }
         ],
-        isAnonymous: false
     }
 ]
 
