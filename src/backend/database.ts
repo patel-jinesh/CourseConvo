@@ -132,7 +132,7 @@ export const users: User[] = [
     {
         userID: uuidv4(),
         name: "John Doe",
-        avatar_url: U1
+        avatar_url: U5
     },
     {
         userID: uuidv4(),
@@ -152,7 +152,7 @@ export const users: User[] = [
     {
         userID: uuidv4(),
         name: "Tina Miller",
-        avatar_url: U5
+        avatar_url: U1
     },
 ]
 
