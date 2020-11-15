@@ -1,5 +1,5 @@
 import { CheckOutlined, DislikeFilled, DislikeTwoTone, LikeFilled, LikeTwoTone, UserOutlined } from '@ant-design/icons';
-import { Button, Col, Comment, Drawer, Form, List, Row, Space, Tag, Tooltip, Typography } from 'antd';
+import { Button, Col, Comment, Drawer, Form, List, Row, Space, Tag, Tooltip, Typography, message } from 'antd';
 import Avatar from 'antd/lib/avatar/avatar';
 import TextArea from 'antd/lib/input/TextArea';
 import moment from 'moment';
@@ -212,8 +212,17 @@ class Review extends React.Component<Props, State> {
                     visible={this.state.reporting}>
                     <ReportForm
                         user={this.props.user.name}
-                        onFinish={() => this.setState({ reporting: false })}
-                        onCancel={() => this.setState({ reporting: false })} />
+                        onFinish={
+                            () => {
+                                message.success('Report submitted!');
+                                this.setState({ reporting: false })
+                            }
+                        }
+                        onCancel={
+                            () => {
+                                this.setState({ reporting: false })
+                            }
+                        } />
                 </Drawer>
             </>
         );
