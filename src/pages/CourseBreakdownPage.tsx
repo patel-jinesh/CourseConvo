@@ -100,11 +100,15 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
                     if (this.state.filters.assessments.length === 1 && this.state.filters.assessments[0] === "All")
                         return true;
                     else
-                    return this.state.filters.assessments.some(item => breakdown.marks.map(mark => mark.type).includes(item));
+                        return this.state.filters.assessments.some(item => breakdown.marks.map(mark => mark.type).includes(item));
                 }
 
-                if (this.state.filters.semesters.includes(`${this.props.instances[breakdown.instanceID].term} ${this.props.instances[breakdown.instanceID].year}`))
-                    return this.state.filters.assessments.some(item => breakdown.marks.map(mark => mark.type).includes(item));
+                if (this.state.filters.semesters.includes(`${this.props.instances[breakdown.instanceID].term} ${this.props.instances[breakdown.instanceID].year}`)) {
+                    if (this.state.filters.assessments.length === 1 && this.state.filters.assessments[0] === "All")
+                        return true;
+                    else
+                        return this.state.filters.assessments.some(item => breakdown.marks.map(mark => mark.type).includes(item));
+                }
 
                 return false;
             })
