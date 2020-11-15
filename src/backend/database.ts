@@ -66,7 +66,63 @@ const coursesdb: [string, string, string][] = [
     ["SFWRENG", "4F03", "Parallel Computing"],
     ["SFWRENG", "4G06", "Software Design IV - Capstone Design Project"],
     ["SFWRENG", "4HC3", "Human Computer Interfaces"],
-    ["SFWRENG", "4X03", "Scientific Computation"]
+    ["SFWRENG", "4X03", "Scientific Computation"],
+    ["ECON", "1B03", "Introduction to Microeconomics"],
+    ["ECON", "1BB3", "Introduction to Macroeconomics"],
+    ["ECON", "2A03", "Economics of Labour-Market Issues"],
+    ["ECON", "2B03", "Analysis of Economic Data"],
+    ["ECON", "2D03", "Economic Issues"],
+    ["ECON", "2K03", "Economic History of Canada"],
+    ["LIFESCI", "1D03", "Medical Imaging Physics"],
+    ["LIFESCI", "2A03", "Research Methods in Life Sciences"],
+    ["LIFESCI", "2AA3", "Intro Topics in Life Sciences"],
+    ["LIFESCI", "3AA3", "Human Pathophysiology"],
+    ["LIFESCI", "3BP3", "Modeling Life"],
+    ["LIFESCI", "3G03", "Introduction to Epidemiology"],
+    ["CHEMENG", "2D04", "Chemical Engineering Principles I"],
+    ["CHEMENG", "2E04", "Numerical Methods"],
+    ["CHEMENG", "3A04", "Heat Transfer"],
+    ["CHEMENG", "3BM3", "Bioseperations Engineering"],
+    ["CHEMENG", "3BK3", "Bio-reaction Engineering"],
+    ["ENGPHYS", "2A04", "Electricity and Magnetism"],
+    ["ENGPHYS", "2CM4", "Computational Multiphysics"],
+    ["ENGPHYS", "2E04", "Analog and Digital Circuits"],
+    ["ENGPHYS", "3BA4", "Circuitts with Non-Linear Components"],
+    ["ENGPHYS", "3D03", "Principles of Nuclear Engineering"],
+    ["COMMERCE", "1AA3", "Financial Accounting"],
+    ["COMMERCE", "1B03", "Strategic Management"],
+    ["COMMERCE", "1BA3", "Human Resources and Management"],
+    ["COMMERCE", "1MA3", "Introduction to Marketing"],
+    ["COMMERCE", "2FA3", "Introduction to Finance"],
+    ["COMMERCE", "2KA3", "Information Systems in Management"],
+    ["COMMERCE", "2QA3", "Financial Accounting"],
+    ["COMMERCE", "3FB3", "Security Analysis"],
+    ["BIO", "1A03", "Cellular and Molecular Biology"],
+    ["BIO", "1M03", "Biodiversity, Evolution & Humanity"],
+    ["BIO", "1P03", "Introductory Biology"],
+    ["BIO", "2C03", "Genetics"],
+    ["BIO", "2F03", "Fundamental & Applied Ecology"],
+    ["BIO", "3EI3", "Ecological Indicators"],
+    ["MOLBIOL", "3M03", "Fundemental Concepts of Development"],
+    ["MOLBIOL", "3O03", "Microbial Genetics"],
+    ["MOLBIOL", "3Y03", "Plant Responses to the Environment"],
+    ["MOLBIOL", "3V03", "Techniques in Molecular Genetics"],
+    ["CLASSICS", "1A03", "Introduction to Classical Archaeology"],
+    ["CLASSICS", "1B03", "Introduction to Ancient Myth and Literature"],
+    ["CLASSICS", "2K03", "The Society of Greece and Rome"],
+    ["CLASSICS", "3MT3", "Advanced Ancient Roots of Medical Terminology"],
+    ["CLASSICS", "4F03", "Seminar in Ancient History"],
+    ["GREEK", "1Z03", "Beginners’ Introduction to Ancient Greek"],
+    ["GREEK", "2A03", "Intermediate Greek 1"],
+    ["GREEK", "3BB3", "Topics in Greek Literature"],
+    ["LATIN", "1ZZ3", "Beginners’ Introduction to Latin 2"],
+    ["LATIN", "2AA3", "Intermediate Latin 2"],
+    ["LATIN", "3BB3", "Topics in Latin Literature"],
+    ["KINESIOL", "1A03", "Human Anatomy and Physiology"],
+    ["KINESIOL", "1E03", "Motor Control and Learning"],
+    ["KINESIOL", "1K03", "Foundations in Kinesiology"],
+    ["KINESIOL", "2A03", "Biomechanics"],
+    ["KINESIOL", "2G03", "Health Psychology"]
 ]
 
 /**
@@ -120,32 +176,264 @@ export const courses: Course[] = coursesdb.map(([subject, code, name]) => {
 export const instances: CourseInstance[] = [
     ...Array(10).fill(undefined).map((_, i) => ({
         instanceID: uuidv4(),
-        courseID: courses[0].courseID,
+        courseID: courses[0].courseID, //SFWRENG 2AA4
         instructor: "Spencer Smith",
         term: Term.FALL,
-        year: 2015 + i
+        year: 2010 + i
     })),
-    {
+    ...Array(10).fill(undefined).map((_, i) => ({
         instanceID: uuidv4(),
-        courseID: courses[2].courseID,
-        instructor: "William Farmer",
-        term: Term.FALL,
-        year: 2017
-    },
-    {
+        courseID: courses[11].courseID,
+        instructor: "Ridha Khedri", //SFWRENG 3A04
+        term: Term.WINTER,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
         instanceID: uuidv4(),
-        courseID: courses[3].courseID,
+        courseID: courses[3].courseID, //SFWRENG 2DM3
         instructor: "Wolfram Kahl",
         term: Term.FALL,
-        year: 2017
-    },
-    {
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
         instanceID: uuidv4(),
-        courseID: courses[4].courseID,
-        instructor: "William Farmer",
+        courseID: courses[10].courseID, //SFWR3BB4
+        instructor: "Emil Sekerinski",
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[22].courseID, //SFWR4E03
+        instructor: "Douglas Down",
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[27].courseID,
+        instructor: "Hannah Holmes", //ECOn 1B03
+        term: (i % 2) ? Term.WINTER : Term.FALL,
+        year: 2015 + (i % 2)
+    })),
+    ...Array(6).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[57].courseID, //BIO1A03
+        instructor: "Aleksandra Gajic",
+        term: (i % 2) ? Term.WINTER : Term.FALL,
+        year: 2017 + (i % 2)
+    })),
+    ...Array(4).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[57].courseID, //Bio1A03
+        instructor: "Katie Moisse",
+        term: (i % 2) ? Term.WINTER : Term.FALL,
+        year: 2015 + (i % 2)
+    })),
+    ...Array(6).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[59].courseID, //BIO
+        instructor: "Katie Moisse",
+        term: (i % 2) ? Term.WINTER : Term.FALL,
+        year: 2017 + (i % 2)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[58].courseID, //BIO
+        instructor: "Janet Pritchard",
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[33].courseID, //LIFESCI
+        instructor: "Jonathan Reeves",
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[34].courseID, //LIFESCI
+        instructor: "Jonathan Reeves",
         term: Term.WINTER,
-        year: 2018
-    }
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[35].courseID, //LIFESCI
+        instructor: "Jonathan Reeves",
+        term: Term.WINTER,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[36].courseID, //LIFESCI
+        instructor: "Stephen Russel",
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[37].courseID, //CHEMENG
+        instructor: "Stephen Russel",
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[38].courseID, //CHEMENG
+        instructor: "Michele George",
+        term: Term.WINTER,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[41].courseID, //CHEMENG
+        instructor: "Stephen Russel",
+        term: Term.WINTER,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[44].courseID, //ENGPHYS
+        instructor: "Kim Jones",
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[45].courseID, //ENGPHYS
+        instructor: "Kim Jones",
+        term: Term.WINTER,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[46].courseID, //ENGPHYS
+        instructor: "Kim Jones",
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[49].courseID, //COMMERCE
+        instructor: "Ashfin Vafael",
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[50].courseID, //COMMERCE
+        instructor: "Ashfin Vafael",
+        term: Term.WINTER,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[53].courseID, //COMMERCE
+        instructor: "Ashfin Vafael",
+        term: (i % 2) ? Term.WINTER : Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[63].courseID, //MOLBIOL
+        instructor: "Kim Jones",
+        term: (i % 2) ? Term.WINTER : Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[64].courseID, //MOLBIOL
+        instructor: "Kim Jones",
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[65].courseID, //MOLBIOL
+        instructor: "Claude Eilers",
+        term: Term.WINTER,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[67].courseID, //CLASSICS
+        instructor: "Kathryn Mattison",
+        term: (i % 2) ? Term.WINTER : Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[68].courseID, //CLASSICS
+        instructor: "Kathryn Mattison",
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[72].courseID, //GREEK
+        instructor: "Patricia White",
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[73].courseID, //GREEK
+        instructor: "Patricia White",
+        term: Term.WINTER,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[74].courseID, //GREEK
+        instructor: "Patricia White",
+        term: (i % 2) ? Term.WINTER : Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[75].courseID, //LATIN
+        instructor: "Patricia White",
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[76].courseID, //LATIN
+        instructor: "Patricia White",
+        term: Term.WINTER,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[77].courseID, //LATIN
+        instructor: "Patricia White",
+        term: (i % 2) ? Term.WINTER : Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[78].courseID, //KINESIOL
+        instructor: "Spencer Pope",
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[79].courseID, //KINESIOL
+        instructor: "Spencer Pope",
+        term: Term.WINTER,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[80].courseID, //KINESIOL
+        instructor: "Sankar Renganathan",
+        term: (i % 2) ? Term.WINTER : Term.FALL,
+        year: 2010 + (i)
+    })),
+
 ]
 
 /**
@@ -161,26 +449,35 @@ export const records: Record[] = [
     {
         recordID: uuidv4(),
         status: Status.TAKEN,
-        instanceID: instances[1].instanceID,
+        instanceID: instances[10].instanceID,
         userID: users[0].userID,
         grade: 12
     },
     {
         recordID: uuidv4(),
         status: Status.TAKEN,
-        instanceID: instances[0].instanceID,
-        userID: users[1].userID,
+        instanceID: instances[20].instanceID,
+        userID: users[0].userID,
         grade: 9
     },
-    ...(instances.map(instance => (
-        Array(10).fill(undefined).map(_ => ({
-            recordID: uuidv4(),
-            status: Status.TAKEN,
-            instanceID: instance.instanceID,
-            userID: users[2].userID,
-            grade: Math.floor(1 + Math.random() * (12))
-        }))
-    )).flat())
+    {
+        recordID: uuidv4(),
+        status: Status.TAKEN,
+        instanceID: instances[30].instanceID,
+        userID: users[0].userID,
+        grade: 6
+    },
+
+
+    // ...(instances.map(instance => (
+    //     Array(10).fill(undefined).map(_ => ({
+    //         recordID: uuidv4(),
+    //         status: Status.TAKEN,
+    //         instanceID: instance.instanceID,
+    //         userID: users[2].userID,
+    //         grade: Math.floor(1 + Math.random() * (12))
+    //     }))
+    // )).flat())
 ]
 /**
  * The breakdowns in our fake database.
