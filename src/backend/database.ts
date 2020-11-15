@@ -320,7 +320,16 @@ export const reviews: Review[] = [
         difficulty: 3,
         enjoyability: 2,
         workload: 1,
-        comment: "ksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgkksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgk",
+        comment: `This assessments for this course are hit or miss in terms of what you are able to learn from them. The coding portions of the assignments were easy and helpful,
+        especially when we need to use unit testing which helped us learn about the test driven development process. The downside to the assignments was that we were required to
+        construct a formal specification document for select assignments. The task here was to create a set of specs that mathematically describe the inputs and the correlating outputsThe irony here is that
+        the instructions were so vague given that the document had to be very specific (so specific that mathematical language needed to be used to reduce any ambiguity).
+        I had to use a 100% of 10% of my brain power to complete these specs at a satisfactory level. My complaints don't just stop there. The midterm and exam for this course is so next level
+        that you would probably need to take an escalator just to understand the first question you see. One of the questions on the exam was designed so 90% of the class would be prevented from
+        saying that they got that question right. And this was after the professor had said that we won't be blindsided in the exam and that the exam would be straightforward. Well I guess it was as
+        as they; you can trust a dishonest man to be dishonest. After the course when I had a chance to stop and reflect at what I had learned, I realized that all I really learned was that
+        unit testing is useful, which is cool I guess. Also I have been told that barely anyone uses formal specs in the industry (except for specific teams) so its good to know I went through all
+        that effort for nothing.`,
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
@@ -343,9 +352,8 @@ export const reviews: Review[] = [
         difficulty: 3,
         enjoyability: 2,
         workload: 1,
-        comment: `Departure so attention pronounce satisfied daughters am. But shy tedious pressed studied opinion entered windows off. Advantage dependent suspicion convinced provision him yet. Timed balls match at by rooms we. Fat not boy neat left had with past here call. Court nay merit few nor party learn. Why our year her eyes know even how. Mr immediate remaining conveying allowance do or. 
-He an thing rapid these after going drawn or. Timed she his law the spoil round defer. In surprise concerns informed betrayed he learning is ye. Ignorant formerly so ye blessing. He as spoke avoid given downs money on we. Of properly carriage shutters ye as wandered up repeated moreover. Inquietude attachment if ye an solicitude to. Remaining so continued concealed as knowledge happiness. Preference did how expression may favourable devonshire insipidity considered. An length design regret an hardly barton mr figure. 
-Now seven world think timed while her. Spoil large oh he rooms on since an. Am up unwilling eagerness perceived incommode. Are not windows set luckily musical hundred can. Collecting if sympathize middletons be of of reasonably. Horrible so kindness at thoughts exercise no weddings subjects. The mrs gay removed towards journey chapter females offered not. Led distrusts otherwise who may newspaper but. Last he dull am none he mile hold as. 
+        comment: `Ok, so this course was doable in terms of difficulty. The assigments were super hard while the midterms and quizzes were things I could handle. There was too much work
+        and a lot of it seemed unnecessary. I did not enjoy doing the assignments as they were very tedious to finish.
         `,
         isAnonymous: false,
         upvoterIDs: {},
@@ -369,7 +377,7 @@ Now seven world think timed while her. Spoil large oh he rooms on since an. Am u
         difficulty: 5,
         enjoyability: 5,
         workload: 4,
-        comment: "ksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgk",
+        comment: "I personaly enjoyed the course a lot and I think it's one of the best courses I've taken! The professor was super nice and I thing he did a great job teaching",
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
@@ -392,7 +400,7 @@ Now seven world think timed while her. Spoil large oh he rooms on since an. Am u
         difficulty: 5,
         enjoyability: 1,
         workload: 4,
-        comment: "ksdjfjdhgjsfhgjdfshgjhdfgjhdfjghdjhgfjkdfhgjkdhfgjhsdjkfghdjfghjkdfhgjhdsgskjfdhgkjhdjkfghkdjfhgjkdhfgjdfhgkjdshfgjkdhfjkghdjkfghkdjfhgjkdshfkgjhdkjfhgkjdhfgjkdshgk",
+        comment: "ez but boring course. The professor was cool tho.",
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
