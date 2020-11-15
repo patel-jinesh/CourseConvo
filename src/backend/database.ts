@@ -1,6 +1,11 @@
 import moment from "moment";
 import { v4 as uuidv4 } from 'uuid';
 import { Assessments, Breakdown, Course, CourseInstance, Record, Review, ReviewTag, Status, Term, User } from "../data/types";
+import U1 from '../images/U1.jpeg'
+import U2 from '../images/U2.jpeg'
+import U3 from '../images/U3.jpeg'
+import U4 from '../images/U4.jpeg'
+import U5 from '../images/U5.jpeg'
 
 /**
 COMPSCI 3AC3 - Algorithms and Complexity
@@ -71,22 +76,27 @@ export const users: User[] = [
     {
         userID: uuidv4(),
         name: "John Doe",
-        avatar_url: "https://thispersondoesnotexist.com/image"
+        avatar_url: U1
     },
     {
         userID: uuidv4(),
-        name: "Jane Doe",
-        avatar_url: "https://thispersondoesnotexist.com/image"
+        name: "Jane Bekham",
+        avatar_url: U2
     },
     {
         userID: uuidv4(),
         name: "Allan Poe",
-        avatar_url: "https://thispersondoesnotexist.com/image"
+        avatar_url: U3
     },
     {
         userID: uuidv4(),
         name: "Edgar Smith",
-        avatar_url: "https://thispersondoesnotexist.com/image"
+        avatar_url: U4
+    },
+    {
+        userID: uuidv4(),
+        name: "Tina Miller",
+        avatar_url: U5
     },
 ]
 
