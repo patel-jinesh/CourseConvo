@@ -52,6 +52,7 @@ type ReduxProps = ConnectedProps<typeof connector>;
 type Props = ReduxProps & ComponentProps;
 type State = ComponentState
 
+//Course breakdown page
 class CourseBreakdownsPage extends React.Component<Props, State> {
     state: State = {
         visible: false,
