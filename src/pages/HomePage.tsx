@@ -94,6 +94,7 @@ class HomePage extends React.Component<Props, State> {
 
 
     render() {
+        let numCourses = 5;
         return (
             //Page header
             <PageHeader
@@ -103,7 +104,7 @@ class HomePage extends React.Component<Props, State> {
                         <Card style={{ height: "100%" }}>
                             <List header="Top Rated Courses"
                                 itemLayout="horizontal"
-                                dataSource={this.getTopRatedCourses(10)}
+                                dataSource={this.getTopRatedCourses(numCourses)}
                                 renderItem={item => (
                                     <List.Item>
                                         <Row style={{ width: "100%" }}>
@@ -175,7 +176,7 @@ class HomePage extends React.Component<Props, State> {
                         <Card style={{ height: "100%" }}>
                             <List header="Most Popular Courses"
                                 itemLayout="horizontal"
-                                dataSource={this.getMostPopularCourses(10)}
+                                dataSource={this.getMostPopularCourses(numCourses)}
 
                                 renderItem={item => (
                                     <List.Item>
@@ -201,7 +202,7 @@ class HomePage extends React.Component<Props, State> {
                         <Card style={{ height: "100%" }}>
                             <List header="Top Instructors"
                                 itemLayout="horizontal"
-                                dataSource={this.getTopRatedInstructors(10)}
+                                dataSource={this.getTopRatedInstructors(numCourses)}
                                 renderItem={item => (
                                     <List.Item>
                                         <Row style={{ width: "100%" }}>
