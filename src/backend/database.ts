@@ -320,16 +320,7 @@ export const reviews: Review[] = [
         difficulty: 3,
         enjoyability: 2,
         workload: 1,
-        comment: `This assessments for this course are hit or miss in terms of what you are able to learn from them. The coding portions of the assignments were easy and helpful,
-        especially when we need to use unit testing which helped us learn about the test driven development process. The downside to the assignments was that we were required to
-        construct a formal specification document for select assignments. The task here was to create a set of specs that mathematically describe the inputs and the correlating outputsThe irony here is that
-        the instructions were so vague given that the document had to be very specific (so specific that mathematical language needed to be used to reduce any ambiguity).
-        I had to use a 100% of 10% of my brain power to complete these specs at a satisfactory level. My complaints don't just stop there. The midterm and exam for this course is so next level
-        that you would probably need to take an escalator just to understand the first question you see. One of the questions on the exam was designed so 90% of the class would be prevented from
-        saying that they got that question right. And this was after the professor had said that we won't be blindsided in the exam and that the exam would be straightforward. Well I guess it was as
-        as they; you can trust a dishonest man to be dishonest. After the course when I had a chance to stop and reflect at what I had learned, I realized that all I really learned was that
-        unit testing is useful, which is cool I guess. Also I have been told that barely anyone uses formal specs in the industry (except for specific teams) so its good to know I went through all
-        that effort for nothing.`,
+        comment: `This assessments for this course are hit or miss in terms of what you are able to learn from them. The coding portions of the assignments were easy and helpful, especially when we need to use unit testing which helped us learn about the test driven development process. The downside to the assignments was that we were required to construct a formal specification document for select assignments. The task here was to create a set of specs that mathematically describe the inputs and the correlating outputsThe irony here is that the instructions were so vague given that the document had to be very specific (so specific that mathematical language needed to be used to reduce any ambiguity). I had to use a 100% of 10% of my brain power to complete these specs at a satisfactory level. My complaints don't just stop there. The midterm and exam for this course is so next level that you would probably need to take an escalator just to understand the first question you see. One of the questions on the exam was designed so 90% of the class would be prevented from saying that they got that question right. And this was after the professor had said that we won't be blindsided in the exam and that the exam would be straightforward. Well I guess it was as as they; you can trust a dishonest man to be dishonest. After the course when I had a chance to stop and reflect at what I had learned, I realized that all I really learned was that unit testing is useful, which is cool I guess. Also I have been told that barely anyone uses formal specs in the industry (except for specific teams) so its good to know I went through all that effort for nothing.`,
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
@@ -352,9 +343,7 @@ export const reviews: Review[] = [
         difficulty: 3,
         enjoyability: 2,
         workload: 1,
-        comment: `Ok, so this course was doable in terms of difficulty. The assigments were super hard while the midterms and quizzes were things I could handle. There was too much work
-        and a lot of it seemed unnecessary. I did not enjoy doing the assignments as they were very tedious to finish.
-        `,
+        comment: `Ok, so this course was doable in terms of difficulty. The assigments were super hard while the midterms and quizzes were things I could handle. There was too much work and a lot of it seemed unnecessary. I did not enjoy doing the assignments as they were very tedious to finish.`,
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
