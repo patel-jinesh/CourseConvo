@@ -108,7 +108,7 @@ class HomePage extends React.Component<Props, State> {
                         <Card style={{ height: "100%" }}>
                             <List header="Top Rated Courses"
                                 itemLayout="horizontal"
-                                dataSource={this.getTopRatedCourses(3)}
+                                dataSource={this.getTopRatedCourses(10)}
                                 renderItem={item => (
                                     <List.Item>
                                         <Row style={{ width: "100%" }}>
@@ -180,7 +180,7 @@ class HomePage extends React.Component<Props, State> {
                         <Card style={{ height: "100%" }}>
                             <List header="Most Popular Courses"
                                 itemLayout="horizontal"
-                                dataSource={this.getMostPopularCourses(3)}
+                                dataSource={this.getMostPopularCourses(10)}
 
                                 renderItem={item => (
                                     <List.Item>
@@ -206,7 +206,7 @@ class HomePage extends React.Component<Props, State> {
                         <Card style={{ height: "100%" }}>
                             <List header="Top Instructors"
                                 itemLayout="horizontal"
-                                dataSource={this.getTopRatedInstructors(3)}
+                                dataSource={this.getTopRatedInstructors(10)}
                                 renderItem={item => (
                                     <List.Item>
                                         <Row style={{ width: "100%" }}>
