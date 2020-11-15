@@ -491,7 +491,7 @@ export const breakdowns: Breakdown[] = [
         breakdownID: uuidv4(),
         instanceID: instances[0].instanceID,
         userID: users[1].userID,
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         marks: [
             {
                 type: Assessments.ASSIGNMENTS,
@@ -524,7 +524,7 @@ export const breakdowns: Breakdown[] = [
         breakdownID: uuidv4(),
         instanceID: instances[0].instanceID,
         userID: users[2].userID,
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         marks: [
             {
                 type: Assessments.ASSIGNMENTS,
@@ -557,7 +557,7 @@ export const breakdowns: Breakdown[] = [
         breakdownID: uuidv4(),
         instanceID: instances[1].instanceID,
         userID: USERID,
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         marks: [
             {
                 type: Assessments.ASSIGNMENTS,
@@ -585,7 +585,7 @@ export const breakdowns: Breakdown[] = [
         breakdownID: uuidv4(),
         instanceID: instances[2].instanceID,
         userID: users[3].userID,
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         marks: [
             {
                 type: Assessments.MIDTERMS,
@@ -608,7 +608,7 @@ export const breakdowns: Breakdown[] = [
         breakdownID: uuidv4(),
         instanceID: instances[39].instanceID,
         userID: users[3].userID,
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         marks: [
             {
                 type: Assessments.MIDTERMS,
@@ -648,7 +648,7 @@ export const reviews: Review[] = [
         replies: [{
             userID: users[1].userID,
             comment: "I agree",
-            datetime: moment().valueOf()
+            datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf()
         }],
         tags: {
             [ReviewTag.HELPFUL]: {},
@@ -667,11 +667,11 @@ export const reviews: Review[] = [
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         replies: [{
             userID: users[1].userID,
             comment: "I agree",
-            datetime: moment().valueOf()
+            datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf()
         }],
         tags: {
             [ReviewTag.HELPFUL]: {},
@@ -690,11 +690,11 @@ export const reviews: Review[] = [
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         replies: [{
             userID: users[1].userID,
             comment: "I agree",
-            datetime: moment().valueOf()
+            datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf()
         }],
         tags: {
             [ReviewTag.HELPFUL]: {},
@@ -705,7 +705,7 @@ export const reviews: Review[] = [
     {
         reviewID: uuidv4(),
         instanceID: instances[2].instanceID,
-        userID: users[2].userID,
+        userID: users[3].userID,
         difficulty: 5,
         enjoyability: 1,
         workload: 4,
@@ -713,11 +713,11 @@ export const reviews: Review[] = [
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         replies: [{
             userID: users[1].userID,
             comment: "I agree",
-            datetime: moment().valueOf()
+            datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf()
         }],
         tags: {
             [ReviewTag.HELPFUL]: {},
