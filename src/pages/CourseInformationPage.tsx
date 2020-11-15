@@ -108,6 +108,9 @@ class CourseInformationPage extends React.Component<Props, State> {
 
         let semestercount = this.props.records?.map(record => `${this.props.instances[record.instanceID].term} ${this.props.instances[record.instanceID].year}`).unique().length ?? 0;
 
+        let highestgrade = Math.max(...Object.values(this.props.records).filter(record => record.status === Status.TAKEN).map(record => record.grade!))
+        let lowestgrade = Math.min(...Object.values(this.props.records).filter(record => record.status === Status.TAKEN).map(record => record.grade!))
+
         return (
             <PageHeader
                 style={{ width: "100%", minWidth: 900 }}
@@ -162,15 +165,15 @@ class CourseInformationPage extends React.Component<Props, State> {
                     <Card.Grid hoverable={false}>
                         <Statistic
                             title="Highest ever grade"
-                            value={Math.max(...Object.values(this.props.records).filter(record => record.status === Status.TAKEN).map(record => record.grade!))}
+                            value={highestgrade === -Infinity ? "N/A" : highestgrade}
                             precision={2}
-                            suffix="/ 12"
+                            suffix={highestgrade === -Infinity ? undefined : "/ 12"}
                         />
                         <Statistic
                             title="Lowest ever grade"
-                            value={Math.min(...Object.values(this.props.records).filter(record => record.status === Status.TAKEN).map(record => record.grade!))}
+                            value={lowestgrade === Infinity ? "N/A" : lowestgrade}
                             precision={2}
-                            suffix="/ 12"
+                            suffix={lowestgrade === Infinity ? undefined : "/ 12"}
                         />
                     </Card.Grid>
                     <Card.Grid hoverable={false}>
