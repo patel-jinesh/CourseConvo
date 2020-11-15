@@ -280,7 +280,7 @@ class AcademicRecordPage extends React.Component<Props, State> {
                 <Drawer
                     destroyOnClose
                     onClose={() => this.setState({ visible: false, recordID: undefined })}
-                    title="Create a new account"
+                    title="Add a record"
                     width={467}
                     visible={this.state.visible}>
                     <AcademicRecordForm
