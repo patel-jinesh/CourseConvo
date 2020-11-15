@@ -204,13 +204,6 @@ export const instances: CourseInstance[] = [
     })),
     ...Array(10).fill(undefined).map((_, i) => ({
         instanceID: uuidv4(),
-        courseID: courses[22].courseID, //SFWR4E03
-        instructor: "Douglas Down",
-        term: Term.FALL,
-        year: 2010 + (i)
-    })),
-    ...Array(10).fill(undefined).map((_, i) => ({
-        instanceID: uuidv4(),
         courseID: courses[27].courseID,
         instructor: "Hannah Holmes", //ECOn 1B03
         term: (i % 2) ? Term.WINTER : Term.FALL,
@@ -223,14 +216,7 @@ export const instances: CourseInstance[] = [
         term: (i % 2) ? Term.WINTER : Term.FALL,
         year: 2017 + (i % 2)
     })),
-    ...Array(4).fill(undefined).map((_, i) => ({
-        instanceID: uuidv4(),
-        courseID: courses[57].courseID, //Bio1A03
-        instructor: "Katie Moisse",
-        term: (i % 2) ? Term.WINTER : Term.FALL,
-        year: 2015 + (i % 2)
-    })),
-    ...Array(6).fill(undefined).map((_, i) => ({
+    ...Array(10).fill(undefined).map((_, i) => ({
         instanceID: uuidv4(),
         courseID: courses[59].courseID, //BIO
         instructor: "Katie Moisse",
@@ -437,6 +423,13 @@ export const instances: CourseInstance[] = [
         instanceID: uuidv4(),
         courseID: courses[1].courseID,
         instructor: "George Karakostas", //SFWRENG 2C03
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[22].courseID, //SFWR4E03
+        instructor: "Douglas Down",
         term: Term.FALL,
         year: 2010 + (i)
     })),
@@ -756,8 +749,8 @@ const reviewTypes: any = [
         enjoyability: 2,
         workload: 4,
     },
-
 ]
+
 /**
  * The reviews in our fake database.
  */
@@ -765,7 +758,7 @@ export const reviews: Review[] = [
     {
         reviewID: uuidv4(),
         instanceID: instances[0].instanceID,
-        userID: users[1].userID,
+        userID: users[4].userID,
         difficulty: 3,
         enjoyability: 2,
         workload: 1,
@@ -787,7 +780,7 @@ export const reviews: Review[] = [
     },
     {
         reviewID: uuidv4(),
-        instanceID: instances[10].instanceID,
+        instanceID: instances[0].instanceID,
         userID: users[2].userID,
         difficulty: 3,
         enjoyability: 2,
@@ -810,7 +803,7 @@ export const reviews: Review[] = [
     },
     {
         reviewID: uuidv4(),
-        instanceID: instances[20].instanceID,
+        instanceID: instances[0].instanceID,
         userID: users[1].userID,
         difficulty: 5,
         enjoyability: 5,
@@ -833,7 +826,7 @@ export const reviews: Review[] = [
     },
     {
         reviewID: uuidv4(),
-        instanceID: instances[20].instanceID,
+        instanceID: instances[0].instanceID,
         userID: users[3].userID,
         difficulty: 5,
         enjoyability: 1,
@@ -854,27 +847,578 @@ export const reviews: Review[] = [
             [ReviewTag.ACCURATE]: {}
         }
     },
-    // ...(courses.slice(1).map((course, index) => {
-    //     return Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => {
-    //         let random = randomIntFromInterval(0, 19);
-    //         return {
-    //             ...reviewTypes[random],
-    //             reviewID: uuidv4(),
-    //             instanceID: instances[index * randomIntFromInterval(0, 9)].instanceID,
-    //             userID: users[i + 1].userID,
-    //             isAnonymous: false,
-    //             upvoterIDs: {},
-    //             downvoterIDs: {},
-    //             datetime: moment().valueOf(),
-    //             replies: [],
-    //             tags: {
-    //                 [ReviewTag.HELPFUL]: {},
-    //                 [ReviewTag.DETAILED]: {},
-    //                 [ReviewTag.ACCURATE]: {}
-    //             }
-    //         }
-    //     })
-    // })).flat()
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[10].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
 
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[20].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
 
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[30].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[40].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[50].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[60].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[70].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[80].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[90].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[100].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[110].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[120].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[130].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[140].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[150].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[160].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[170].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[180].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[190].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[200].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[210].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[220].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[230].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[240].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[250].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[260].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[270].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[280].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[290].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[300].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[310].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[320].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[330].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
+    ...Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => ({
+        ...reviewTypes[randomIntFromInterval(0, 19)],
+        reviewID: uuidv4(),
+        instanceID: instances[340].instanceID,
+        userID: users[i + 1].userID,
+        isAnonymous: false,
+        upvoterIDs: {},
+        downvoterIDs: {},
+        datetime: moment().valueOf(),
+        replies: [],
+        tags: {
+            [ReviewTag.HELPFUL]: {},
+            [ReviewTag.DETAILED]: {},
+            [ReviewTag.ACCURATE]: {}
+        }
+    })),
 ]
