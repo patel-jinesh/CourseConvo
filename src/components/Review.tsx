@@ -193,7 +193,7 @@ class Review extends React.Component<Props, State> {
                         dataSource={
                             this.props.review.replies.map(reply => ({
                                 author: this.props.users[reply.userID].name,
-                                avatar: "https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png",
+                                avatar: this.props.users[reply.userID].avatar_url,
                                 content: <p>{reply.comment}</p>,
                                 datetime: moment(reply.datetime).fromNow()
                             })).reverse()
