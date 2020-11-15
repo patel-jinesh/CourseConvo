@@ -443,27 +443,27 @@ export const records: Record[] = [
     {
         recordID: uuidv4(),
         status: Status.IN_PROGRESS,
-        instanceID: instances[0].instanceID,
+        instanceID: instances[8].instanceID,
         userID: USERID,
     },
     {
         recordID: uuidv4(),
         status: Status.TAKEN,
-        instanceID: instances[10].instanceID,
+        instanceID: instances[19].instanceID,
         userID: USERID,
         grade: 12
     },
     {
         recordID: uuidv4(),
         status: Status.TAKEN,
-        instanceID: instances[20].instanceID,
+        instanceID: instances[37].instanceID,
         userID: USERID,
         grade: 9
     },
     {
         recordID: uuidv4(),
         status: Status.TAKEN,
-        instanceID: instances[30].instanceID,
+        instanceID: instances[47].instanceID,
         userID: USERID,
         grade: 6
     },
