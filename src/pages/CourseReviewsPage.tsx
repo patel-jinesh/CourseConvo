@@ -92,14 +92,12 @@ class CourseReviewsPage extends React.Component<Props, State> {
             .filter(review => review.userID !== USERID)
             .filter(review => {
                 let rating = (review.difficulty + review.workload + review.enjoyability) / 3;
+                let semester = `${this.props.instances[review.instanceID].term} ${this.props.instances[review.instanceID].year}`;
+                
+                let matchSemester = this.state.filters.semesters.includes("All") || this.state.filters.semesters.includes(semester);
+                let matchRating = this.state.filters.minimumrating <= rating;
 
-                if (this.state.filters.semesters.length === 1 && this.state.filters.semesters[0] === "All")
-                    return this.state.filters.minimumrating <= rating;
-                
-                if (this.state.filters.semesters.includes(`${this.props.instances[review.instanceID].term} ${this.props.instances[review.instanceID].year}`))
-                    return this.state.filters.minimumrating <= rating;
-                
-                return false;
+                return matchSemester && matchRating;
             })
             .sort((a, b) => {
                 return b.reviewID.localeCompare(a.reviewID);
