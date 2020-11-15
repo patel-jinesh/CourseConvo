@@ -205,12 +205,12 @@ class Review extends React.Component<Props, State> {
                     }
                 </Comment>
                 <Drawer
+                    destroyOnClose
                     onClose={() => this.setState({ reporting: false })}
                     title="Report"
                     width={467}
                     visible={this.state.reporting}>
                     <ReportForm
-                        key={this.props.user.userID}
                         user={this.props.user.name}
                         onFinish={() => this.setState({ reporting: false })}
                         onCancel={() => this.setState({ reporting: false })} />
