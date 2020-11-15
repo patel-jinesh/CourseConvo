@@ -50,25 +50,45 @@ const reviewsRedux = createSlice({
         },
         upvote(state, action: PayloadAction<{ reviewID: string, userID: string }>) {
             console.timeLog('Event', 'Review upvoted', action.payload);
+
+            if (state[action.payload.reviewID].userID === action.payload.userID)
+                return;
+
             state[action.payload.reviewID].upvoterIDs[action.payload.userID] = true;
             delete state[action.payload.reviewID].downvoterIDs[action.payload.userID];
         },
         downvote(state, action: PayloadAction<{ reviewID: string, userID: string }>) {
             console.timeLog('Event', 'Review downvoted', action.payload);
+
+            if (state[action.payload.reviewID].userID === action.payload.userID)
+                return;
+            
             state[action.payload.reviewID].downvoterIDs[action.payload.userID] = true;
             delete state[action.payload.reviewID].upvoterIDs[action.payload.userID];
         },
         unvote(state, action: PayloadAction<{ reviewID: string, userID: string }>) {
             console.timeLog('Event', 'Review unvoted', action.payload);
+
+            if (state[action.payload.reviewID].userID === action.payload.userID)
+                return;
+            
             delete state[action.payload.reviewID].upvoterIDs[action.payload.userID];
             delete state[action.payload.reviewID].downvoterIDs[action.payload.userID];
         },
         tag(state, action: PayloadAction<{ reviewID: string, userID: string, tag: ReviewTag }>) {
             console.timeLog('Event', 'Review tagged', action.payload);
+
+            if (state[action.payload.reviewID].userID === action.payload.userID)
+                return;
+            
             state[action.payload.reviewID].tags[action.payload.tag][action.payload.userID] = true;
         },
         untag(state, action: PayloadAction<{ reviewID: string, userID: string, tag: ReviewTag }>) {
             console.timeLog('Event', 'Review untagged', action.payload);
+
+            if (state[action.payload.reviewID].userID === action.payload.userID)
+                return;
+            
             delete state[action.payload.reviewID].tags[action.payload.tag][action.payload.userID];
         }
     }

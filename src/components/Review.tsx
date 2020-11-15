@@ -127,15 +127,15 @@ class Review extends React.Component<Props, State> {
                         <Tooltip title="Like">
                             <span
                                 onClick={() => (this.props.review.upvoterIDs[USERID] ? this.props.unvote : this.props.upvote)({ reviewID: this.props.reviewID, userID: USERID })}
-                                style={{ pointerEvents: (this.props.review.userID !== USERID ? 'all' : 'none') }}>
+                                style={{ cursor: (this.props.review.userID !== USERID ? 'pointer' : 'not-allowed') }}>
                                 {this.props.review.upvoterIDs[USERID] ? <LikeTwoTone /> : <LikeFilled />}
-                                <span style={{ pointerEvents: (this.props.review.userID !== USERID ? 'all' : 'none') }}>{Object.keys(this.props.review.upvoterIDs).length}</span>
+                                <span>{Object.keys(this.props.review.upvoterIDs).length}</span>
                             </span>
                         </Tooltip>,
                         <Tooltip title="Dislike">
                             <span
                                 onClick={() => (this.props.review.downvoterIDs[USERID] ? this.props.unvote : this.props.downvote)({ reviewID: this.props.reviewID, userID: USERID })}
-                                style={{ pointerEvents: (this.props.review.userID !== USERID ? 'all' : 'none') }}>
+                                style={{ cursor: (this.props.review.userID !== USERID ? 'pointer' : 'not-allowed') }}>
                                 {this.props.review.downvoterIDs[USERID] ? <DislikeTwoTone /> : <DislikeFilled />}
                                 <span>{Object.keys(this.props.review.downvoterIDs).length}</span>
                             </span>
@@ -149,7 +149,7 @@ class Review extends React.Component<Props, State> {
                                     icon={tagged ? <CheckOutlined /> : undefined}
                                     onClick={() => (tagged ? this.props.untag : this.props.tag)({ reviewID: this.props.reviewID, userID: USERID, tag: tag })}
                                     color={color}
-                                    style={{ color: "black", pointerEvents: (this.props.review.userID !== USERID ? 'all' : 'none') }}>
+                                    style={{ color: "black", cursor: (this.props.review.userID !== USERID ? 'pointer' : 'not-allowed') }}>
                                     {tag}:  {Object.values(this.props.review.tags[tag]).length}
                                 </Tag>
                             );
