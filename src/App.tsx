@@ -1,4 +1,4 @@
-import { AuditOutlined, CommentOutlined, HomeOutlined, InfoCircleOutlined, PieChartOutlined, SearchOutlined } from '@ant-design/icons';
+import { AuditOutlined, BulbOutlined, CommentOutlined, HomeOutlined, InfoCircleOutlined, PieChartOutlined, SearchOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import React from 'react';
 import { connect, ConnectedProps } from 'react-redux';
@@ -51,8 +51,8 @@ function Nav() {
           <Menu.Item key="/academics" icon={<AuditOutlined />}>
             <Link to="/academics">Academic Records</Link>
           </Menu.Item>
-          <Menu.Item key="/electives" icon={<AuditOutlined />}>
-            <Link to="/electives">Electives</Link>
+          <Menu.Item key="/electives" icon={<BulbOutlined />}>
+            <Link to={{ pathname: "/electives", search: query.toString(), state: history.location.state }}>Electives</Link>
           </Menu.Item>
         </Menu.ItemGroup>
         <Menu.ItemGroup title="Courses">
