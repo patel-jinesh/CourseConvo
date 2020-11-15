@@ -166,19 +166,6 @@ class CourseInformationPage extends React.Component<Props, State> {
                             precision={2}
                             suffix="/ 12"
                         />
-                    </Card.Grid>
-                    <Card.Grid hoverable={false}>
-                        <Statistic
-                            title="Best instructor"
-                            value={bestratedinstructor ?? "N/A"}
-                        />
-                    </Card.Grid>
-                    <Card.Grid hoverable={false}>
-                        <Statistic
-                            title="Most recent instructor"
-                            value={mostrecentinstructor}
-                        />
-                    </Card.Grid><Card.Grid hoverable={false}>
                         <Statistic
                             title="Lowest ever grade"
                             value={Math.min(...Object.values(this.props.records).filter(record => record.status === Status.TAKEN).map(record => record.grade!))}
@@ -188,11 +175,19 @@ class CourseInformationPage extends React.Component<Props, State> {
                     </Card.Grid>
                     <Card.Grid hoverable={false}>
                         <Statistic
+                            title="Best instructor"
+                            value={bestratedinstructor ?? "N/A"}
+                        />
+                        <Statistic
                             title="Last taught in"
                             value={lastbestinstance === undefined ? "N/A" : `${lastbestinstance.term} ${lastbestinstance.year}`}
                         />
                     </Card.Grid>
                     <Card.Grid hoverable={false}>
+                        <Statistic
+                            title="Most recent instructor"
+                            value={mostrecentinstructor}
+                        />
                         <Statistic
                             title="Last taught in"
                             value={mostrecentsemester}
