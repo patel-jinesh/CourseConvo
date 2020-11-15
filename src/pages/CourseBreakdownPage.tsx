@@ -85,7 +85,8 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
             .filter(breakdown => breakdown.userID !== USERID)
             .map(breakdown => `${this.props.instances[breakdown.instanceID].term} ${this.props.instances[breakdown.instanceID].year}`)
             .unique()
-            .sort();
+            .sort()
+            .reverse();
 
         let assessments = Object.values(Assessments)
             .map(assessment => `${assessment}`)

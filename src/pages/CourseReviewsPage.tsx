@@ -85,7 +85,8 @@ class CourseReviewsPage extends React.Component<Props, State> {
             .filter(review => review.userID !== USERID)
             .map(review => `${this.props.instances[review.instanceID].term} ${this.props.instances[review.instanceID].year}`)
             .unique()
-            .sort();
+            .sort()
+            .reverse();
 
         let datasource = this.props.reviews.reverse()
             .filter(review => review.userID !== USERID)
