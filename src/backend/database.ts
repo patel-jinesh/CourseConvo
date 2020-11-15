@@ -199,7 +199,7 @@ export const instances: CourseInstance[] = [
         instanceID: uuidv4(),
         courseID: courses[10].courseID, //SFWR3BB4
         instructor: "Emil Sekerinski",
-        term: Term.FALL,
+        term: Term.WINTER,
         year: 2010 + (i)
     })),
     ...Array(10).fill(undefined).map((_, i) => ({
@@ -604,6 +604,30 @@ export const breakdowns: Breakdown[] = [
                 type: Assessments.PROJECTS,
                 weight: 30,
                 count: 1
+            }
+        ],
+        isAnonymous: false
+    },
+    {
+        breakdownID: uuidv4(),
+        instanceID: instances[39].instanceID,
+        userID: users[3].userID,
+        datetime: moment().valueOf(),
+        marks: [
+            {
+                type: Assessments.MIDTERMS,
+                weight: 30,
+                count: 3
+            },
+            {
+                type: Assessments.EXAMS,
+                weight: 50,
+                count: 1
+            },
+            {
+                type: Assessments.ASSIGNMENTS,
+                weight: 20,
+                count: 5
             }
         ],
         isAnonymous: false
