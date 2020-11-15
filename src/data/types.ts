@@ -50,7 +50,6 @@ export interface Breakdown {
     instanceID: string;
     userID: string;
     marks: Mark[];
-    isAnonymous: boolean;
 }
 
 export interface Course {
