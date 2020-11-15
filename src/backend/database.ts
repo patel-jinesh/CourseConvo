@@ -479,6 +479,7 @@ export const records: Record[] = [
     //     }))
     // )).flat())
 ]
+
 /**
  * The breakdowns in our fake database.
  */
@@ -603,9 +604,138 @@ export const breakdowns: Breakdown[] = [
             }
         ],
         isAnonymous: false
-    }
+    },
+
 ]
 
+
+function randomIntFromInterval(min: number, max: number) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+const reviewTypes: any = [
+    {
+        comment: "Course was very bad, and did not prepare me at all. I cannot belive the professor did not get fired. The professor constantly snaked and contradicted himself very often. Exams and midterms were very unfair and does not prepare us for the real wrold. When I took future course that requried this courses knowledge I was very lost.",
+        difficulty: 1,
+        enjoyability: 2,
+        workload: 3,
+    },
+    {
+        comment: "Course was very easy, but there is some work, I loved the professor and TA's",
+        difficulty: 5,
+        enjoyability: 4,
+        workload: 3,
+    },
+    {
+        comment: "Bird course",
+        difficulty: 5,
+        enjoyability: 5,
+        workload: 4,
+    },
+    {
+        comment: "Bird course",
+        difficulty: 5,
+        enjoyability: 5,
+        workload: 5,
+    },
+    {
+        comment: "I thought this course is an easy A+",
+        difficulty: 5,
+        enjoyability: 3,
+        workload: 3,
+    },
+    {
+        comment: "Course was very easy and barely any work but it was very boring",
+        difficulty: 5,
+        enjoyability: 3,
+        workload: 5,
+    },
+    {
+        comment: "its a meh course, not too hard, not too easy, not too exicting",
+        difficulty: 3,
+        enjoyability: 3,
+        workload: 3,
+    },
+    {
+        comment: "its a meh course, not too hard, not too easy, not too exicting",
+        difficulty: 4,
+        enjoyability: 4,
+        workload: 4,
+    },
+    {
+        comment: "Amazing course, the TA sankar rengantthan is too sick",
+        difficulty: 5,
+        enjoyability: 5,
+        workload: 5,
+    },
+    {
+        comment: "Very Tough course, I cannot believe I almost failed, this is a very tough course and I pray for anyone who takes this course",
+        difficulty: 1,
+        enjoyability: 1,
+        workload: 1,
+    },
+    {
+        comment: "Tough course, the professor  tried his best tho",
+        difficulty: 1,
+        enjoyability: 3,
+        workload: 1,
+    },
+    {
+        comment: "Tough course, the professor  tried his best tho",
+        difficulty: 1,
+        enjoyability: 5,
+        workload: 1,
+    },
+    {
+        comment: "Ok course, the professor  tried his best tho",
+        difficulty: 3,
+        enjoyability: 5,
+        workload: 1,
+    },
+    {
+        comment: "This assessments for this course are hit or miss in terms of what you are able to learn from them. The practical portions of the assignments were easy and helpful, especially when we needed to use unit testing which helped us learn about the test driven development process. The downside to the assignments was that we were required to construct a formal specification document for select assignments. The task here was to create a set of specs that mathematically describe the inputs and the correlating outputsThe irony here is that the instructions were so vague given that the document had to be very specific (so specific that mathematical language needed to be used to reduce any ambiguity). I had to use a 100% of 10% of my brain power to complete these specs at a satisfactory level. My complaints don't just stop there. The midterm and exam for this course is so next level that you would probably need to take an escalator just to understand the first question you see. One of the questions on the exam was designed so 90% of the class would be prevented from saying that they got that question right. And this was after the professor had said that we won't be blindsided in the exam and that the exam would be straightforward. Well I guess it was as as they; you can trust a dishonest man to be dishonest. After the course when I had a chance to stop and reflect at what I had learned, I realized that all I really learned was that unit testing is useful, which is cool I guess. Also I have been told that barely anyone uses formal specs in the industry (except for specific teams) so its good to know I went through all that effort for nothing.",
+        difficulty: 1,
+        enjoyability: 5,
+        workload: 5,
+    },
+    {
+        comment: "Medicore course",
+        difficulty: 2,
+        enjoyability: 3,
+        workload: 3,
+    },
+    {
+        comment: "Ok, so this course was doable in terms of difficulty. The assigments were super hard while the midterms and quizzes were things I could handle. There was too much work and a lot of it seemed unnecessary. I did not enjoy doing the assignments as they were very tedious to finish.",
+        difficulty: 4,
+        enjoyability: 3,
+        workload: 3,
+    },
+    {
+        comment: "I regret everyhting",
+        difficulty: 1,
+        enjoyability: 1,
+        workload: 1,
+    },
+    {
+        comment: "I personaly enjoyed the course a lot and I think it's one of the best courses I've taken! The professor was super nice and I thing he did a great job teaching",
+        difficulty: 5,
+        enjoyability: 5,
+        workload: 2,
+    },
+    {
+        comment: "I personaly disliked the course a lot and I think it's one of the most ok courses I've taken. The professor was alright and he did an alright job teaching",
+        difficulty: 4,
+        enjoyability: 3,
+        workload: 2,
+    },
+    {
+        comment: "`This assessments for this course are hit or miss in terms of what you are able to learn from them. The coding portions of the assignments were easy and helpful, especially when we need to use unit testing which helped us learn about the test driven development process. The downside to the assignments was that we were required to construct a formal specification document for select assignments. The task here was to create a set of specs that mathematically describe the inputs and the correlating outputsThe irony here is that the instructions were so vague given that the document had to be very specific (so specific that mathematical language needed to be used to reduce any ambiguity). I had to use a 100% of 10% of my brain power to complete these specs at a satisfactory level. My complaints don't just stop there. The midterm and exam for this course is so next level that you would probably need to take an escalator just to understand the first question you see. One of the questions on the exam was designed so 90% of the class would be prevented from saying that they got that question right. And this was after the professor had said that we won't be blindsided in the exam and that the exam would be straightforward. Well I guess it was as as they; you can trust a dishonest man to be dishonest. After the course when I had a chance to stop and reflect at what I had learned, I realized that all I really learned was that unit testing is useful, which is cool I guess. Also I have been told that barely anyone uses formal specs in the industry (except for specific teams) so its good to know I went through all that effort for nothing.`,",
+        difficulty: 2,
+        enjoyability: 2,
+        workload: 4,
+    },
+
+]
 /**
  * The reviews in our fake database.
  */
@@ -635,8 +765,8 @@ export const reviews: Review[] = [
     },
     {
         reviewID: uuidv4(),
-        instanceID: instances[1].instanceID,
-        userID: users[0].userID,
+        instanceID: instances[10].instanceID,
+        userID: users[2].userID,
         difficulty: 3,
         enjoyability: 2,
         workload: 1,
@@ -658,8 +788,8 @@ export const reviews: Review[] = [
     },
     {
         reviewID: uuidv4(),
-        instanceID: instances[2].instanceID,
-        userID: users[2].userID,
+        instanceID: instances[20].instanceID,
+        userID: users[1].userID,
         difficulty: 5,
         enjoyability: 5,
         workload: 4,
@@ -681,7 +811,7 @@ export const reviews: Review[] = [
     },
     {
         reviewID: uuidv4(),
-        instanceID: instances[2].instanceID,
+        instanceID: instances[20].instanceID,
         userID: users[2].userID,
         difficulty: 5,
         enjoyability: 1,
@@ -701,5 +831,28 @@ export const reviews: Review[] = [
             [ReviewTag.DETAILED]: {},
             [ReviewTag.ACCURATE]: {}
         }
-    }
+    },
+    // ...(courses.slice(1).map((course, index) => {
+    //     return Array(randomIntFromInterval(1, 4)).fill(undefined).map((_, i) => {
+    //         let random = randomIntFromInterval(0, 19);
+    //         return {
+    //             ...reviewTypes[random],
+    //             reviewID: uuidv4(),
+    //             instanceID: instances[index * randomIntFromInterval(0, 9)].instanceID,
+    //             userID: users[i + 1].userID,
+    //             isAnonymous: false,
+    //             upvoterIDs: {},
+    //             downvoterIDs: {},
+    //             datetime: moment().valueOf(),
+    //             replies: [],
+    //             tags: {
+    //                 [ReviewTag.HELPFUL]: {},
+    //                 [ReviewTag.DETAILED]: {},
+    //                 [ReviewTag.ACCURATE]: {}
+    //             }
+    //         }
+    //     })
+    // })).flat()
+
+
 ]
