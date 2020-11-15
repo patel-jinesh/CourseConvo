@@ -96,21 +96,11 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
         let datasource = this.props.breakdowns.reverse()
             .filter(breakdown => breakdown.userID !== USERID)
             .filter(breakdown => {
-                if (this.state.filters.semesters.length === 1 && this.state.filters.semesters[0] === "All") {
-                    if (this.state.filters.assessments.length === 1 && this.state.filters.assessments[0] === "All")
-                        return true;
-                    else
-                        return this.state.filters.assessments.some(item => breakdown.marks.map(mark => mark.type).includes(item));
-                }
+                let semester = `${this.props.instances[breakdown.instanceID].term} ${this.props.instances[breakdown.instanceID].year}`;
+                let matchSemester = this.state.filters.semesters.includes("All") || this.state.filters.semesters.includes(semester)
+                let matchAssessments = this.state.filters.assessments.includes("All") || this.state.filters.assessments.some(item => breakdown.marks.map(mark => mark.type).includes(item));
 
-                if (this.state.filters.semesters.includes(`${this.props.instances[breakdown.instanceID].term} ${this.props.instances[breakdown.instanceID].year}`)) {
-                    if (this.state.filters.assessments.length === 1 && this.state.filters.assessments[0] === "All")
-                        return true;
-                    else
-                        return this.state.filters.assessments.some(item => breakdown.marks.map(mark => mark.type).includes(item));
-                }
-
-                return false;
+                return matchSemester && matchAssessments;
             })
             .sort((a, b) => {
                 return b.breakdownID.localeCompare(a.breakdownID);
