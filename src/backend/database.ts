@@ -444,40 +444,38 @@ export const records: Record[] = [
         recordID: uuidv4(),
         status: Status.IN_PROGRESS,
         instanceID: instances[0].instanceID,
-        userID: users[0].userID
+        userID: USERID,
     },
     {
         recordID: uuidv4(),
         status: Status.TAKEN,
         instanceID: instances[10].instanceID,
-        userID: users[0].userID,
+        userID: USERID,
         grade: 12
     },
     {
         recordID: uuidv4(),
         status: Status.TAKEN,
         instanceID: instances[20].instanceID,
-        userID: users[0].userID,
+        userID: USERID,
         grade: 9
     },
     {
         recordID: uuidv4(),
         status: Status.TAKEN,
         instanceID: instances[30].instanceID,
-        userID: users[0].userID,
+        userID: USERID,
         grade: 6
     },
-
-
-    // ...(instances.map(instance => (
-    //     Array(10).fill(undefined).map(_ => ({
-    //         recordID: uuidv4(),
-    //         status: Status.TAKEN,
-    //         instanceID: instance.instanceID,
-    //         userID: users[2].userID,
-    //         grade: Math.floor(1 + Math.random() * (12))
-    //     }))
-    // )).flat())
+    ...(instances.map(instance => (
+        Array(10).fill(undefined).map(_ => ({
+            recordID: uuidv4(),
+            status: Status.TAKEN,
+            instanceID: instance.instanceID,
+            userID: users[2].userID,
+            grade: Math.floor(1 + Math.random() * (12))
+        }))
+    )).flat())
 ]
 /**
  * The breakdowns in our fake database.
