@@ -95,9 +95,10 @@ class CourseInformationPage extends React.Component<Props, State> {
 
         let instancessorted = Object.values(this.props.instances).sort((a, b) => {
             if (a.year === b.year)
-                return termmap[a.term] - termmap[b.term]
-            return a.year - b.year;
+                return termmap[b.term] - termmap[a.term]
+            return b.year - a.year;
         });
+        
 
         let mostrecentinstance = instancessorted[0];
         let mostrecentinstructor = mostrecentinstance.instructor;
