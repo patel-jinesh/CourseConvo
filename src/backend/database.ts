@@ -433,7 +433,13 @@ export const instances: CourseInstance[] = [
         term: (i % 2) ? Term.WINTER : Term.FALL,
         year: 2010 + (i)
     })),
-
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[1].courseID,
+        instructor: "George Karakostas", //SFWRENG 2C03
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
 ]
 
 /**
