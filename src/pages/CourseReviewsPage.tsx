@@ -137,7 +137,7 @@ class CourseReviewsPage extends React.Component<Props, State> {
                 style={{ width: "100%", minWidth: 900 }}
                 backIcon={false}
                 title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}
-                extra={this.state.hide && <Button onClick={() => this.setState({ visible: true })} type="primary">Write a review!</Button>}
+                extra={!this.props.userreview && this.state.hide && <Button onClick={() => this.setState({ visible: true })} type="primary">Write a review!</Button>}
             >
                 {content}
                 <Row gutter={24} wrap={false}>

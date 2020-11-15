@@ -85,7 +85,6 @@ class AddBreakdownForm extends React.Component<Props, State> {
                 breakdownID: this.props.breakdownID,
                 userID: USERID,
                 marks: values.assessments,
-                isAnonymous: false
             });
         else
             this.props.addBreakdown({
@@ -94,7 +93,6 @@ class AddBreakdownForm extends React.Component<Props, State> {
                 instanceID: instanceID,
                 userID: USERID,
                 marks: values.assessments,
-                isAnonymous: false
             });
 
         if (this.props.onFinish)

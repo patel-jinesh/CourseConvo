@@ -163,7 +163,7 @@ class CourseBreakdownsPage extends React.Component<Props, State> {
                 style={{ width: "100%", minWidth: 900 }}
                 backIcon={false}
                 title={`${this.props.course?.subject} ${this.props.course?.code} - ${this.props.course?.name}`}
-                extra={this.state.hide && <Button onClick={() => this.setState({ visible: true })} type="primary">Write a breakdown!</Button>}
+                extra={!this.props.userbreakdown && this.state.hide && <Button onClick={() => this.setState({ visible: true })} type="primary">Write a breakdown!</Button>}
             >
                 {content}
                 <Row gutter={24}>

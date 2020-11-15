@@ -199,7 +199,7 @@ export const instances: CourseInstance[] = [
         instanceID: uuidv4(),
         courseID: courses[10].courseID, //SFWR3BB4
         instructor: "Emil Sekerinski",
-        term: Term.FALL,
+        term: Term.WINTER,
         year: 2010 + (i)
     })),
     ...Array(10).fill(undefined).map((_, i) => ({
@@ -433,7 +433,13 @@ export const instances: CourseInstance[] = [
         term: (i % 2) ? Term.WINTER : Term.FALL,
         year: 2010 + (i)
     })),
-
+    ...Array(10).fill(undefined).map((_, i) => ({
+        instanceID: uuidv4(),
+        courseID: courses[1].courseID,
+        instructor: "George Karakostas", //SFWRENG 2C03
+        term: Term.FALL,
+        year: 2010 + (i)
+    })),
 ]
 
 /**
@@ -443,41 +449,39 @@ export const records: Record[] = [
     {
         recordID: uuidv4(),
         status: Status.IN_PROGRESS,
-        instanceID: instances[0].instanceID,
-        userID: users[0].userID
+        instanceID: instances[8].instanceID,
+        userID: USERID,
     },
     {
         recordID: uuidv4(),
         status: Status.TAKEN,
-        instanceID: instances[10].instanceID,
-        userID: users[0].userID,
+        instanceID: instances[19].instanceID,
+        userID: USERID,
         grade: 12
     },
     {
         recordID: uuidv4(),
         status: Status.TAKEN,
-        instanceID: instances[20].instanceID,
-        userID: users[0].userID,
+        instanceID: instances[37].instanceID,
+        userID: USERID,
         grade: 9
     },
     {
         recordID: uuidv4(),
         status: Status.TAKEN,
-        instanceID: instances[30].instanceID,
-        userID: users[0].userID,
+        instanceID: instances[47].instanceID,
+        userID: USERID,
         grade: 6
     },
-
-
-    // ...(instances.map(instance => (
-    //     Array(10).fill(undefined).map(_ => ({
-    //         recordID: uuidv4(),
-    //         status: Status.TAKEN,
-    //         instanceID: instance.instanceID,
-    //         userID: users[2].userID,
-    //         grade: Math.floor(1 + Math.random() * (12))
-    //     }))
-    // )).flat())
+    ...(instances.map(instance => (
+        Array(10).fill(undefined).map(_ => ({
+            recordID: uuidv4(),
+            status: Status.TAKEN,
+            instanceID: instance.instanceID,
+            userID: users[2].userID,
+            grade: Math.floor(1 + Math.random() * (12))
+        }))
+    )).flat())
 ]
 
 /**
@@ -488,7 +492,7 @@ export const breakdowns: Breakdown[] = [
         breakdownID: uuidv4(),
         instanceID: instances[0].instanceID,
         userID: users[1].userID,
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         marks: [
             {
                 type: Assessments.ASSIGNMENTS,
@@ -516,13 +520,12 @@ export const breakdowns: Breakdown[] = [
                 count: 4
             },
         ],
-        isAnonymous: false
     },
     {
         breakdownID: uuidv4(),
         instanceID: instances[0].instanceID,
         userID: users[2].userID,
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         marks: [
             {
                 type: Assessments.ASSIGNMENTS,
@@ -550,13 +553,12 @@ export const breakdowns: Breakdown[] = [
                 count: 4
             },
         ],
-        isAnonymous: false
     },
     {
         breakdownID: uuidv4(),
         instanceID: instances[1].instanceID,
         userID: USERID,
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         marks: [
             {
                 type: Assessments.ASSIGNMENTS,
@@ -579,13 +581,12 @@ export const breakdowns: Breakdown[] = [
                 count: 4
             },
         ],
-        isAnonymous: false
     },
     {
         breakdownID: uuidv4(),
         instanceID: instances[2].instanceID,
         userID: users[3].userID,
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         marks: [
             {
                 type: Assessments.MIDTERMS,
@@ -603,9 +604,30 @@ export const breakdowns: Breakdown[] = [
                 count: 1
             }
         ],
-        isAnonymous: false
     },
-
+    {
+        breakdownID: uuidv4(),
+        instanceID: instances[39].instanceID,
+        userID: users[3].userID,
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
+        marks: [
+            {
+                type: Assessments.MIDTERMS,
+                weight: 30,
+                count: 3
+            },
+            {
+                type: Assessments.EXAMS,
+                weight: 50,
+                count: 1
+            },
+            {
+                type: Assessments.ASSIGNMENTS,
+                weight: 20,
+                count: 5
+            }
+        ],
+    }
 ]
 
 
@@ -755,7 +777,7 @@ export const reviews: Review[] = [
         replies: [{
             userID: users[1].userID,
             comment: "I agree",
-            datetime: moment().valueOf()
+            datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf()
         }],
         tags: {
             [ReviewTag.HELPFUL]: {},
@@ -774,11 +796,11 @@ export const reviews: Review[] = [
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         replies: [{
             userID: users[1].userID,
             comment: "I agree",
-            datetime: moment().valueOf()
+            datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf()
         }],
         tags: {
             [ReviewTag.HELPFUL]: {},
@@ -797,11 +819,11 @@ export const reviews: Review[] = [
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         replies: [{
             userID: users[1].userID,
             comment: "I agree",
-            datetime: moment().valueOf()
+            datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf()
         }],
         tags: {
             [ReviewTag.HELPFUL]: {},
@@ -812,7 +834,7 @@ export const reviews: Review[] = [
     {
         reviewID: uuidv4(),
         instanceID: instances[20].instanceID,
-        userID: users[2].userID,
+        userID: users[3].userID,
         difficulty: 5,
         enjoyability: 1,
         workload: 4,
@@ -820,11 +842,11 @@ export const reviews: Review[] = [
         isAnonymous: false,
         upvoterIDs: {},
         downvoterIDs: {},
-        datetime: moment().valueOf(),
+        datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf(),
         replies: [{
             userID: users[1].userID,
             comment: "I agree",
-            datetime: moment().valueOf()
+            datetime: moment().subtract(Math.floor(1 + Math.random() * (48)), 'hour').valueOf()
         }],
         tags: {
             [ReviewTag.HELPFUL]: {},

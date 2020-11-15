@@ -58,11 +58,6 @@ class HomePage extends React.Component<Props, State> {
 
     }
 
-    getElectiveRecommendations = (numCourse: number) => {
-
-        return [];
-    }
-
     getMostPopularCourses = (numCourse: number) => {
         let mostPopularCourses: { [courseID: string]: { count: number } } = {};
         for (let i = 0; i < this.props.reviews.length; i++) {
