@@ -107,8 +107,10 @@ class HomePage extends React.Component<Props, State> {
                                 dataSource={this.getTopRatedCourses(numCourses)}
                                 renderItem={item => (
                                     <List.Item>
-                                        <Row style={{ width: "100%" }}>
-                                            <Col flex={1}>{`${this.props.courses[item.courseID].subject} ${this.props.courses[item.courseID].code}`}
+                                        <Row style={{ width: "100%" }} align="middle">
+                                            <Col span={9}>{`${this.props.courses[item.courseID].subject} ${this.props.courses[item.courseID].code}`}
+                                            </Col>
+                                            <Col offset={2} flex={1}>
                                                 <Tooltip title='Information'>
                                                     <Button
                                                         type='link'
@@ -180,7 +182,7 @@ class HomePage extends React.Component<Props, State> {
 
                                 renderItem={item => (
                                     <List.Item>
-                                        <Row style={{ width: "100%" }}>
+                                        <Row style={{ width: "100%" }} align="middle">
                                             <Col flex={1}>{`${this.props.courses[item.courseID].subject} ${this.props.courses[item.courseID].code}`}</Col>
                                             <Col style={{ height: "36.660px" }}>
                                                 <Button
@@ -205,7 +207,7 @@ class HomePage extends React.Component<Props, State> {
                                 dataSource={this.getTopRatedInstructors(numCourses)}
                                 renderItem={item => (
                                     <List.Item>
-                                        <Row style={{ width: "100%" }}>
+                                        <Row style={{ width: "100%" }} align="middle">
                                             <Col flex={1}>{`${item.instructor}`}</Col>
                                             <Col>
                                                 <Statistic
