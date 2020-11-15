@@ -1,4 +1,4 @@
-import { AutoComplete, DatePicker, Form, Input, Radio, Select } from "antd";
+import { AutoComplete, DatePicker, Form, Input, Select } from "antd";
 import { SizeType } from 'antd/lib/config-provider/SizeContext';
 import React, { CSSProperties } from "react";
 import { Course, CourseInstance, FormType, Term } from "../data/types";
@@ -104,42 +104,6 @@ export function addInstructorForm(instance: any, instances: CourseInstance[]) {
                         .map(instructor => ({ value: instructor }))
                 }
             />
-        </Form.Item>
-    );
-}
-
-function collectButtons(list: any) {
-    var buttons = []
-    for (let item in list) {
-        buttons.push(<Radio.Button key={item} value={list[item]}>{list[item]}</Radio.Button>)
-    }
-    return buttons
-}
-
-export function addRadioGroup(name: string, label: string, list: any, dependencies?: string[], courses?: Course[], instances?: CourseInstance[], courseID?: string) {
-    return (
-        <Form.Item
-            noStyle
-            dependencies={dependencies}
-            rules={[{ required: true, message: "Please select one of the options!" }]}>
-            {({ getFieldValue }) => {
-                let term = getFieldValue('term');
-                let year = getFieldValue('year')?.year();
-
-                let instance = instances?.find(instance =>
-                    instance.courseID === courseID &&
-                    instance.term === term &&
-                    instance.year === year);
-
-                return (
-                    <Form.Item name={name} label={label}>
-                        <Radio.Group buttonStyle='solid' disabled={dependencies !== undefined && instance !== undefined && instance.lecture !== undefined}>
-                            {collectButtons(list)}
-                        </Radio.Group>
-                    </Form.Item>
-                )
-            }}
-
         </Form.Item>
     );
 }

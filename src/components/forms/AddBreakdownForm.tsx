@@ -6,10 +6,10 @@ import { connect, ConnectedProps } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '../../app/store';
 import { USERID } from '../../backend/database';
-import { Assessments, FormType, Lecture } from '../../data/types';
+import { Assessments, FormType } from '../../data/types';
 import { add as addBreakdown, edit as editBreakdown } from '../../features/courses/breakdown';
 import { add as addInstance } from '../../features/courses/instance';
-import { addDateForm, addForms, addRadioGroup, addTermForm } from "../../utilities/formUtils";
+import { addDateForm, addForms, addTermForm } from "../../utilities/formUtils";
 
 const { Option } = Select;
 
@@ -62,8 +62,6 @@ class AddBreakdownForm extends React.Component<Props, State> {
 
         if (instance !== undefined && values.instructor !== instance.instructor)
             this.form.current?.setFieldsValue({ instructor: instance.instructor });
-        if (instance?.lecture !== undefined && values.lecture !== instance.lecture)
-            this.form.current?.setFieldsValue({ lecture: instance.lecture });
     }
 
     onFinish = (values: any) => {
@@ -72,7 +70,6 @@ class AddBreakdownForm extends React.Component<Props, State> {
 
         if (instance === undefined)
             this.props.addInstance({
-                lecture: values.lecture,
                 instanceID: instanceID,
                 instructor: values.instructor,
                 term: values.term,
