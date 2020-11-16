@@ -148,7 +148,7 @@ class ElectivePage extends React.Component<Props, State> {
 
                 <Row style={{ width: "100%" }}>
                     <Col span={5}>
-                        <Affix offsetTop={50}>
+                        <Affix offsetTop={30}>
                             <Card bordered={false} title="Elective Filter Options">
                                 <Space direction='vertical'>
                                     <span> Course: (required)</span>
