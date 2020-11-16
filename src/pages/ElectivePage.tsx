@@ -112,7 +112,7 @@ class ElectivePage extends React.Component<Props, State> {
         //Getting top numCourse results of the filter
         results.sort((a, b) => { return courseRatings[b.courseID].overallRating - courseRatings[a.courseID].overallRating });
         if (results.length > numCourse) {
-            results.splice(0, numCourse);
+            results = results.splice(0, numCourse);
 
         }
 
