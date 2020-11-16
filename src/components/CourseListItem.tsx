@@ -140,21 +140,21 @@ class CourseListItem extends React.Component<Props, State> {
                             { this.props.showOtherRatings && this.props.difficulty !== undefined && <Row align="middle">
                                 <Col span={4}> Overall Difficulty</Col>
                                 <Col>
-                                    <SmileRate value={Math.round(this.props.difficulty)} disabled={true} />
+                                    <SmileRate value={Math.round(this.props.difficulty)} disabled={true} tooltips={["Challenging", "Hard", "Understandable", "Easy", "No brainer"]} />
                                 </Col>
                             </Row>
                             }
                             { this.props.showOtherRatings && this.props.enjoyability !== undefined && <Row align="middle">
                                 <Col span={4}> Overall Enjoyability</Col>
                                 <Col>
-                                    <SmileRate value={Math.round(this.props.enjoyability)} disabled={true} />
+                                    <SmileRate value={Math.round(this.props.enjoyability)} disabled={true} tooltips={["Challenging", "Hard", "Understandable", "Easy", "No brainer"]} />
                                 </Col>
                             </Row>
                             }
                             { this.props.showOtherRatings && this.props.workload !== undefined && <Row align="middle">
                                 <Col span={4}> Overall Workload</Col>
                                 <Col>
-                                    <SmileRate value={Math.round(this.props.workload)} disabled={true} />
+                                    <SmileRate value={Math.round(this.props.workload)} disabled={true} tooltips={["Challenging", "Hard", "Understandable", "Easy", "No brainer"]} />
                                 </Col>
                             </Row>
                             }

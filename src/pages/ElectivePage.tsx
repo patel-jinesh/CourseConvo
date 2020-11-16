@@ -94,7 +94,7 @@ class ElectivePage extends React.Component<Props, State> {
     getCourseSuggestions = (numCourse: number) => {
         let noneDefined = this.state.subject === undefined;
         let courseRatings = getCourseRatings(this.props.reviews, this.props.instances);
-        console.log(courseRatings);
+
 
         //filtering results to match filter options
         let results = Object.values(this.props.courses)
@@ -112,7 +112,8 @@ class ElectivePage extends React.Component<Props, State> {
         //Getting top numCourse results of the filter
         results.sort((a, b) => { return courseRatings[b.courseID].overallRating - courseRatings[a.courseID].overallRating });
         if (results.length > numCourse) {
-            results.slice(0, numCourse);
+            results.splice(0, numCourse);
+
         }
 
         if (!noneDefined && results.length === 0) {
@@ -164,6 +165,7 @@ class ElectivePage extends React.Component<Props, State> {
 
                                     <span> Minimum Difficulty (optional)</span>
                                     <SmileRate className="difficulty" value={this.state.difficulty ?? 0}
+                                        tooltips={["Challenging", "Hard", "Understandable", "Easy", "No brainer"]}
                                         onChange={(value) => this.setState({
                                             difficulty: value,
                                             overallRating:
@@ -172,6 +174,7 @@ class ElectivePage extends React.Component<Props, State> {
 
                                     <span> Minimum Enjoyability (optional)</span>
                                     <SmileRate className="enjoyability" value={this.state.enjoyability ?? 0}
+                                        tooltips={["Challenging", "Hard", "Understandable", "Easy", "No brainer"]}
                                         onChange={(value) =>
                                             this.setState({
                                                 enjoyability: value,
@@ -181,6 +184,7 @@ class ElectivePage extends React.Component<Props, State> {
 
                                     <span> Minimum Workload (optional)</span>
                                     <SmileRate className="workload" value={this.state.workload ?? 0}
+                                        tooltips={["Challenging", "Hard", "Understandable", "Easy", "No brainer"]}
                                         onChange={(value) => this.setState({
                                             workload: value,
                                             overallRating:

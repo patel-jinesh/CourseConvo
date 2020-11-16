@@ -1,3 +1,4 @@
 Sankar Renganathan - Worked on breakdown page/tab UI and functionality as well as adding db components
 Jinesh Patel - Worked on redux logic, setup react routing, did the academic record page and search page, worked on the course information page statistics graphs.
 Archit Shah - Worked on reviews page, worked on the information page to add the top reviews tab.
+Mohammed Mirajkar - Worked on the dashboard page, worked on the course suggestions page, populated database.

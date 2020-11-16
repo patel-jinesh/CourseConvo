@@ -225,7 +225,7 @@ class HomePage extends React.Component<Props, State> {
                                                                 return '#fadb14'
                                                             } else if (item.rating < 4) {
                                                                 return '#7cb305'
-                                                            } else if (item.rating < 5) {
+                                                            } else if (item.rating <= 5) {
                                                                 return '#52c41a'
                                                             }
                                                         })()
