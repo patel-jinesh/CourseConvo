@@ -153,6 +153,7 @@ class ElectivePage extends React.Component<Props, State> {
                                 <Space direction='vertical'>
                                     <span> Course: (required)</span>
                                     <AutoComplete placeholder="Course" style={{ width: "200px" }}
+                                        getPopupContainer={trigger => trigger.parentElement}
                                         value={this.state.subject}
                                         onChange={(value) => { this.setState({ subject: value }) }}
                                         filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
