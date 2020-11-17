@@ -1,0 +1,1583 @@
+commit 3af827f2ea3e12d8f207a559035055ea4a014809
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 20:55:33 2020 -0500
+
+    change offset
+
+commit 77f7d1e5bfd54110ecdbb1b3b3ba5885a70ad868
+Merge: 51bba61 3e6035d
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 15 20:52:39 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit 51bba617972f7e127429b01e7af9634d46ba5e15
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 20:52:35 2020 -0500
+
+    fix popup
+
+commit 3e6035ddfae5633828672cbdf057386a93d5d7c4
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 20:51:10 2020 -0500
+
+    changed splice to slice
+
+commit 673ab84a54ebf4e89e1aa60857d0167bebd5746d
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 20:43:30 2020 -0500
+
+    final commit, fixed bugs and update work.txt file
+
+commit be30b6111271856257da62a36fc43b45674e4ab3
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 15 20:32:17 2020 -0500
+
+    update work.txt
+
+commit 83d5cbf4434c4b0776b1ee984dfe11fbe69a8b97
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 20:30:28 2020 -0500
+
+    added url.txt
+
+commit f86c93ccc55ebae8af1c4c58e6bea4445ba7a4fa
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 15 20:26:10 2020 -0500
+
+    remove course.txt
+
+commit a5f0f981faf2b3b3d11dc791d3ebe9e98bebdafa
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 15 19:58:25 2020 -0500
+
+    modify work
+
+commit 5fbfbe749a93aea234dc5881af2817a264eadb57
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 15 19:57:08 2020 -0500
+
+    write my work in the work file
+
+commit 673f342db59b7475365a762362a8b0e152eb7604
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 15 19:56:23 2020 -0500
+
+    minor addition
+
+commit 115de0bb1ba20260751b4f91936d34744ba4cd3e
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 15 19:55:04 2020 -0500
+
+    add my work.txt
+
+commit c0dc929de0c76a862bfc23dbc0bc468d4bc3b09f
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sun Nov 15 19:49:37 2020 -0500
+
+    Added extra stuff
+
+commit 7ea118959c8819d6bdf1208dcf2be2f9f2ea2aaa
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sun Nov 15 15:57:35 2020 -0500
+
+    Fixed typo
+
+commit 8f276169aabc57dec73e7303807b835472c4d4fb
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 15:47:14 2020 -0500
+
+    fix user image
+
+commit 9e4cf2c17100bad7d5dfe5cbd230518f4090189a
+Merge: 978fcf6 5277e73
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 15 15:45:43 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit 978fcf60970b02c6c1f889cf325c3e4fb8f7df2f
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 15:45:33 2020 -0500
+
+    reviews
+
+commit 5277e734af37e8946e0f0cf34c31af9826c8ae2b
+Merge: 5b4e8ee 0e89d09
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 15:04:44 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit 5b4e8ee233b2fece99411c7d8fe8aeb10d1a0f54
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 15:04:00 2020 -0500
+
+    Fixed issue where info buttons were not alligned
+
+commit 0e89d09bc40a4ce807606d54e4bdb82d77de4460
+Merge: 3b92e85 bcd375b
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 15 15:00:48 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit 3b92e85dde261cfed0f2569ff9d32daafb5a56f1
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 15 15:00:40 2020 -0500
+
+    change icon
+
+commit bcd375b599a331ff89d68628318fb1b34cbfcd8d
+Merge: be5b5f2 69edb18
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 14:38:38 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit be5b5f2642ad40a295ed3bb2dc071316ccb102f4
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 14:35:42 2020 -0500
+
+    Updated database to include more reviews
+
+commit 69edb18575214915615f6db28d4121a4d8ef23f2
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 13:41:58 2020 -0500
+
+    remove unused function
+
+commit 8a76e653460fb147da350a17f0c47b8d9fdb09fb
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 13:41:24 2020 -0500
+
+    incease numCourse
+
+commit 56bf70043621446b322888b0a95e49b6f0fcc00c
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 15 13:32:23 2020 -0500
+
+    fix breakdown hide button bug
+
+commit 7aafaf3d7960210cb61c9b8cd6faa921173b93a4
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 15 13:31:50 2020 -0500
+
+    fix review hide button bug
+
+commit a1ef922f40e65b9119cb095a30588dd6c3d1387b
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 15 13:30:17 2020 -0500
+
+    random time
+
+commit 3b8b41aaa9a4d65ebd2c05e3c79036a568326f49
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 15 13:25:58 2020 -0500
+
+    remove breakdown anonymous in form
+
+commit 78441ceb4be1af20ea7be01c4197f3578e73b9fb
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 15 13:25:50 2020 -0500
+
+    remove breakdown anonymous in db
+
+commit 0bb0ab1c0d184c79f3cd5bebfdb0a075b0435d9c
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 15 13:25:38 2020 -0500
+
+    remove breakdown anonymous
+
+commit d6fb84b6edac44a3711b75d916642244cd71aff7
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 13:22:10 2020 -0500
+
+    add 3BB4 breakdown
+
+commit d7c1abecfa3e542d441f7861a9b67ec78cf7faee
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 13:13:03 2020 -0500
+
+    Fixed recent instance bug
+
+commit 7baa77c29b6288647259777daa5f16f0e473213a
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 13:08:10 2020 -0500
+
+    add 2C03
+
+commit 6cb1f43b99e072263880038a563bb51d9a788145
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 13:02:16 2020 -0500
+
+    fix records
+
+commit 78e2e65bc747ac59dab2b51a1bee4a9a5570543b
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 15 12:56:06 2020 -0500
+
+    fix the infinity bug
+
+commit 8ef48e034d5a7238f7a9c17fa860e08615fd65fa
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 12:49:56 2020 -0500
+
+    fix stats problem
+
+commit c43c010aa12d391f9e93d3cfa5aff92c7514a113
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 12:42:42 2020 -0500
+
+    added more instances in database
+
+commit c78cff502fa3af28058d90d772baa9e0991fe9eb
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 12:41:07 2020 -0500
+
+    fix comment spacing
+
+commit fad90aa8ae6070479dfca07bf8fb61cdeebd3d13
+Merge: 9f77a54 bed2adb
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 15 12:33:07 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit 9f77a54a3ac6b7a5e8132aacff544da143d9a255
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 15 12:32:59 2020 -0500
+
+    added submitted message
+
+commit ae33ba4256ef600d4558132a40bb0e0a82becb74
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 15 12:30:08 2020 -0500
+
+    fixed report form
+
+commit bed2adb95915c68c944994a338481a8e8c154d7d
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 12:20:21 2020 -0500
+
+    remove word breaks in review comments
+
+commit 53d2f5f0d7f7451e432de600c92b7ded200194c1
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 12:15:39 2020 -0500
+
+    Updated review comments in db
+
+commit fdb396ecfcea41de8d9e717f70c8c3ae99fdfa70
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 11:30:32 2020 -0500
+
+    Updated breakdowns
+
+commit cdb947d5cfa8f7797b301652fefc7469d289072a
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 11:16:55 2020 -0500
+
+    simplify review filtering
+
+commit 74f43bc1c420d83fe0a29deb7665ba816f0e6779
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Sun Nov 15 11:13:29 2020 -0500
+
+    simplify breakdown filtering
+
+commit a7c9ad38c48d957c73d95f79d7bc833acb00c74a
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sun Nov 15 10:32:01 2020 -0500
+
+    Fix bug with semester filtering
+
+commit 6fa1129df1bfdb807736b44a6b47c9228800fa99
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sat Nov 14 20:19:12 2020 -0500
+
+    change semester order
+
+commit 018369b30d81152c0dce800d4c2217826ed4d6cb
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sat Nov 14 20:16:44 2020 -0500
+
+    fixed overview grouping
+
+commit 25f32a93cec30d4ad59d460c56b42e13fd000d84
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sat Nov 14 20:01:02 2020 -0500
+
+    fixed reply avatar url
+
+commit 8c63b0d795b878c92107c3d82e278897b287f6fe
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sat Nov 14 19:58:48 2020 -0500
+
+    add users
+
+commit decd6a428d74b2a5ffac194374ce0944d6976ad7
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sat Nov 14 19:47:09 2020 -0500
+
+    cleanup lecture stuff
+
+commit d386ed1abce239837a4aa7daefd76daec9635a1b
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sat Nov 14 19:42:27 2020 -0500
+
+    change self review pointer
+
+commit 00581b07e3c7192d40fc45c7402ceba4f7f0c238
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 19:24:44 2020 -0500
+
+    Remove lecture types
+
+commit 8dc97df95b87c602d2ba9e65a72c7cdf476a2cb3
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 19:05:01 2020 -0500
+
+    fix form title
+
+commit db828addd4d061c5b6a4a07b2be06368eb89f2db
+Merge: d65fc82 78cf09b
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 18:52:27 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit d65fc82a78332942e20a80841d234bb2cf06b7ea
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 18:52:19 2020 -0500
+
+    fix lecture radio bug
+
+commit 78cf09b29e7a4cf4ccff31adfa5a1492de2c5f8d
+Merge: d0e8bb3 2217519
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sat Nov 14 18:29:08 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit d0e8bb3e83f1dc260fd5fc2360cfdb5c1b3e769f
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sat Nov 14 18:25:24 2020 -0500
+
+    Elective Page is now working
+
+commit 2217519b819a6514f1ebff9772116319e90accba
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 18:13:03 2020 -0500
+
+    fix apples and oranges
+
+commit 0f7e8e51b514d0f857b9c19d9bdf91f1e8232597
+Merge: f2ea2fa d6f57b1
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 17:33:49 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit f2ea2fa007cc57a92b0dd77dcfd6ea4b01f928a3
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 17:33:41 2020 -0500
+
+    self can now see reviews
+
+commit d6f57b1215a39b607d12eadaba89a3980ffa09a7
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 17:22:58 2020 -0500
+
+    Added assessment filtering and bug fixes
+
+commit 16274e090305099c6fbdf7c97b261b5e0e04cde5
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 17:17:28 2020 -0500
+
+    added timelogs
+
+commit 91e940935841b5ffaa506dc2eb91fcda95b7ca83
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 17:09:51 2020 -0500
+
+    fix year undefined bug
+
+commit ede7dd9f883581c635170e0b403f346f2c2aea56
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 16:56:55 2020 -0500
+
+    add label to breakdown form
+
+commit b6d2356b436d0ab78063e14770ef568c46625649
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 16:52:32 2020 -0500
+
+    add breakdown form to information page
+
+commit ec73c3defb230f0af1a69028e83687d0621348c0
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 16:49:19 2020 -0500
+
+    change to recently posted breakdown
+
+commit 0ca46fbfbadb2fc4b4ab58c0591bf2c86b858e90
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 16:44:39 2020 -0500
+
+    added form when no reviews in top reviews
+
+commit ca7d98d532da30a8cc6d68f9b3a73362b3d23f23
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 16:28:58 2020 -0500
+
+    cleanup
+
+commit d29c5d225b3a69453c2dcc806d01e09d9524d9e3
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 16:21:13 2020 -0500
+
+    fix status radio button group
+
+commit 1f771907070d0efdd869a8ae6d38eef950ec6e29
+Merge: 9945d74 b884768
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sat Nov 14 15:23:51 2020 -0500
+
+    Merge branch 'dashboard'
+
+commit b8847684847b09cb4156c230a8b287cb78984e9b
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sat Nov 14 15:17:39 2020 -0500
+
+    Elective page now filters and retrives top rated elective suggestions
+
+commit 9945d74790ae5592ded42f87ca79c221bb47a926
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 15:13:38 2020 -0500
+
+    add minwidth
+
+commit 98947ae169e6755f175f24773b4738d5ff82bc61
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 15:00:41 2020 -0500
+
+    fix default value
+
+commit 5d7f51d72a5fea005d3e520daf5022ce5d57e5cf
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 14:59:43 2020 -0500
+
+    changed numericrate to radio
+
+commit 18053e685751d2d24175a600890508a4de235cad
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 14:36:37 2020 -0500
+
+    added tooltips in review form
+
+commit c2b98312c1e2a14e65a5a94d1f6a3316c02ce8bf
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Sat Nov 14 14:35:53 2020 -0500
+
+    merged database
+
+commit 862d72a473ba3978833b7049836e470258dea972
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 14:34:09 2020 -0500
+
+    search preservation
+
+commit 36f8510760a07e97430b6f42ccfd9a660cd0b7f9
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 14:09:57 2020 -0500
+
+    added breakdown sem filter
+
+commit cf9906eed2a8f9d8945e91d3d48fbb0edcee1e60
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 14:05:05 2020 -0500
+
+    cleanup
+
+commit 4d19c8b06530b9b69887e65cccb760e4ddc7f91f
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 13:34:58 2020 -0500
+
+    fixed database
+
+commit 17d089ae6c591d825d40fb6e1128f5c9f55ce071
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 13:31:18 2020 -0500
+
+    reintroduce unique breakdowns
+
+commit 9fc76eed5192163f32e70e24b6dc549c44e11ddb
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 13:06:43 2020 -0500
+
+    fixed initialValues for assessments if none & submit on 100
+
+commit 7b2b4f8d8c400d58867d295be05f67f936b72032
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 12:59:24 2020 -0500
+
+    fix posters => poster
+
+commit 7d9d685cd0b5f8cd3c25e4f706dae7c3c1f9d115
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 12:59:01 2020 -0500
+
+    remove breakdown bucket
+
+commit 25444c90404b90c49128614e83e86419ae6e11de
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 12:55:21 2020 -0500
+
+    fix tag render
+
+commit cc8afce6f9325e649eefb1a7583f6ad8811f0d50
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 12:48:31 2020 -0500
+
+    fixed back initialValues
+
+commit df380b286b3442215da858d1177469b280075840
+Merge: a46cd40 80193cf
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 11:57:08 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit a46cd405e379bed29f35fb08d5c30c19ea037f4f
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 11:55:31 2020 -0500
+
+    added count integer check
+
+commit 4294a43a535478168a61e8a5925da69db75c70dc
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 11:51:03 2020 -0500
+
+    setup for combined breakdown
+
+commit 80193cf13dbd0a6b37022ce66c8c70cc7a512ad4
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 11:43:47 2020 -0500
+
+    Autofill min value to 1 for assessment count
+
+commit 06dd13d239e87661659e6478c2bb1b5cd9c956cc
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 11:30:58 2020 -0500
+
+    added poster to breakdown
+
+commit 4af7837daf5ac877a80cd7013d242593b706df3d
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 11:14:01 2020 -0500
+
+    minimum assessment check
+
+commit b60d92f34ebc6ed137a4bca5c5ba677b316fe8bc
+Merge: 4a9998b e50d8fe
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 14 11:09:31 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit 4a9998b4ef255084bd5127a4868e37adcdbc3c7d
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 11:09:23 2020 -0500
+
+    added duplicate assessment check
+
+commit e50d8fe24209edeefd2deb0ccd792ff264fc0776
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 11:05:10 2020 -0500
+
+    Add sorting by number of assessments for breakdowns
+
+commit 0fef691e896957baaec3f52b10b3c9a0ac5409e3
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 09:34:48 2020 -0500
+
+    Add assessments to initial values for editing
+
+commit 43d6e427fa299c7995551ce32a815ccd80c878e4
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 00:57:06 2020 -0500
+
+    breakdown adding & editing
+
+commit 6edd75920f55ea5d27337114969e7fe695ea9805
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 00:36:26 2020 -0500
+
+    fix disable
+
+commit 92804a3bd2ab72e3987450ec3a8f54d36803648e
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Sat Nov 14 00:14:27 2020 -0500
+
+    fix disable
+
+commit cf8a26afc42ef5a627f0faf132ab526473492ddf
+Merge: 1cae83e 69aa4c5
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Fri Nov 13 23:51:22 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit 1cae83e081ff9a374dad4acb5f95ea7f75f10b47
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Fri Nov 13 23:41:14 2020 -0500
+
+    setup initialValues
+
+commit 69aa4c5e921a94a59346fe9fba8a84c7baf102ff
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Fri Nov 13 23:40:55 2020 -0500
+
+    Fixed form submit bug. Breakdowns can now be added by the user
+
+commit 4a92da3b4646f4dda5fd3bf2ea28c3f423fae64d
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Fri Nov 13 22:57:36 2020 -0500
+
+    fix instructor autofill
+
+commit 7b2b7d244ba75267e04cd447836bf63f173925c0
+Merge: 08616a3 6bd4cae
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 22:54:34 2020 -0500
+
+    Merge branch 'dashboard'
+
+commit 6bd4cae3c77f5357b3eb7fd293cbb936ac14665e
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 22:52:57 2020 -0500
+
+    Created new elective page, still in progress
+
+commit 08616a3139e7debe623cf194a555a2017611e720
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Fri Nov 13 22:50:26 2020 -0500
+
+    setup breakdown form validation
+
+commit efeb17468b9d397aef332c1778d5fac06749418e
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Fri Nov 13 21:59:06 2020 -0500
+
+    fix key error
+
+commit 6f6356cdbc1239259a6b0a8b5e65a8d99d50457d
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 21:23:29 2020 -0500
+
+    added user name to reporting form
+
+commit b51da14db0587c32bd8dcfa06ad4796bc492fd38
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 20:59:59 2020 -0500
+
+    fix sems
+
+commit 852c4dd77201b9f801ee72ddffb49cf5088e517f
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 20:58:17 2020 -0500
+
+    fix rating display bug
+
+commit 4dcd37e124430b6d7f9343afedd3e4af6dd74ba6
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 20:56:35 2020 -0500
+
+    dont show stats when not enough data
+
+commit a035656294008884162076728f8e97395a91e22a
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 19:33:43 2020 -0500
+
+    refactor search results + change info
+
+commit 0b6a70c2a4b2cb7caf0aa6d37847b281df9491d5
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 18:10:16 2020 -0500
+
+    fix no instance bug
+
+commit e5591763f9dba110c32fb588a38b563808a003d1
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 17:24:36 2020 -0500
+
+    fixed merge issues
+
+commit 0310cc7602f2d17d784e09406c87e3fe45bc859d
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Fri Nov 13 15:46:56 2020 -0500
+
+    fix searching
+
+commit ea319d2d5f4e37a48a799f98837968cc73fb901a
+Merge: c5310c8 5036f00
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Fri Nov 13 15:43:07 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit c5310c87e78524159a9c3afc869f29a17cc6d77e
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 15:42:59 2020 -0500
+
+    added quick overview
+
+commit 5036f00006fd5aaddfb2085ad01a9d4f4caab208
+Merge: 32e075a 53b806c
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 15:11:09 2020 -0500
+
+    Merge branch 'dashboard'
+
+commit 32e075abe77c9adbe4759f5bd7392013697f2cd1
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 14:21:13 2020 -0500
+
+    fix no instance bug
+
+commit fef9fcdf2058b604c3542efd973ef3f16e18477c
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 14:19:45 2020 -0500
+
+    remove redundant code
+
+commit 43514a8a13a0adba2d598bb1f258928aeb9e5c05
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 14:17:08 2020 -0500
+
+    added instructor graph
+
+commit 8186d656605cd0ea316cc1842204d7f7d1e7be60
+Merge: f939c94 3e5854c
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Fri Nov 13 14:14:38 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit f939c94c1cfbb88cbdc3dc7b29a7dd6c672fb18e
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 14:14:29 2020 -0500
+
+    added instructor graph
+
+commit 3e5854cf95a1c6dac84696b84bed8a4bc327c952
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Fri Nov 13 14:02:03 2020 -0500
+
+    Add contents to course breakdowns page
+
+commit e76a6ad6771570f626d41aeaeca9a0485f7a3432
+Author: Mirajkam <mirajkam@mcmaster.ca>
+Date:   Fri Nov 13 13:47:29 2020 -0500
+
+    added min and max to gpa graph
+
+commit 229500b1a4a527def0619a1f368285284ab28da8
+Merge: 8548f85 7217a00
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Fri Nov 13 13:06:28 2020 -0500
+
+    Merge branch 'master' into reviews
+
+commit 7217a006ca905a8eecaab187cfc8ef56d5e0ea9f
+Merge: 6205a08 b36f28b
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Fri Nov 13 13:04:24 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit 8548f8594decbc280c486a983295d7bbc9ef73e9
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Fri Nov 13 12:16:59 2020 -0500
+
+    fix render issue
+
+commit b22911d75824b0f1ce4a60ee7e8b417e2d6016bd
+Merge: 7643550 6205a08
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Fri Nov 13 11:21:38 2020 -0500
+
+    Merge branch 'master' into reviews
+
+commit 76435500542222640e3044c5af4b67c551388a6b
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Fri Nov 13 11:17:34 2020 -0500
+
+    top 3 reviews
+
+commit 32ff1d530bbad27b0e1798a34442bdb23ffaf6aa
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Fri Nov 13 11:17:10 2020 -0500
+
+    fix key error
+
+commit b36f28b15c27e7f1893a939fa11e3a3007709a6d
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Fri Nov 13 11:15:27 2020 -0500
+
+    Added additional db info for breakdowns
+
+commit 7f2b7ced21e15ba26acc722e76f7005d00c0317b
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Fri Nov 13 11:03:58 2020 -0500
+
+    refactor tag + checkmark
+
+commit 551ba26d8dede41446293b999908fbd516262be6
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Fri Nov 13 10:02:13 2020 -0500
+
+    Update breakdown form UI
+
+commit fe2939b539965b8a698f097132e4d2ee19e0f878
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Fri Nov 13 10:01:32 2020 -0500
+
+    Add breakdown UI
+
+commit 6205a08ab35696be2a212f1c386251d97228f9b7
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 22:13:09 2020 -0500
+
+    added percent sign
+
+commit 3f8953ac06b711febb2e29327aacdc87d177379d
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 22:11:30 2020 -0500
+
+    style
+
+commit bc6ad4314074f6b2adacff4ad76fcb7695029e58
+Merge: beb5250 351cdac
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 12 21:42:47 2020 -0500
+
+    Merge branch 'master' into reviews
+
+commit beb525029c154618cbe9b256705a08a3ea12b3fd
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 21:41:46 2020 -0500
+
+    added semester and instructor to reviews
+
+commit 351cdacdfe9dcac6390b6b6f49e30496fb2b45f8
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 21:38:19 2020 -0500
+
+    fix expand rendering bug
+
+commit 9f7ae6db68ad8c4ee8d9174459897fd23b8dca6c
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 21:35:25 2020 -0500
+
+    fix add review bug
+
+commit 53b806ceb43c7fb67d07dfa4dfe29a216fe4fd40
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Thu Nov 12 21:21:35 2020 -0500
+
+    Updated dashboard to include top rated instructors
+
+commit dd983595e93b62333ab865c417fc9854b67e1486
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 21:18:04 2020 -0500
+
+    fix bug
+
+commit 110928913589019b7163d12281f1f697943dc93c
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 20:17:20 2020 -0500
+
+    fix database
+
+commit 34e453c0fcf4fd4ca38b375d7821dbb67df7ae3e
+Merge: c57d1fa fd6f9df
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 12 20:14:21 2020 -0500
+
+    Merge branch 'master' into reviews
+
+commit c57d1fa99783e68507e7e462cc80ad4deb969998
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 20:13:15 2020 -0500
+
+    fix rating sort
+
+commit dc0b4253a832bd8975ceadf57d055b9e04c5fd29
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 20:03:56 2020 -0500
+
+    fixed review instructor field
+
+commit ff0fd9ab0aac5bb75797684a47b6fe529aa0812a
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 19:54:19 2020 -0500
+
+    fixed required in review form
+
+commit b64ccdfd4f5c68c54367bee1f4d24be51f9f0e0f
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 19:51:52 2020 -0500
+
+    fixed editing
+
+commit d1463992e5e4a5d7ee8d753e16564506c064de2f
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 19:45:42 2020 -0500
+
+    added deleting
+
+commit fd6f9df7f26a25e287b73516da1ed7ce6a2c9dd7
+Merge: e84f719 e365d17
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Thu Nov 12 19:03:25 2020 -0500
+
+    Merge branch 'master' into dashboard
+
+commit e84f719622bafc05bfa0030a01597f56b6524572
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Thu Nov 12 18:58:32 2020 -0500
+
+    fixed issues
+
+commit 83aff654d8f7e93c86e9ad5909ef2d491ac223dd
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Thu Nov 12 18:55:01 2020 -0500
+
+    Added functionality to toolbar in top courses
+
+commit eb272e53ccb4560fbbc70de2be4ff0abac7c0112
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 18:36:06 2020 -0500
+
+    changed reporting form display
+
+commit 7ce969e364ad38215cff2880d7013434165690af
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 18:35:54 2020 -0500
+
+    added tagging
+
+commit e365d17ccf3cbb41bf9b5b95830e750f785e0a28
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 17:34:00 2020 -0500
+
+    cleanup
+
+commit 9b2616dc2ba2ebef905db87031dc100eb1e51031
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 17:25:24 2020 -0500
+
+    fix addForm for reviews
+
+commit f6676b9dd5bb97cd0e88c1eb8fdcb0057246ac3c
+Merge: 643b085 4c206ea
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 12 17:14:22 2020 -0500
+
+    Merge branch 'master' into reviews
+
+commit 4c206ea9665ff6c3ffdf0c9799c13321f1d665ad
+Author: Sankar <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 17:11:17 2020 -0500
+
+    change order
+
+commit 6792e2a9e61eb68e331c2dc3ea0e359a112a92ab
+Merge: de882f7 4143aec
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 12 17:00:35 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit de882f70195408d73476940cdb251c588cc97fb1
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 12 16:59:19 2020 -0500
+
+    Remove Term & Year
+
+commit 4143aec2f7f5081744b84850d0ffdaa87e6adffa
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 16:14:40 2020 -0500
+
+    Improved form utilities
+
+commit c647f2806898941532d02555c4e21210d776c7f2
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Thu Nov 12 15:23:14 2020 -0500
+
+    Added code for top rated instructors [still in progress]
+
+commit d83e93a6a123aaf654be2f0739d85c775ce5f34f
+Merge: 1bcee46 00d3623
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 12 14:12:00 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit 1bcee46a7d65b81cea3d7b59c396a65c89442050
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 12 14:09:45 2020 -0500
+
+    fixed submission bug, added reroute
+
+commit 643b08583cfc678d37432dcf119f6211de1658b6
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Thu Nov 12 14:01:31 2020 -0500
+
+    edit form
+
+commit 00d3623f67f5a5851173e34e3fc14d33261fcfa1
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Thu Nov 12 13:44:42 2020 -0500
+
+    Add more common functions for form creation
+
+commit 6c1aee4dbb3826d2fae382dfd16b337b354652ae
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Thu Nov 12 11:07:21 2020 -0500
+
+    fix bugs
+
+commit 4a300023e808f7668a53f79ddc01a39e08b5001a
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Thu Nov 12 11:07:14 2020 -0500
+
+    added custom rates
+
+commit 9c7afc200944420b79f953ec9fe9c37d25e96d3f
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Wed Nov 11 21:06:19 2020 -0500
+
+    Created reusable Form UI functions for scalability purposes
+
+commit bf7c7ff50e9537e7a39b9139973e721d2749f037
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Wed Nov 11 16:15:44 2020 -0500
+
+    added review sorting
+
+commit 48b7a0d50296af32d5fe53bcbe134dfdee708eb3
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Wed Nov 11 16:07:41 2020 -0500
+
+    Updated home page
+
+commit 21e82763dd4c210ee799bca7154610577681a347
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Wed Nov 11 15:05:42 2020 -0500
+
+    changed required for review form
+
+commit 112aeaa2f720e4a801c32dfdbc825dcd0bd4bfba
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Wed Nov 11 15:05:07 2020 -0500
+
+    added filtering
+
+commit d574d3da2398947088b2b7ce59660986016a4ca6
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Wed Nov 11 13:46:06 2020 -0500
+
+    merged changes from latest pull
+
+commit 13ce5aa717e4797f7f11140090b6e5f6d553d263
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Wed Nov 11 13:23:38 2020 -0500
+
+    fix anonymous form item
+
+commit 901412f916554149966a5cbef02546ab30bc1841
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Wed Nov 11 13:21:54 2020 -0500
+
+    fix crticial warning
+
+commit eac0fb66eb1a89b055198fcb7042cf5d3f130707
+Merge: 8e1ecf6 9aee3b4
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Wed Nov 11 13:20:15 2020 -0500
+
+    Merge branch 'master' into reviews
+
+commit 9aee3b4272adcecaaa795fad449838438ac6c910
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Wed Nov 11 13:19:30 2020 -0500
+
+    fix other key issue
+
+commit e2f3f5875e58fb45817e2e6d89bcc80ff4aa46e1
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Wed Nov 11 13:18:34 2020 -0500
+
+    fix key issue
+
+commit 8e1ecf6cd1f45508c9891de3710a488228297732
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Wed Nov 11 13:17:31 2020 -0500
+
+    added hiding
+
+commit 2c3a1ed443ec69eb2eb6e13bebeb0bc4eeaa0d63
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Wed Nov 11 13:11:39 2020 -0500
+
+    added code for top popular courses
+
+commit fcede0d9559f767ca5e04a972e18f48ea5c8eb7a
+Merge: 2b37531 678fc7f
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Wed Nov 11 12:54:09 2020 -0500
+
+    Merge branch 'master' into reviews
+
+commit 678fc7f41500005ba2356f72d9b6666945b95939
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Wed Nov 11 12:49:30 2020 -0500
+
+    fix gpa graph
+
+commit 79a9e3dd6205fbac21130daceeff566041db7ac6
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Wed Nov 11 12:49:21 2020 -0500
+
+    fix breakdown routing bug
+
+commit 0b64e9d82c9c0443b82bd6b2065e3f4c0226210f
+Merge: e0f2e6a a51d621
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Wed Nov 11 12:44:19 2020 -0500
+
+    Merge branch 'master' of https://github.com/patel-jinesh/CourseConvo
+
+commit e0f2e6a9d85064f06a6f91bdca1bad651ed04502
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Wed Nov 11 12:39:04 2020 -0500
+
+    changed searching to be courses
+
+commit 2b3753194f69aa3a2c4fa63b751503aacfe5886d
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Wed Nov 11 12:38:34 2020 -0500
+
+    setup filter ui
+
+commit a51d621da3bff2b2aea0a561ac8cc65cdcc22cab
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Wed Nov 11 12:22:16 2020 -0500
+
+    Update breakdown UI
+
+commit 3ca7a257d6b1c161904ce55cc1465dfdedeac03d
+Author: Mohammed Mirajkar <mirajkam@mcmaster.ca>
+Date:   Wed Nov 11 12:19:08 2020 -0500
+
+    added top rated courses dashboard card to dashboard
+
+commit db852ba1519dc0c000169847ca17f5caca7842f7
+Author: Sankar Renganathan <sankarrenga08@gmail.com>
+Date:   Wed Nov 11 10:59:55 2020 -0500
+
+    Added initial breakdown table
+
+commit e0ba24891df2b5b7b4ab4958c0b6c66d1c541a58
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Tue Nov 10 19:01:36 2020 -0500
+
+    fixed key error
+
+commit 989ea0fd8022915aa5cc13da41b677931a07b545
+Merge: 4c7b675 11f6628
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Tue Nov 10 19:00:02 2020 -0500
+
+    Merge branch 'reviews'
+
+commit 11f662835b1aa3063c7021a882d40a494cda19e7
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Tue Nov 10 18:59:06 2020 -0500
+
+    adding review, styling
+
+commit 4c7b6755969390136ef7519bc197139b5ff3c8f5
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Tue Nov 10 15:46:54 2020 -0500
+
+    changed how search results look
+
+commit 177ee41e0441fd889c38c783818c88921f7be07f
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Tue Nov 10 15:23:31 2020 -0500
+
+    create review form
+
+commit 0fffd92bf1661bfa2c53e0772d8393d51d88fdea
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Tue Nov 10 15:22:55 2020 -0500
+
+    fix moment bug
+
+commit 458a087b2a98070345541bf5a7fc45fd207071aa
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Mon Nov 9 22:16:23 2020 -0500
+
+    worked on review report stuff
+
+commit 186c31f88d51528fbeb556f4358e4f061a967c98
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Mon Nov 9 22:16:04 2020 -0500
+
+    fixed bug for search page & decoupled forms
+
+commit a7967d908ce0a7bb594f81100f0cbcdd22d2fee0
+Merge: 622356d 1e91daa
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Mon Nov 9 12:10:15 2020 -0500
+
+    Merge branch 'information'
+
+commit 1e91daaa9801ea606e711055a796c64bf8fe32d2
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Mon Nov 9 11:57:08 2020 -0500
+
+    finialized gpa graph
+
+commit 622356d6d3e42c89a54cd37b1fcd49fb0d25836b
+Merge: b8849dc 4bbcfc9
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Mon Nov 9 01:24:37 2020 -0500
+
+    Merge branch 'reviews'
+
+commit b8849dceb4fa82f8875335bc192a3c94ec98c78f
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Mon Nov 9 01:23:07 2020 -0500
+
+    added graphing
+
+commit 4bbcfc91361efd48e2bd3d1dd0f081fb5b739d51
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 8 19:34:33 2020 -0500
+
+    added reviews to course review page
+
+commit 76fff49708e140822366f1a45916975c1a0c0fab
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 8 18:48:31 2020 -0500
+
+    setup other pages
+
+commit 3b1afa2db831e869ea04f68e01a271ca6ce63e28
+Merge: ea8f864 a1b47dc
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 8 16:47:49 2020 -0500
+
+    Merge branch 'reviews'
+
+commit ea8f864da961a9e127a71d64c2c12bc79f2c2e53
+Merge: 974a453 869e56c
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 8 16:47:26 2020 -0500
+
+    Merge branch 'academic'
+
+commit a1b47dc1d6f3cf4df867c9293767a0620da89960
+Merge: 3e72011 974a453
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 8 16:46:01 2020 -0500
+
+    Merge branch 'master' into reviews
+
+commit 974a453d5e6dacbe7fae087d0aba457febf3d860
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 8 16:44:10 2020 -0500
+
+    changed routing
+
+commit 3e72011188e83e59fc95aa9b0caee57a96455c9a
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sun Nov 8 16:26:53 2020 -0500
+
+    setup course review page
+
+commit bddf84b8d135e21295e54f0fd68ae1f9091bede9
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 8 16:06:40 2020 -0500
+
+    added unvoting, removed console logs
+
+commit 869e56c7d96c001a86fa4e6ae67c343dcb35e757
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 8 15:52:03 2020 -0500
+
+    added 12.0 gpa
+
+commit df5a5666557ef6a2b19eab794debbce80a28b6c6
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 8 14:56:22 2020 -0500
+
+    added in review replies
+
+commit 082f9892d7cbb56104d8744459f740f58918c660
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 8 00:06:31 2020 -0500
+
+    worked on reviews
+
+commit 020be113eac241b7ff00b8ba45efaf0a8a2d5392
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 7 22:13:08 2020 -0500
+
+    maintainence
+
+commit a65677a583e5d83ca327af1f505a697899208b88
+Merge: 264ad0b a94e18c
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 7 22:05:04 2020 -0500
+
+    Merge branch 'master' into academic
+
+commit a94e18cca06055853badbbef33e95c6fca86da06
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 7 22:04:25 2020 -0500
+
+    restructure courses
+
+commit 264ad0bc53364fdc2c2fc251d022b84448cc55fe
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 7 18:27:50 2020 -0500
+
+    maintainance
+
+commit fa1b6665638918512e5ae402afc49dcfdbf3d53d
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 7 13:45:05 2020 -0500
+
+    refactor & simplified the form handling
+
+commit d66d40034e08425ac1b1a5b64dd07e201583d89b
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sat Nov 7 11:49:38 2020 -0500
+
+    remove warnings
+
+commit b35f99aafb5caaba3fa0e25cac1d43701a85b64f
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sat Nov 7 10:22:35 2020 -0500
+
+    setup course info page
+
+commit 6419eabd266b1cd339edfc5b0d5922243c21c220
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sat Nov 7 10:03:04 2020 -0500
+
+    remove formrefs
+
+commit 0aec6d6d02b9e809e62b7b5b7b7d61b94f2e5575
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sat Nov 7 09:27:25 2020 -0500
+
+    remove console.log
+
+commit ca33060e8be54f798e932b738906e0a964954c10
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Sat Nov 7 09:25:59 2020 -0500
+
+    fixed search typo-bug
+
+commit af7303a97d42adced337043244f467d3c3bb7ecf
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Fri Nov 6 23:37:34 2020 -0500
+
+    fixed normailize & matching
+
+commit dc4e379de21cceaf6718a4b67d51cfd5d3769e7e
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Fri Nov 6 23:28:47 2020 -0500
+
+    optimized & use Form.Provider
+
+commit d299bb2f0724a50761aa201ea2c69ff7b4946501
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Fri Nov 6 22:15:06 2020 -0500
+
+    added course adding
+
+commit 9609ef1a214a65c3b26fe2a9452d48339787fbbe
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Fri Nov 6 21:51:25 2020 -0500
+
+    refactor and simplify
+
+commit 929adbdb7d0486806804469db3d598eec8bd8078
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Fri Nov 6 21:51:06 2020 -0500
+
+    create components for refactoring
+
+commit d438d31afd23155954e607adc315ce3dbc4458c6
+Author: Archit Shah <shaha18@mcmaster.ca>
+Date:   Fri Nov 6 14:37:44 2020 -0500
+
+    added searching
+
+commit b0c1e12bc5ce234ae18004b51ec5aae53464604e
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 5 23:47:39 2020 -0500
+
+    added other menu items
+
+commit 5e4607a69fc2420c1f5c7f4e80e838a15a557383
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 5 23:25:18 2020 -0500
+
+    added userID to records
+
+commit 33dd32fff7ab20e407361f2ddcd2ba7a4b31a47f
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 5 23:05:59 2020 -0500
+
+    fix computation bug
+
+commit f9995936934b427403b5a2c05e5d5e6dc9975589
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 5 22:47:56 2020 -0500
+
+    added notification
+
+commit a584e71e094e1ebf30b186feb127b834470f1701
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 5 19:13:51 2020 -0500
+
+    added sorting
+
+commit 4c93aef39a6aea6498675ad05ba7e81a28def1a3
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 5 13:00:00 2020 -0500
+
+    fixed submit button
+
+commit bce26dd69490e4ab2ca8aa578827c237a0d8ab99
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 5 12:44:39 2020 -0500
+
+    Changed to academic records
+
+commit f7b4b26ccc5b1f49d40901a0587a2f19cc90d48f
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Nov 5 12:01:19 2020 -0500
+
+    Updated form field management
+
+commit 100481d52363e1f0f4fa92ae4b08a52513569771
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Wed Nov 4 01:17:52 2020 -0500
+
+    trying serve?
+
+commit c0a9fc7eabadf11a1be07489b7d4dd35ee5f1a37
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Wed Nov 4 01:08:03 2020 -0500
+
+    remove refs
+
+commit 595cce3b78f09898d37f13da770ccff752ebfa91
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Wed Nov 4 01:07:33 2020 -0500
+
+    added static.json
+
+commit e45e1e3dadaf03b50a46d77581efa4e388971759
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Wed Nov 4 00:55:35 2020 -0500
+
+    rid of icons
+
+commit 35a5bcc8cd79bde1330bde60e27d6fdea2a73a77
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Wed Nov 4 00:41:33 2020 -0500
+
+    started work of form input
+
+commit 707abcc9af77f3b856453f5ae5c71d7248408f74
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Tue Nov 3 16:16:43 2020 -0500
+
+    added react router, changed to academic record
+
+commit 5bba19e5c5620df6f803aa1b8ada97de5b223c1d
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Mon Nov 2 02:44:32 2020 -0500
+
+    Added backend data
+
+commit 67875dee296a9ff63f27cb96a6618ca6c34f030e
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Mon Nov 2 00:06:24 2020 -0500
+
+    fixed import
+
+commit ef16c83d0bb3f41ca5f3db52e538da06652dc503
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Mon Nov 2 00:04:19 2020 -0500
+
+    seperated data types from redux features
+
+commit 67fc4da0d71ba34f8365f3f0b408286179546a35
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 1 23:59:16 2020 -0500
+
+    updated gitignore
+
+commit f768e6fd545092bfbb41762e9787e5dd3700b737
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Sun Nov 1 23:58:26 2020 -0500
+
+    created course history page
+
+commit f789aed670d0cbc168c416b8b6e07a2aa3bb63b1
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Oct 22 22:37:22 2020 -0400
+
+    updaed user type and removed hot reload state
+
+commit 5889cddad749e0fef35f01fb8778eac55a9d33b9
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Oct 22 22:25:24 2020 -0400
+
+    edit state types
+
+commit 2fbe850fa8131cfce280e4ce66f805ab065b7f8f
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Oct 22 22:15:11 2020 -0400
+
+    add breakdown redux
+
+commit 8e101b986e50e04713638faf61adf7aaba60134b
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Oct 22 22:12:35 2020 -0400
+
+    add reviews redux
+
+commit 5be825e357ad23e4e6a26949dc2a9cc0ff7069cd
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Oct 22 21:45:36 2020 -0400
+
+    add redux,ant design
+
+commit 2644ae5bfea7308e857d3039eed31a7f5b0f64f2
+Author: Jinesh Patel <programmer.jinesh@gmail.com>
+Date:   Thu Oct 22 18:06:39 2020 -0400
+
+    Initialize project using Create React App

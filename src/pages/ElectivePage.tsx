@@ -148,11 +148,12 @@ class ElectivePage extends React.Component<Props, State> {
 
                 <Row style={{ width: "100%" }}>
                     <Col span={5}>
-                        <Affix offsetTop={50}>
+                        <Affix offsetTop={30}>
                             <Card bordered={false} title="Elective Filter Options">
                                 <Space direction='vertical'>
                                     <span> Course: (required)</span>
                                     <AutoComplete placeholder="Course" style={{ width: "200px" }}
+                                        getPopupContainer={trigger => trigger.parentElement}
                                         value={this.state.subject}
                                         onChange={(value) => { this.setState({ subject: value }) }}
                                         filterOption={(i, o) => o?.value.indexOf(i.toUpperCase()) === 0}
